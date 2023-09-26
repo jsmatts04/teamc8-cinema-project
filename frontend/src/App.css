@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #202329;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,18 @@
   to {
     transform: rotate(360deg);
   }
+}
+.form_container {
+  width: 30%
+}
+@media screen and (max-width: 1000px) {
+  .form_container{
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+    .form_container {
+      width: 65%; 
+    }
 }
