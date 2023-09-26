@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
-import filmLogo from './Images/film.png'
+import filmLogo from './Images/film.png';
 
 function Register() {
     const navbarStyle = {
-        backgroundColor: '#3B3B3C', // Set the background color to #3B3B3C
+        backgroundColor: '#3B3B3C', // Set the background color to #808080
     };
 
     return (
@@ -17,7 +17,7 @@ function Register() {
                         <img
                             src={filmLogo}
                             alt="Film Logo"
-                            height="50" // Customize the height as needed
+                            height="50"
                             className="navbar-brand"
                         />
                     </Link>
@@ -29,8 +29,8 @@ function Register() {
             </nav>
 
             {/* Registration Form */}
-            <div className="login-container d-flex justify-content-center align-items-center vh-100 bg-dark">
-                <div className="login-form-container p-4 rounded bg-white">
+            <div className="login-container d-flex justify-content-center align-items-center bg-dark">
+                <div className="login-form-container p-4 rounded bg-white" style={{ maxWidth: '400px' }}>
                     <form>
                         <h3 className="mb-4">Create Movie Account</h3>
                         <div className="mb-3">
@@ -46,11 +46,11 @@ function Register() {
                             <input type="text" placeholder="Enter Street" className="form-control" />
                         </div>
                         <div className="row mb-3">
-                            <div className="col-md-6">
+                            <div className="col">
                                 <label htmlFor="state" className="form-label">State</label>
                                 <input type="text" placeholder="Enter State" className="form-control" />
                             </div>
-                            <div className="col-md-6">
+                            <div className="col">
                                 <label htmlFor="zip" className="form-label">ZIP Code</label>
                                 <input type="text" placeholder="Enter ZIP Code" className="form-control" />
                             </div>
@@ -60,11 +60,11 @@ function Register() {
                             <input type="text" placeholder="Enter Credit Card Number" className="form-control" />
                         </div>
                         <div className="row mb-3">
-                            <div className="col-md-6">
+                            <div className="col">
                                 <label htmlFor="expiration" className="form-label">Expiration Date</label>
                                 <input type="text" placeholder="MM/YYYY" className="form-control" />
                             </div>
-                            <div className="col-md-6">
+                            <div className="col">
                                 <label htmlFor="securityCode" className="form-label">Security Code</label>
                                 <input type="text" placeholder="Enter Security Code" className="form-control" />
                             </div>

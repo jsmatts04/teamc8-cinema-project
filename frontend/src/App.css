@@ -50,3 +50,6 @@
       width: 65%; 
     }
 }
+.login-form-container {
+  overflow-x: auto; /* Allow horizontal scrolling if necessary */
+}
