@@ -12,8 +12,7 @@ function Register() {
       };
 
     return (
-        <div>
-
+        <>
             {/* Registration Form */}
             <div className="login-container d-flex justify-content-center align-items-center" style={gradientBackground}>
                 <div className="login-form-container p-4 rounded bg-white" style={shadowStyle}>
@@ -66,7 +65,7 @@ function Register() {
                     </form>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

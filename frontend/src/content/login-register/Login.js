@@ -9,7 +9,7 @@ function Login() {
             <div className="login-container d-flex justify-content-center align-items-center vh-100 bg-dark">
                 <div className="login-form-container p-5 rounded bg-white">
                     <form>
-                        <h3>Sign In</h3>
+                        <h3 className="mb-4">Sign In</h3>
                         <div className="mb-2">
                             <label htmlFor="email">Email</label>
                             <input type="email" placeholder="Enter Email" className="form-control" />
