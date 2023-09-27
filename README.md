@@ -1,1 +1,1 @@
-# cinema-ebooking-system-backend
+# teamc8-cinema-project-backend
