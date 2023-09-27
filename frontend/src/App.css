@@ -53,3 +53,6 @@
 .login-form-container {
   overflow-x: auto; /* Allow horizontal scrolling if necessary */
 }
+.gradient-background {
+  background: linear-gradient(135deg, #00A3E1 0%, #C84B31 100%);
+}

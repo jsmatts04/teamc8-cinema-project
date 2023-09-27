@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../App.css';
 
-
 function Login() {
+    const navbarStyle = {
+        backgroundColor: '#3B3B3C', // Set the background color to #808080
+    };
+
     return (
         <div>
             {/* Login Form */}
