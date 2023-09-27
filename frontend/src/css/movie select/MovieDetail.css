@@ -1,0 +1,69 @@
+#detailsTitle {
+    color: white;
+    margin-left: 10%;
+    font-size:4vw;
+}
+
+#ytvid {
+    height: 450px;
+}
+
+.ratings-logo {
+    height: 60px;
+}
+
+.book-button-details {
+    margin: 0 auto;
+    margin-left: 10%;
+    margin-bottom: 10px;
+    width: 400px;
+    background-color: orange;
+    color: black;
+    font-weight:bold;
+    border-color: black;
+}
+
+.book-ticket-content {
+    display:flex;
+}
+
+.left-column-detail {
+    flex-grow:1;
+    min-width: 20%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.right-column-detail {
+    color: white;
+    flex-grow:3;
+    margin-right: 10%;
+}
+
+#ratingsDiv {
+    margin-left: 40px;
+    width: 100%;
+    display:inline-flex;
+    justify-content:space-evenly;
+    margin-bottom: 60px;
+}
+
+#ratingsDiv h2 {
+    font-size: 50px;
+    color: white;
+}
+
+h3 {
+    color: white;
+    font-size: 35px;
+}
+
+li {
+    color: white;
+    font-size: 20px;
+    list-style-type: none;
+}
+
+p {
+    font-size: 20px;
+}

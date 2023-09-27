@@ -1,20 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './App.css'
-import filmLogo from './Images/film.png'
-import Navbar from './Navbar.js'
+import '../../App.css';
 
 
 function Login() {
-    const navbarStyle = {
-        backgroundColor: '#3B3B3C', // Set the background color to #808080
-    };
-
     return (
         <div>
-            {/* Navigation Bar */}
-            <Navbar></Navbar>
-
             {/* Login Form */}
             <div className="login-container d-flex justify-content-center align-items-center vh-100 bg-dark">
                 <div className="login-form-container p-5 rounded bg-white">

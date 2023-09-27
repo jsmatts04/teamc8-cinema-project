@@ -1,18 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './App.css';
-import filmLogo from './Images/film.png';
-import Navbar from './Navbar';
+import '../../App.css';
+
 
 function Register() {
-    const navbarStyle = {
-        backgroundColor: '#3B3B3C', // Set the background color to #808080
-    };
-
     return (
         <div>
-            <Navbar></Navbar>
-
             {/* Registration Form */}
             <div className="login-container d-flex justify-content-center align-items-center bg-dark">
                 <div className="login-form-container p-4 rounded bg-white" style={{ maxWidth: '400px' }}>

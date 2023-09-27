@@ -5,7 +5,7 @@ import NavBar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import filmLogo from './Images/film.png'
+import filmLogo from '../Images/film.png'
 
 function Navbar() {
     return (

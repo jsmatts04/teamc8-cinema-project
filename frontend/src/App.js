@@ -1,22 +1,15 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './Login'
-import Register from './Register'
-import Home from './Home'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import VerifyAccount from './VerifyAccount'
+import Navbar from "./content/Navbar"
+import Content from "./content/Content"
+import { BrowserRouter as Router } from "react-router-dom"
+import './App.css'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/Login' element={<Login />}></Route>
-          <Route path='/Register' element={<Register />}></Route>
-          <Route path='/VerifyAccount' element={<VerifyAccount />}></Route>
-      </Routes>
-    </BrowserRouter>
-  )
+    <Router>      
+      <Navbar/>
+      <Content/>
+    </Router>
+  );
 }
 
 export default App
