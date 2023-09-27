@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import filmLogo from './Images/film.png';
+import Navbar from './Navbar';
 
 function Register() {
     const navbarStyle = {
@@ -10,23 +11,7 @@ function Register() {
 
     return (
         <div>
-            {/* Navigation Bar */}
-            <nav className="navbar" style={navbarStyle}>
-                <div className="container-fluid">
-                    <Link to="/">
-                        <img
-                            src={filmLogo}
-                            alt="Film Logo"
-                            height="50"
-                            className="navbar-brand"
-                        />
-                    </Link>
-                    <div className="d-flex">
-                        <Link to="/"><button className="btn btn-outline-light mx-2">LOGIN</button></Link>
-                        <Link to="/Register"><button className="btn btn-outline-light">REGISTER</button></Link>
-                    </div>
-                </div>
-            </nav>
+            <Navbar></Navbar>
 
             {/* Registration Form */}
             <div className="login-container d-flex justify-content-center align-items-center bg-dark">

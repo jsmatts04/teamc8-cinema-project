@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css'
 import filmLogo from './Images/film.png'
+import Navbar from './Navbar.js'
 
 
 function Login() {
@@ -12,22 +13,7 @@ function Login() {
     return (
         <div>
             {/* Navigation Bar */}
-            <nav className="navbar" style={navbarStyle}>
-                <div className="container-fluid">
-                    <Link to="/">
-                        <img
-                            src={filmLogo}
-                            alt="Film Logo"
-                            height="50" // Customize the height as needed
-                            className="navbar-brand"
-                        />
-                    </Link>
-                    <div className="d-flex">
-                        <Link to="/"><button className="btn btn-outline-light mx-2">LOGIN</button></Link>
-                        <Link to="/Register"><button className="btn btn-outline-light">REGISTER</button></Link>
-                    </div>
-                </div>
-            </nav>
+            <Navbar></Navbar>
 
             {/* Login Form */}
             <div className="login-container d-flex justify-content-center align-items-center vh-100 bg-dark">
@@ -52,7 +38,7 @@ function Login() {
                             <button className="btn btn-primary" style={{ backgroundColor: '#C84B31' }}>Sign in</button>
                         </div>
                         <p className="text-right">
-                            Already Registered?<Link to='/Register' className='ms-2'>Sign up</Link>
+                            Don't have an account?<Link to='/Register' className='ms-2'>Sign up</Link>
                         </p>
                     </form>
                 </div>
