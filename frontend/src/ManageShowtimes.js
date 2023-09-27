@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css'
 import { Button, Container, Card } from 'react-bootstrap';
 import AdminNavbar from './AdminNavbar'
+import './css/AdminHomePage.css'
+import './css/ManageShowtimes.css'
 
 const ManageShowtimes = () => {
   const gradientBackground = {
@@ -11,7 +13,7 @@ const ManageShowtimes = () => {
   return (
     <div className="admin-page" style={gradientBackground}>
       <AdminNavbar></AdminNavbar>
-      <Container className="admin-content">
+      <Container className="admin-content-MS">
         <div className="d-flex justify-content-center align-items-center h-100" style={{ marginTop: '250px',  }}>
           <Card>
             <Card.Body>

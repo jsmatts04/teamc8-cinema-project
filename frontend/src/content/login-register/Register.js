@@ -1,13 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../App.css';
+import './App.css';
 
 function Register() {
+    const gradientBackground = {
+        background: 'linear-gradient(135deg, #9F025E 0%, #F9C929 100%)',
+    };
+
+    const shadowStyle = {
+        boxShadow: '0px 0px 50px rgba(0, 0, 0, 1.0)', // Adjust values as needed
+      };
+
     return (
         <div>
+
             {/* Registration Form */}
-            <div className="login-container d-flex justify-content-center align-items-center bg-dark">
-                <div className="login-form-container p-4 rounded bg-white" style={{ maxWidth: '400px' }}>
+            <div className="login-container d-flex justify-content-center align-items-center" style={gradientBackground}>
+                <div className="login-form-container p-4 rounded bg-white" style={shadowStyle}>
                     <form>
                         <h3 className="mb-4">Create Movie Account</h3>
                         <div className="mb-3">

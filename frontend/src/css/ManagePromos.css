@@ -1,0 +1,8 @@
+.admin-content-MP {
+    width: 80%;
+    max-width: 400px; /* Adjust the max-width as needed */
+    text-align: center;
+    padding: 10px;
+    position: relative; top: -105px;
+    border: none;
+  }
