@@ -3,6 +3,7 @@ import './App.css'
 import { Navbar, Nav, Button, Container, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar'
+import './css/AdminHomePage.css'
 
 const AdminHomePage = () => {
   const gradientBackground = {
@@ -13,7 +14,7 @@ const AdminHomePage = () => {
     <div className="admin-page" style={gradientBackground}>
       <AdminNavbar></AdminNavbar>
       <Container className="admin-content">
-        <div className="d-flex justify-content-center align-items-center h-100" style={{ marginTop: '250px',  }}>
+        <div className="d-flex justify-content-center align-items-center h-100" style={{ marginTop: '220px',  }}>
           <Card>
             <Card.Body>
               <h1 className="text-center mb-4">Welcome, Admin</h1>

@@ -14,7 +14,7 @@ function Register() {
     };
 
     const shadowStyle = {
-        boxShadow: '0px 0px 50px rgba(0, 0, 0, 1.0)', // Adjust values as needed
+        boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.7)', // Adjust values as needed
       };
 
     return (
