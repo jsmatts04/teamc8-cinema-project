@@ -1,29 +1,28 @@
 import React from 'react';
 import './App.css'
-import { Navbar, Nav, Button, Container, Row, Col } from 'react-bootstrap';
+import { Navbar, Nav, Button, Container, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import AdminNavbar from './AdminNavbar'
 
 const AdminHomePage = () => {
+  const gradientBackground = {
+    background: 'linear-gradient(135deg, #000000 0%, #923CB5 100%)',
+};
+
   return (
-    <div className="admin-page">
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand>Admin Page</Navbar.Brand>
-        <Nav className="ml-auto">
-          <Nav.Link href="#">Manage Movies</Nav.Link>
-          <Nav.Link href="#">Manage Showtimes</Nav.Link>
-          <Nav.Link href="#">Manage Promos</Nav.Link>
-        </Nav>
-      </Navbar>
+    <div className="admin-page" style={gradientBackground}>
+      <AdminNavbar></AdminNavbar>
       <Container className="admin-content">
-        <Row>
-          <Col md={{ span: 6, offset: 3 }}>
-            <div className="welcome-text">
-              <h1>Welcome, Admin</h1>
-              <Button variant="primary">Manage Movies</Button>
-              <Button variant="primary">Manage Showtimes</Button>
-              <Button variant="primary">Manage Promos</Button>
-            </div>
-          </Col>
-        </Row>
+        <div className="d-flex justify-content-center align-items-center h-100" style={{ marginTop: '250px',  }}>
+          <Card>
+            <Card.Body>
+              <h1 className="text-center mb-4">Welcome, Admin</h1>
+              <Link to="/ManageMovies"><Button variant="primary" className="d-block mx-auto mb-4">Manage Movies</Button></Link>
+              <Link to="/ManageShowtimes"><Button variant="primary" className="d-block mx-auto mb-4">Manage Showtimes</Button></Link>
+              <Link to="/ManagePromos"><Button variant="primary" className="d-block mx-auto mb-4">Manage Promos</Button></Link>
+            </Card.Body>
+          </Card>
+        </div>
       </Container>
     </div>
   );

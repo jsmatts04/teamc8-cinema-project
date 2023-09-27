@@ -1,14 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css'
-import filmLogo from './Images/film.png'
 import Navbar from './Navbar.js'
 
 function Login() {
-    const navbarStyle = {
-        background: 'linear-gradient(180deg, #4D4855 0%, #000000 100%)',
-    };
-
     const gradientBackground = {
         background: 'linear-gradient(135deg, #9F025E 0%, #F9C929 100%)',
     };

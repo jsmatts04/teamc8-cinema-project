@@ -7,7 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import VerifyAccount from './VerifyAccount'
 import AdminHomePage from './AdminHomePage'
 import ManageMovies from './ManageMovies'
-
+import ManageShowtimes from './ManageShowtimes'
+import ManagePromos from './ManagePromos'
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Route path='/VerifyAccount' element={<VerifyAccount />}></Route>
           <Route path='/AdminHomePage' element={<AdminHomePage />}></Route>
           <Route path='/ManageMovies' element={<ManageMovies />}></Route>
+          <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>
+          <Route path='/ManagePromos' element={<ManagePromos />}></Route>
       </Routes>
     </BrowserRouter>
   )

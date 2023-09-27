@@ -1,14 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css'
-import filmLogo from './Images/film.png'
+import Navbar from './Navbar';
 
 
 function VerifyAccount() {
-  const navbarStyle = {
-    background: 'linear-gradient(180deg, #4D4855 0%, #000000 100%)',
-};
-
 const gradientBackground = {
     background: 'linear-gradient(135deg, #9F025E 0%, #F9C929 100%)',
 };
@@ -19,24 +15,11 @@ const shadowStyle = {
 
   return (
     <div>
-      {/* Navigation Bar */}
-      <nav className="navbar" style={navbarStyle}>
-        <div className="container-fluid">
-        <Link to="/">
-            <img
-              src={filmLogo}
-              alt="Film Logo"
-              height="50" // Customize the height as needed
-              className="navbar-brand"
-            />
-          </Link>
-          <div className="d-flex">
-          <Link to="/"><button className="btn btn-outline-light mx-2">LOGIN</button></Link>
-          <Link to="/Register"><button className="btn btn-outline-light">REGISTER</button></Link>
-          </div>
-        </div>
-      </nav>
 
+      
+      {/* Navigation Bar */}
+      <Navbar></Navbar>
+      
       {/* Login Form */}
       <div className="login-container d-flex justify-content-center align-items-center vh-100" style={gradientBackground}>
         <div className="login-form-container p-5 rounded bg-white"style={shadowStyle}>
