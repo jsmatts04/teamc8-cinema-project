@@ -26,3 +26,9 @@ h1.title {
     color:white;
     font-size:30px;
 }
+
+.disabled {
+    pointer-events: none;
+    background-color: rgb(57, 57, 57);
+    border-color: white;
+}

@@ -1,6 +1,7 @@
 import YoutubeEmbed from "./YoutubeEmbed";
 import { useState } from "react";
 import '../../css/movie select/SelectAgeCategory.css'
+import { Link } from 'react-router-dom'
 
 function SelectAgeCategory() {
     let [numberTotalTickets, setNumberTotalTickets] = useState(5);
@@ -17,7 +18,7 @@ function SelectAgeCategory() {
     }
 
     function handleDecrementAdult() {
-        if (numberAdultTickets != 0) {
+        if (numberAdultTickets !== 0) {
             numberAdultTickets = numberAdultTickets - 1;
             setNumberTotalTickets(numberTotalTickets+1);
         }
@@ -33,7 +34,7 @@ function SelectAgeCategory() {
     }
 
     function handleDecrementChild() {
-        if (numberChildTickets != 0) {
+        if (numberChildTickets !== 0) {
             numberChildTickets = numberChildTickets - 1;
             setNumberTotalTickets(numberTotalTickets+1);
         }
@@ -49,11 +50,19 @@ function SelectAgeCategory() {
     }
 
     function handleDecrementSenior() {
-        if (numberSeniorTickets != 0) {
+        if (numberSeniorTickets !== 0) {
             numberSeniorTickets = numberSeniorTickets - 1;
             setNumberTotalTickets(numberTotalTickets+1);
         }
         setNumberSeniorTickets(numberSeniorTickets);
+    }
+
+    function disableLink(path) {
+        if (numberTotalTickets===0) {
+            return <Link className='confirm-button active' numAdult={numberAdultTickets} numChild={numberChildTickets} numSenior={numberSeniorTickets} to={path}>Checkout</Link>
+        } else {
+            return <Link className='confirm-button disabled' to=' '>Checkout</Link>
+        }
     }
 
     return (
@@ -71,6 +80,7 @@ function SelectAgeCategory() {
             <h3 className='ticket-title'>{numberSeniorTickets} Senior Tickets</h3>
             <button id='plus-minus' onClick={handleIncrementSenior}>+</button>
             </div>
+            {disableLink('/Checkout')}
         </>
     );
 }
