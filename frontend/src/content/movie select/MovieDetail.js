@@ -6,13 +6,15 @@ import YoutubeEmbed from './YoutubeEmbed';
 import SelectShowTime from './SelectShowTime';
 import { Link } from 'react-router-dom';
 
-function MovieDetail ({movie}) {
-
+function MovieDetail () {
+    let movie = {
+        title: 'Oppenheimer'
+    }
     return (
         <>
         <YoutubeEmbed/>
         <h1 id='detailsTitle'>OPPENHEIMER</h1>
-        <Link to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
+        <Link to={'/Movie/SelectShowtime'} state={{movie:{movie}}} element={<SelectShowTime/>}>
         <Button className='book-button-details'>BOOK TICKETS</Button>
         </Link>
         <div className="book-ticket-content">

@@ -1,0 +1,26 @@
+.checkoutGrid {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: white;
+}
+
+.two-column-grid {
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.summary-movie-details {
+    display:grid;
+    grid-template-columns: 1fr 2fr;
+    height:fit-content;
+    font-size: 20px;
+}
+
+.summary-movie-details h4,p {
+    margin: 0 0 0 0;
+}
+

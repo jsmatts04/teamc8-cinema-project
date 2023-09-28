@@ -15,7 +15,9 @@ function SelectSeats() {
     const location = useLocation();
     const {time} = location.state.time;
     const {date} = location.state.date.startDate;
-    let dateString = () => (JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11))
+    const movieTitle = location.state.movie.movie.title;
+    const movie = location.state.movie.movie;
+    let dateString = JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11);
     
     const handleChange = (event) => {
         if (event.target.checked) {
@@ -35,14 +37,14 @@ function SelectSeats() {
 
     function disabledButton(path) {
         if (count !== 0)
-            return <Link ticketCount={count} className='confirm-button active' to={path}>Continue</Link>;
+            return <Link state={{time:{time}, date:{dateString}, movie:{movie}}} ticketCount={count} className='confirm-button active' to={path}>Continue</Link>;
         return <Link className='confirm-button disabled' to=' '>Continue</Link>;
     }
 
     return (
         <>
             <YoutubeEmbed/>
-            <h1 id='date-time'>{dateString()}, {time}</h1>
+            <h1 id='date-time'>{movieTitle}, {dateString}, {time}</h1>
             <h2 id='screen'>Screen</h2>
             <div id='cinema-layout'>
             {printSeatList()}
