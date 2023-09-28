@@ -1,13 +1,18 @@
 import YoutubeEmbed from "./YoutubeEmbed";
 import { useState } from "react";
 import '../../css/movie select/SelectAgeCategory.css'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
 
 function SelectAgeCategory() {
     let [numberTotalTickets, setNumberTotalTickets] = useState(5);
     let [numberAdultTickets, setNumberAdultTickets] = useState(0);
     let [numberChildTickets, setNumberChildTickets] = useState(0);
     let [numberSeniorTickets, setNumberSeniorTickets] = useState(0);
+
+    const location = useLocation();
+    const {time} = location.state.time;
+    const dateString = location.state.date.dateString;
+    const movie = location.state.movie.movie;
 
     function handleIncrementAdult() {
         if (numberTotalTickets > 0) {
@@ -59,7 +64,7 @@ function SelectAgeCategory() {
 
     function disableLink(path) {
         if (numberTotalTickets===0) {
-            return <Link className='confirm-button active' numAdult={numberAdultTickets} numChild={numberChildTickets} numSenior={numberSeniorTickets} to={path}>Checkout</Link>
+            return <Link className='confirm-button active' state={{ time:{time}, date:{dateString}, movie:{movie}, numAdult:{numberAdultTickets},numChild:{numberChildTickets},numSenior:{numberSeniorTickets} }} to={path}>Checkout</Link>
         } else {
             return <Link className='confirm-button disabled' to=' '>Checkout</Link>
         }

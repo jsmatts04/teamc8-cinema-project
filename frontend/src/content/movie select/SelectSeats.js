@@ -14,7 +14,10 @@ function SelectSeats() {
     const location = useLocation();
     const {time} = location.state.time;
     const {date} = location.state.date.startDate;
-    let dateString = () => (JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11))
+    const movieTitle = location.state.movie.movie.title;
+    const movie = location.state.movie.movie;
+
+    let dateString = JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11);
     
     function printSeatList(){
         let list = 
@@ -26,12 +29,12 @@ function SelectSeats() {
     return (
         <>
             <YoutubeEmbed/>
-            <h1 id='date-time'>{dateString()}, {time}</h1>
+            <h1 id='date-time'>{movieTitle}, {dateString}, {time}</h1>
             <h2 id='screen'>Screen</h2>
             <div id='cinema-layout'>
             {printSeatList()}
             </div>
-            <Link className='confirm-button' to='/movie/ShowTime/Seats'>Continue</Link>
+            <Link state={{time:{time}, date:{dateString}, movie:{movie}}} className='confirm-button' to='/movie/ShowTime/Seats'>Continue</Link>
         </>
     );
 }
