@@ -1,14 +1,43 @@
 #cinema-layout {
     display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    margin-left: 5%;
-    margin-right: 5%;
-    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
     row-gap: 10px;
     column-gap: 3px;
+    width:fit-content;
+    margin-bottom: 40px;
+    background-color: #ffffff50;
+    padding: 70px 20px 20px 20px;
+    margin-top: -60px;
+}
+
+#screen {
+    color: black;
+    padding: 2px 150px 2px 150px;
+    width: fit-content;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#date-time {
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
 }
 
 #cinema-layout .form-check-input{
     height: 40px;
     width: 40px;
+}
+
+.confirm-button {
+    padding: 10px 20px 10px 20px;
+    background-color: orangered;
+    color: white;
+    text-decoration: none;
+    border: 2px orange solid;
+    border-radius: 4px;
+    position:absolute;
+    right: 50px;
 }

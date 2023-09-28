@@ -11,6 +11,7 @@ import ManageShowtimes from '../ManageShowtimes'
 import ManagePromos from '../ManagePromos'
 import SelectShowTime from './movie select/SelectShowTime'
 import SelectSeats from './movie select/SelectSeats'
+import SelectAgeCategory from './movie select/SelectAgeCategory'
 
 function Content() {
     return (
@@ -25,7 +26,8 @@ function Content() {
         <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>
         <Route path='/ManagePromos' element={<ManagePromos />}></Route>
         <Route path='/Movie/SelectShowTime' element={<SelectShowTime/>}></Route>
-        <Route path='/movie/SelectShowtime/Showtime' element={<SelectSeats/>}></Route>
+        <Route path='/movie/ShowTime/' element={<SelectSeats/>}></Route>
+        <Route path='/movie/ShowTime/Seats' element={<SelectAgeCategory/>}></Route>
       </Routes>
     );
 }

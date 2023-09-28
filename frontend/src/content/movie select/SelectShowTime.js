@@ -16,7 +16,7 @@ function SelectShowTime() {
         <DatePicker minDate={new Date()} selected={startDate} onChange={(date) => setStartDate(date)} />
         <div id='time-grid'>
         {timeList.map((time) => (
-            <Link state={{ date:{startDate}, time:{time} }} id='timeLink' to='/movie/SelectShowtime/Showtime'>{time}</Link>
+            <Link state={{ date:{startDate}, time:{time} }} id='timeLink' to='/movie/Showtime'>{time}</Link>
         ))}
         </div>
 
