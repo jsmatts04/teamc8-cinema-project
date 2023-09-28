@@ -33,9 +33,8 @@ public class Movie {
 
     private short review_score;
 
-    @Lob
-    @Column(columnDefinition = "bytea")
-    private byte[] trailer_picture;
+    @Column(length = 512)
+    private String trailer_picture;
 
     private String trailer_video;
 
@@ -116,11 +115,11 @@ public class Movie {
         this.review_score = review_score;
     }
 
-    public byte[] getTrailer_picture() {
+    public String getTrailer_picture() {
         return trailer_picture;
     }
 
-    public void setTrailer_picture(byte[] trailer_picture) {
+    public void setTrailer_picture(String trailer_picture) {
         this.trailer_picture = trailer_picture;
     }
 
@@ -167,7 +166,7 @@ public class Movie {
                 ", director='" + director + '\'' +
                 ", producer='" + producer + '\'' +
                 ", review_score=" + review_score +
-                ", trailer_picture=" + Arrays.toString(trailer_picture) +
+                ", trailer_picture=" + trailer_picture +
                 ", trailer_video='" + trailer_video + '\'' +
                 ", film_rating='" + film_rating + '\'' +
                 ", release_date=" + release_date +
