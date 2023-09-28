@@ -37,7 +37,7 @@ function SelectSeats() {
 
     function disabledButton(path) {
         if (count !== 0)
-            return <Link state={{time:{time}, date:{dateString}, movie:{movie}}} ticketCount={count} className='confirm-button active' to={path}>Continue</Link>;
+            return <Link state={{time:{time}, date:{dateString}, movie:{movie}, count:{count}}}  className='confirm-button active' to={path}>Continue</Link>;
         return <Link className='confirm-button disabled' to=' '>Continue</Link>;
     }
 
