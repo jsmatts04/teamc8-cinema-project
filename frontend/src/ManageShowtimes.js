@@ -1,26 +1,33 @@
 import React from 'react';
 import './App.css'
+import { Link } from 'react-router-dom';
 import { Button, Container, Card } from 'react-bootstrap';
 import AdminNavbar from './AdminNavbar'
 import './css/AdminHomePage.css'
 import './css/ManageShowtimes.css'
 
+
 const ManageShowtimes = () => {
   const gradientBackground = {
-    background: 'linear-gradient(135deg, #000000 0%, #923CB5 100%)',
+    background: 'linear-gradient(180deg, #000000 0%, #923CB5 100%)',
+};
+const cardStyle = {
+  backgroundColor: 'white', // Set the background color to white
+  boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',
 };
 
   return (
     <div className="admin-page" style={gradientBackground}>
-      <AdminNavbar></AdminNavbar>
       <Container className="admin-content-MS">
         <div className="d-flex justify-content-center align-items-center h-100" style={{ marginTop: '250px',  }}>
-          <Card>
+        <Card style={cardStyle}>
             <Card.Body>
               <h1 className="text-center mb-4">Manage Showtimes</h1>
               <Button variant="primary" className="d-block mx-auto mb-4">Add Showtimes</Button>
               <Button variant="primary" className="d-block mx-auto mb-4">Edit Showtimes</Button>
               <Button variant="primary" className="d-block mx-auto mb-4">Delete Showtimes</Button>
+              <Link to="/AdminHomePage"><Button variant="primary" className="d-block mx-auto mb-4">Back</Button></Link>
+              
             </Card.Body>
           </Card>
         </div>

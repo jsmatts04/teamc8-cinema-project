@@ -5,7 +5,7 @@ import '../../App.css'
 
 function VerifyAccount() {
 const gradientBackground = {
-    background: 'linear-gradient(135deg, #9F025E 0%, #F9C929 100%)',
+  background: 'linear-gradient(180deg, #12100E 0%, #2B4162 100%)',
 };
 
 const shadowStyle = {
@@ -18,7 +18,7 @@ const shadowStyle = {
       <div className="login-container d-flex justify-content-center align-items-center vh-100" style={gradientBackground}>
         <div className="login-form-container p-5 rounded bg-white"style={shadowStyle}>
           <form>
-            <h3>Verify Account</h3>
+          <h3 style={{ color: 'black' }}>Verify Account</h3>
             <div className="mb-2">
               <label htmlFor="email">Enter Verification Code</label>
               <input type="email" placeholder="Enter Code" className="form-control" />
