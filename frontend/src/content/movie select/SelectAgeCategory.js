@@ -4,15 +4,16 @@ import '../../css/movie select/SelectAgeCategory.css'
 import { Link, useLocation } from 'react-router-dom';
 
 function SelectAgeCategory() {
-    let [numberTotalTickets, setNumberTotalTickets] = useState(5);
-    let [numberAdultTickets, setNumberAdultTickets] = useState(0);
-    let [numberChildTickets, setNumberChildTickets] = useState(0);
-    let [numberSeniorTickets, setNumberSeniorTickets] = useState(0);
-
     const location = useLocation();
     const {time} = location.state.time;
     const dateString = location.state.date.dateString;
     const movie = location.state.movie.movie;
+    const {count} = location.state.count;
+
+    let [numberTotalTickets, setNumberTotalTickets] = useState(count);
+    let [numberAdultTickets, setNumberAdultTickets] = useState(0);
+    let [numberChildTickets, setNumberChildTickets] = useState(0);
+    let [numberSeniorTickets, setNumberSeniorTickets] = useState(0);
 
     function handleIncrementAdult() {
         if (numberTotalTickets > 0) {
