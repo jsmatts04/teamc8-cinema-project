@@ -6,6 +6,7 @@ import '../../css/movie select/SelectSeats.css'
 import { Link } from 'react-router-dom';
 
 function SelectSeats() {
+    let[count,setCount] = useState(0);
     const[seatList, setSeatList] = useState([0,0,0,0,0,0,0,0,0,0,
                                              0,0,0,0,0,0,0,0,0,0,
                                              0,0,0,0,0,0,0,0,0,0,
@@ -16,11 +17,26 @@ function SelectSeats() {
     const {date} = location.state.date.startDate;
     let dateString = () => (JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11))
     
+    const handleChange = (event) => {
+        if (event.target.checked) {
+            count = count + 1;
+        } else {
+            count = count - 1;
+        }
+        setCount(count);
+    }
+
     function printSeatList(){
         let list = 
-        seatList.map((e) => (((e === 0) && <Form.Check aria-label='option 1'/>)||( 
-        (e === 1) && <Form.Check disabled aria-label='option 1'/>)));
+        seatList.map((e) => (((e === 0) && <Form.Check onChange={handleChange} aria-label='option 1'/>)||( 
+        (e === 1) && <Form.Check  disabled aria-label='option 1'/>)));
         return list;
+    }
+
+    function disabledButton(path) {
+        if (count !== 0)
+            return <Link ticketCount={count} className='confirm-button active' to={path}>Continue</Link>;
+        return <Link className='confirm-button disabled' to=' '>Continue</Link>;
     }
 
     return (
@@ -31,7 +47,9 @@ function SelectSeats() {
             <div id='cinema-layout'>
             {printSeatList()}
             </div>
-            <Link className='confirm-button' to='/movie/ShowTime/Seats'>Continue</Link>
+            <div id='footer'>
+            <h3 id='ticket-count'> {count} Ticket(s) Selected</h3>{disabledButton('/movie/ShowTime/Seats')}
+            </div>
         </>
     );
 }
