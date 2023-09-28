@@ -3,7 +3,7 @@
 }
 
 #root {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -59,7 +59,7 @@ h3.mb-4 {
   color: rgb(0, 0, 0);
 }
 
-.login-container{
+.login-container {
   height: 100%;
 }
 

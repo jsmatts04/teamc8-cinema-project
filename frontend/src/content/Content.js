@@ -9,6 +9,8 @@ import AdminHomePage from '../AdminHomePage'
 import ManageMovies from '../ManageMovies'
 import ManageShowtimes from '../ManageShowtimes'
 import ManagePromos from '../ManagePromos'
+import SelectShowTime from './movie select/SelectShowTime'
+import SelectSeats from './movie select/SelectSeats'
 
 function Content() {
     return (
@@ -22,6 +24,8 @@ function Content() {
         <Route path='/ManageMovies' element={<ManageMovies />}></Route>
         <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>
         <Route path='/ManagePromos' element={<ManagePromos />}></Route>
+        <Route path='/Movie/SelectShowTime' element={<SelectShowTime/>}></Route>
+        <Route path='/movie/SelectShowtime/Showtime' element={<SelectSeats/>}></Route>
       </Routes>
     );
 }

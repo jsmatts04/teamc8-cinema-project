@@ -2,14 +2,19 @@ import tomatoImage from '../../Images/FreshTomato.png';
 import imdbImage from '../../Images/imdb.png';
 import Button from 'react-bootstrap/Button';
 import '../../css/movie select/MovieDetail.css'
+import YoutubeEmbed from './YoutubeEmbed';
+import SelectShowTime from './SelectShowTime';
+import { Link } from 'react-router-dom';
 
 function MovieDetail ({movie}) {
 
     return (
         <>
-        <iframe id='ytvid' width="100%" height="600px" src="https://www.youtube.com/embed/bK6ldnjE3Y0?si=YA7uQVgOiR9I_Yxm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <YoutubeEmbed/>
         <h1 id='detailsTitle'>OPPENHEIMER</h1>
+        <Link to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
         <Button className='book-button-details'>BOOK TICKETS</Button>
+        </Link>
         <div className="book-ticket-content">
             <div className="left-column-detail">
                 <div id='ratingsDiv'>

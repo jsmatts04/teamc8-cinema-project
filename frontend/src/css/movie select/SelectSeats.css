@@ -1,0 +1,14 @@
+#cinema-layout {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: fit-content;
+    row-gap: 10px;
+    column-gap: 3px;
+}
+
+#cinema-layout .form-check-input{
+    height: 40px;
+    width: 40px;
+}
