@@ -1,9 +1,7 @@
 package com.teamc8.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 
-import java.util.Arrays;
 import java.util.Date;
 
 @Entity
@@ -44,12 +42,8 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private Date release_date;
 
-    @Enumerated(EnumType.STRING)
-    private MovieStatus status;
-
-    public enum MovieStatus {
-        CURRENT, UPCOMING, ARCHIVED
-    }
+    @Column(length = 20)
+    private String status;
 
     public int getId() {
         return id;
@@ -147,11 +141,11 @@ public class Movie {
         this.release_date = release_date;
     }
 
-    public MovieStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(MovieStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
