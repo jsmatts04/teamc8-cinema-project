@@ -1,13 +1,21 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import NavBar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import filmLogo from '../Images/film.png'
 
-function Navbar() {
+function Navbar(props) {
+    let {loginState,setLoggedIn} = props;
+    const navigate = useNavigate();
+
+    function logout() {
+        setLoggedIn(false);
+        navigate('/');
+    }
+
     return (
         <NavBar style={{ background: '#3B3B3C' }} data-bs-theme="dark" expand="lg" className="bg=body-tertiary">
             <Container>
@@ -35,7 +43,7 @@ function Navbar() {
                                 <Button type="submit" variant="outline-light">Search</Button>
                             </InputGroup>
                         </Form>
-                        <div style={{ color: 'white', marginTop: 'auto', marginBottom: 'auto' }}>
+                        {!loginState && <div style={{ color: 'white', marginTop: 'auto', marginBottom: 'auto' }}>
                             <Link to="/Login">
                                 <Button variant="primary" className="mx-2">LOGIN</Button>
                             </Link>
@@ -43,7 +51,8 @@ function Navbar() {
                             <Link to="/Register">
                                 <Button variant="primary" className="mx-2">REGISTER</Button>
                             </Link>
-                        </div>
+                        </div>}
+                        {loginState && <Button onClick={logout} variant="primary" className="mx-2">LOGOUT</Button>}
                     </Nav>
                 </NavBar.Collapse>
             </Container>

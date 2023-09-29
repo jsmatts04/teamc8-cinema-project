@@ -1,14 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import '../../App.css';
+import Button from 'react-bootstrap/Button';
 
-function Login() {
+function Login(props) {
+  let {setLoggedIn,setAdminState} = props;
   const gradientBackground = {
     background: 'linear-gradient(180deg, #12100E 0%, #2B4162 100%)',
   };
   const shadowStyle = {
     boxShadow: '0px 0px 50px rgba(0, 0, 0, 1.0)', // Adjust values as needed
   };
+  const navigate = useNavigate();
+  
+  function login() {
+    setLoggedIn(true);
+    navigate('/');
+  }
+  function loginAdmin() {
+    setLoggedIn(true);
+    setAdminState(true);
+    navigate('/adminhomepage');
+  }
+
 
   return (
     <div>
@@ -32,9 +46,13 @@ function Login() {
               </label>
             </div>
             <div className="d-grid">
-              <button className="btn btn-primary" style={{ backgroundColor: '#C84B31' }}>
+              <Button onClick={login} style={{ backgroundColor: '#C84B31',marginBottom: 5 }}>
                 Sign in
-              </button>
+              </Button>
+
+              <Button onClick={loginAdmin} style={{ backgroundColor: '#C84B31' }}>
+                Sign in (as Admin)
+              </Button>
             </div>
             <p className="text-right">
               Don't have an account?<Link to='/Register' className='ms-2'>Sign up</Link>

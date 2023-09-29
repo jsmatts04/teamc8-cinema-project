@@ -17,14 +17,15 @@ import OrderConfirmation from './checkout/OrderConfirmation'
 import OrderHistory from '../OrderHistory'
 import EditProfile from '../EditProfile'
 
-function Content() {
+function Content(props) {
+  const {loginState, setAdminState, setLoggedIn } = props;
     return (
       <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/Login' element={<Login />}></Route>
+        <Route path='/' element={<Home loginState = {loginState}/>}></Route>
+        <Route path='/Login' element={<Login setLoggedIn = {setLoggedIn} setAdminState = {setAdminState}/>}></Route>
         <Route path='/Register' element={<Register />}></Route>
         <Route path='/VerifyAccount' element={<VerifyAccount />}></Route>
-        <Route path='/Movie' element={<MovieDetail/>}></Route>
+        <Route path='/Movie' element={<MovieDetail loginState = {loginState}/>}></Route>
         <Route path='/AdminHomePage' element={<AdminHomePage />}></Route>
         <Route path='/ManageMovies' element={<ManageMovies />}></Route>
         <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>

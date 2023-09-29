@@ -4,7 +4,8 @@ import {useState} from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-function MovieCarousel () {
+function MovieCarousel (props) {
+    let {loginState} = props;
     const [backendData, setBackendData] = useState([{}]);
     const [movieListCurrent, setMovieListCurrent] = useState([]);
     const [movieListUpcoming, setMovieListUpcoming] = useState([]);
@@ -27,13 +28,13 @@ function MovieCarousel () {
     };
 
     return (
-        <Carousel infinite responsive={responsive}>
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
+        <Carousel infinite responsive={responsive} draggable={false}>
+            <MovieCard loginState={loginState}/>
+            <MovieCard loginState={loginState}/>
+            <MovieCard loginState={loginState}/>
+            <MovieCard loginState={loginState}/>
+            <MovieCard loginState={loginState}/>
+            <MovieCard loginState={loginState}/>
 
             {(typeof backendData === 'undefined') ? (
                 <p>Loading...</p>

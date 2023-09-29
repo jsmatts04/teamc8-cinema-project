@@ -5,7 +5,8 @@ import MovieDetail from '../movie select/MovieDetail';
 import { Link } from 'react-router-dom';
 import SelectShowTime from '../movie select/SelectShowTime';
 
-function MovieCard() {
+function MovieCard(props) {
+    let {loginState} = props;
     let movie = {
         title:'Oppenheimer'
     }
@@ -21,9 +22,12 @@ function MovieCard() {
                 <Card.Title style={{color:'orange'}}>PG</Card.Title>
             </Card.Body>
         </Card>
-        <Link to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
+        {loginState && <Link state={{movie:{movie}}} to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
         <Button className='book-button'>BOOK TICKETS</Button>
-        </Link>
+        </Link>}
+        {!loginState && <Link to={'/Login'}>
+        <Button className='book-button'>BOOK TICKETS</Button>
+        </Link>}
         </div>
     );
 }
