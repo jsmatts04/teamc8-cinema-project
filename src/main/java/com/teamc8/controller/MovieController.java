@@ -29,12 +29,6 @@ public class MovieController {
         return movieService.getMovieById(id);
     }
 
-//    @GetMapping(path = "/cover")
-//    public List<MovieCover> getAllMovieTitleAndPicture() {
-//        return movieService.getAllMovieTitleAndPicture();
-//    }
-
-
     @GetMapping(path = "/cover")
     public List<MovieCover> getAllMovieCoversForStatus(@RequestParam String status) {
         return movieService.getAllMovieCoversForStatus(status);
