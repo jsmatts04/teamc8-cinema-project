@@ -16,6 +16,7 @@ import Checkout from './checkout/Checkout'
 import OrderConfirmation from './checkout/OrderConfirmation'
 import OrderHistory from '../OrderHistory'
 import EditProfile from '../EditProfile'
+import AddMovie from '../AddMovie'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn } = props;
@@ -37,6 +38,7 @@ function Content(props) {
         <Route path='/Order/Confirmation' element={<OrderConfirmation/>}></Route>
         <Route path='/OrderHistory' element={<OrderHistory/>}></Route>
         <Route path='/EditProfile' element={<EditProfile/>}></Route>
+        <Route path='/AddMovie' element={<AddMovie/>}></Route>
       </Routes>
     );
 }

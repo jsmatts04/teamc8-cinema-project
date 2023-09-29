@@ -22,9 +22,9 @@ const cardStyle = {
         <Card style={cardStyle}>
             <Card.Body>
               <h1 className="text-center mb-4">Manage Movies</h1>
-              <Button variant="primary" className="d-block mx-auto mb-4">Add Movies</Button>
+              <Link to='/AddMovie'><Button variant="primary" className="d-block mx-auto mb-4">Add Movies</Button></Link>
               <Button variant="primary" className="d-block mx-auto mb-4">Edit Movies</Button>
-              <Button variant="primary" className="d-block mx-auto mb-4">Delete Movies</Button>
+              <Button variant="primary" className="d-block mx-auto mb-4">Archive Movies</Button>
               <Link to="/AdminHomePage"><Button variant="primary" className="d-block mx-auto mb-4">Back</Button></Link>
             </Card.Body>
           </Card>

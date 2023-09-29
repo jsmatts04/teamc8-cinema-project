@@ -7,7 +7,7 @@ function EditProfile() {
   const [phoneNumber, setPhoneNumber] = useState('');
 
   // State for addresses and payment methods
-  const [addresses, setAddresses] = useState(['1234 Elm Street, Apt 2A, City, State, 12345']);
+  const [addresses, setAddresses] = useState(['200 D. W. Brooks Drive, Athens, GA 30602']);
   const [paymentMethods, setPaymentMethods] = useState(['Amex Card ending in ....1234']);
 
   // Functions to handle form input changes
