@@ -1,0 +1,23 @@
+#confirmation-card {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0px 20px 0 20px;
+}
+
+.center-text {
+    text-align: center;
+}
+
+h2.center-text {
+    margin-top: 40px;
+    font-size: 50px;
+    color:rgb(2, 114, 2);
+}
+
+h3.center-text {
+    font-size: 2%;
+}
+
+.two-column-grid#order-summary {
+    margin-top: 10px;
+}

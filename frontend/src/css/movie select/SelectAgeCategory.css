@@ -32,3 +32,8 @@ h1.title {
     background-color: rgb(57, 57, 57);
     border-color: white;
 }
+
+.center-button {
+    margin-top: 40px;
+    text-align: center;
+}

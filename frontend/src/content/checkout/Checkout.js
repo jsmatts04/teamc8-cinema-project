@@ -34,15 +34,15 @@ function Checkout() {
     let printSenior = () => {return <><div>Senior Tickets ({numSenior})</div><div>$ {totalSeniorPrice.toFixed(2)}</div></>}
 
     let orderInfo = {
-        numAdult: {numAdult},
-        numChild: {numChild},
-        numSenior: {numSenior},
-        totalAdultPrice: {totalAdultPrice},
-        totalChildPrice: {totalChildPrice},
-        totalSeniorPrice: {totalSeniorPrice},
-        totalFees: {totalFees},
-        totalTaxes: {totalTaxes},
-        totalPrice: {totalPrice}
+        numAdult,
+        numChild,
+        numSenior,
+        totalAdultPrice,
+        totalChildPrice,
+        totalSeniorPrice,
+        totalFees,
+        totalTaxes,
+        totalPrice
     }
 
     return (
@@ -89,10 +89,11 @@ function Checkout() {
             </Form.Group>
         </Form>
         <div className='order-summary'>
+            <hr/>
             <div className='summary-movie-details'>
-            <h4>Movie</h4> <p>{movieTitle}</p>
-            <h4>Date</h4> <p>{dateString}</p>
-            <h4>Time</h4> <p>{time}</p>
+            <h4>Movie</h4> <h4>{movieTitle}</h4>
+            <h4>Date</h4> <h4>{dateString}</h4>
+            <h4>Time</h4> <h4>{time}</h4>
             </div>
             <hr/>
             TICKETS
@@ -101,7 +102,6 @@ function Checkout() {
             {numChild !== 0 && printChild()}
             {numSenior !== 0 && printSenior()}
             </div>
-            <br/>
             FEES
             <div className='two-column-grid'>
             <div>Online Fees</div><div>$ {totalFees.toFixed(2)}</div>
@@ -114,9 +114,12 @@ function Checkout() {
             <div className='two-column-grid'>
             <div>TOTAL</div><div>$ {totalPrice.toFixed(2)}</div>
             </div>
+            <div className='center-button'>
+            <Link state={{movie:{movieTitle}, date:{dateString}, time:{time}, orderInfo:{orderInfo}}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
+            </div>
         </div>
         </div>
-        <Link state={{movie:{movieTitle}, date:{dateString}, time:{time}, orderInfo:{orderInfo}}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
+        
         </>
     );
 }

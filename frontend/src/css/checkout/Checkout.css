@@ -1,26 +1,37 @@
 .checkoutGrid {
     display:grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 5%;
-    margin-left: 5%;
-    margin-right: 5%;
+    justify-items: center;
+    column-gap: 1ch;
+    margin-left: 10%;
+    margin-right: 10%;
     color: white;
+    margin-top: 20px;
 }
 
 .two-column-grid {
     color: white;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    column-gap: 50px;
+    margin-bottom: 10px;
 }
 
 .summary-movie-details {
     display:grid;
     grid-template-columns: 1fr 2fr;
     height:fit-content;
-    font-size: 20px;
 }
 
-.summary-movie-details h4,p {
-    margin: 0 0 0 0;
+.summary-movie-details h4 {
+    font-size: 18px;
 }
 
+.order-summary {
+    width:fit-content;
+    align-self:start;
+}
+
+.order-summary hr {
+    margin: 5px 0px 5px 0px;
+}
