@@ -46,9 +46,9 @@ function OrderConfirmation () {
                 {numAdult !== 0 && printAdult()}
                 {numChild !== 0 && printChild()}
                 {numSenior !== 0 && printSenior()}
-                <div>Online Fees</div> <div>${totalFees.toFixed(2)}</div>
-                <div>Taxes</div> <div>${totalTaxes.toFixed(2)}</div>
-                <div>TOTAL</div> <div>${totalPrice.toFixed(2)}</div>
+                <div>Online Fees</div> <div>$ {totalFees.toFixed(2)}</div>
+                <div>Taxes</div> <div>$ {totalTaxes.toFixed(2)}</div>
+                <div>Total</div> <div>$ {totalPrice.toFixed(2)}</div>
                 </div>
             </div>
             <div className="center-text">
