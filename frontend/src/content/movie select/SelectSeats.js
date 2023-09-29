@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import '../../css/movie select/SelectSeats.css'
 import { Link } from 'react-router-dom';
+import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 
 function SelectSeats() {
     let[count,setCount] = useState(0);
@@ -28,10 +29,19 @@ function SelectSeats() {
         setCount(count);
     }
 
+    function returnSeat(num) {
+        let newNum = num;
+        if (num%10 != 0) 
+            newNum = (num)%10;
+        else 
+            newNum = 10
+        return String.fromCharCode('A'.charCodeAt(0) + (num - 1)/10) + newNum;
+    }
+
     function printSeatList(){
         let list = 
-        seatList.map((e) => (((e === 0) && <Form.Check onChange={handleChange} aria-label='option 1'/>)||( 
-        (e === 1) && <Form.Check  disabled aria-label='option 1'/>)));
+        seatList.map((e,index) => (((e === 0) && <ToggleButton onChange={handleChange} id={'toggle-check' + index} type="checkbox" value={returnSeat(index+1)}>{returnSeat(index+1)}</ToggleButton>)||( 
+        (e === 1) && <ToggleButton value={returnSeat(index+1)} disabled >{returnSeat(index+1)}</ToggleButton>)));
         return list;
     }
 
@@ -46,9 +56,9 @@ function SelectSeats() {
             <YoutubeEmbed/>
             <h1 id='date-time'>{movieTitle}, {dateString}, {time}</h1>
             <h2 id='screen'>Screen</h2>
-            <div id='cinema-layout'>
-            {printSeatList()}
-            </div>
+            <ToggleButtonGroup type="checkbox" id='cinema-layout'>
+                {printSeatList()}
+            </ToggleButtonGroup>
             <div id='footer'>
             <h3 id='ticket-count'> {count} Ticket(s) Selected</h3>{disabledButton('/movie/ShowTime/Seats')}
             </div>

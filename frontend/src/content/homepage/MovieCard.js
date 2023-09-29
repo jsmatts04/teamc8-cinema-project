@@ -23,10 +23,10 @@ function MovieCard(props) {
             </Card.Body>
         </Card>
         {loginState && <Link state={{movie:{movie}}} to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
-        <Button className='book-button'>BOOK TICKETS</Button>
+        <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         {!loginState && <Link to={'/Login'}>
-        <Button className='book-button'>BOOK TICKETS</Button>
+        <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         </div>
     );

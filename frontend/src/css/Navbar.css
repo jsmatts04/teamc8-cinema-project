@@ -1,0 +1,19 @@
+.nav-buttons a{
+    text-decoration: none;
+    color: white;
+    padding: 8px 10px 8px 10px;
+    background-color: orangered;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.nav-buttons a:hover {
+    background-color: rgb(221, 59, 0);
+    transition: 0.35s;
+}
+
+.nav-buttons a:active {
+    background-color: rgb(182, 49, 0);
+    transition: 0.35s;
+}

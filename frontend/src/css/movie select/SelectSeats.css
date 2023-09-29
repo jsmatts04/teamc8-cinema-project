@@ -36,8 +36,18 @@
     background-color: orangered;
     color: white;
     text-decoration: none;
-    border: 2px orange solid;
+    border: 2px rgb(174, 81, 0) solid;
     border-radius: 4px;
+}
+
+.confirm-button:hover {
+    transition: 0.4s;
+    background-color: rgb(205, 55, 0);
+}
+
+.confirm-button:active {
+    transition: 0.2s;
+    background-color: rgb(165, 44, 0);
 }
 
 #footer {

@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import filmLogo from '../Images/film.png'
+import '../css/Navbar.css'
 
 function Navbar(props) {
     let {loginState,setLoggedIn} = props;
@@ -52,7 +53,11 @@ function Navbar(props) {
                                 <Button variant="primary" className="mx-2">REGISTER</Button>
                             </Link>
                         </div>}
-                        {loginState && <Button onClick={logout} variant="primary" className="mx-2">LOGOUT</Button>}
+                        {loginState && <div className='nav-buttons'>
+                        <Link to='/OrderHistory' variant="primary" className="mx-2">Order History</Link>
+                        <Link to='/EditProfile' variant="primary" className="mx-2">My Profile</Link>
+                        <Button onClick={logout} variant="primary" className="mx-2">LOGOUT</Button>
+                        </div>}
                     </Nav>
                 </NavBar.Collapse>
             </Container>

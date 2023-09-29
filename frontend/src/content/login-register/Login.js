@@ -12,7 +12,7 @@ function Login(props) {
     boxShadow: '0px 0px 50px rgba(0, 0, 0, 1.0)', // Adjust values as needed
   };
   const navigate = useNavigate();
-  
+
   function login() {
     setLoggedIn(true);
     navigate('/');
@@ -46,11 +46,11 @@ function Login(props) {
               </label>
             </div>
             <div className="d-grid">
-              <Button onClick={login} style={{ backgroundColor: '#C84B31',marginBottom: 5 }}>
+              <Button onClick={login} style={{ marginBottom: 5 }}>
                 Sign in
               </Button>
 
-              <Button onClick={loginAdmin} style={{ backgroundColor: '#C84B31' }}>
+              <Button onClick={loginAdmin}>
                 Sign in (as Admin)
               </Button>
             </div>

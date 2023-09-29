@@ -17,11 +17,13 @@ function SelectShowTime() {
     return (
         <>
         <YoutubeEmbed/>
+        <div className='body-margin'>
         <div className="showtime-title"><h2>{movieTitle}</h2> <DatePicker minDate={new Date()} selected={startDate} onChange={(date) => setStartDate(date)} /></div>
         <div id='time-grid'>
         {timeList.map((time) => (
             <Link state={{ date:{startDate}, time:{time}, movie:{movie} }} id='timeLink' to='/movie/Showtime'>{time}</Link>
         ))}
+        </div>
         </div>
 
         </>

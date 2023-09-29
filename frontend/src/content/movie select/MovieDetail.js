@@ -16,10 +16,10 @@ function MovieDetail (props) {
         <YoutubeEmbed/>
         <h1 id='detailsTitle'>OPPENHEIMER</h1>
         {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:{movie}}} element={<SelectShowTime/>}>
-        <Button className='book-button-details'>BOOK TICKETS</Button>
+        <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
         </Link>}
         {!loginState && <Link to={'/Login'}>
-        <Button className='book-button-details'>BOOK TICKETS</Button>
+        <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
         </Link>}
         <div className="book-ticket-content">
             <div className="left-column-detail">
