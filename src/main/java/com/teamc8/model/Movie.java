@@ -29,18 +29,21 @@ public class Movie {
     @Column(length = 100)
     private String producer;
 
-    private short review_score;
+    @Column(name = "review_score")
+    private short reviewScore;
 
-    @Column(length = 512)
-    private String trailer_picture;
+    @Column(length = 512, name = "trailerPicture")
+    private String trailerPicture;
 
-    private String trailer_video;
+    @Column(name = "trailer_video")
+    private String trailerVideo;
 
-    @Column(length = 10)
-    private String film_rating;
+    @Column(length = 10, name = "film_rating")
+    private String filmRating;
 
+    @Column(name = "release_date")
     @Temporal(TemporalType.DATE)
-    private Date release_date;
+    private Date releaseDate;
 
     @Column(length = 20)
     private String status;
@@ -101,44 +104,44 @@ public class Movie {
         this.producer = producer;
     }
 
-    public short getReview_score() {
-        return review_score;
+    public short getReviewScore() {
+        return reviewScore;
     }
 
-    public void setReview_score(short review_score) {
-        this.review_score = review_score;
+    public void setReviewScore(short review_score) {
+        this.reviewScore = review_score;
     }
 
-    public String getTrailer_picture() {
-        return trailer_picture;
+    public String getTrailerPicture() {
+        return trailerPicture;
     }
 
-    public void setTrailer_picture(String trailer_picture) {
-        this.trailer_picture = trailer_picture;
+    public void setTrailerPicture(String trailer_picture) {
+        this.trailerPicture = trailer_picture;
     }
 
-    public String getTrailer_video() {
-        return trailer_video;
+    public String getTrailerVideo() {
+        return trailerVideo;
     }
 
-    public void setTrailer_video(String trailer_video) {
-        this.trailer_video = trailer_video;
+    public void setTrailerVideo(String trailer_video) {
+        this.trailerVideo = trailer_video;
     }
 
-    public String getFilm_rating() {
-        return film_rating;
+    public String getFilmRating() {
+        return filmRating;
     }
 
-    public void setFilm_rating(String film_rating) {
-        this.film_rating = film_rating;
+    public void setFilmRating(String film_rating) {
+        this.filmRating = film_rating;
     }
 
-    public Date getRelease_date() {
-        return release_date;
+    public Date getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setRelease_date(Date release_date) {
-        this.release_date = release_date;
+    public void setReleaseDate(Date release_date) {
+        this.releaseDate = release_date;
     }
 
     public String getStatus() {
@@ -159,11 +162,11 @@ public class Movie {
                 ", cast='" + cast + '\'' +
                 ", director='" + director + '\'' +
                 ", producer='" + producer + '\'' +
-                ", review_score=" + review_score +
-                ", trailer_picture=" + trailer_picture +
-                ", trailer_video='" + trailer_video + '\'' +
-                ", film_rating='" + film_rating + '\'' +
-                ", release_date=" + release_date +
+                ", review_score=" + reviewScore +
+                ", trailer_picture=" + trailerPicture +
+                ", trailer_video='" + trailerVideo + '\'' +
+                ", film_rating='" + filmRating + '\'' +
+                ", release_date=" + releaseDate +
                 ", status=" + status +
                 '}';
     }

@@ -1,9 +1,11 @@
 package com.teamc8.controller;
 
 import com.teamc8.model.Movie;
+import com.teamc8.model.MovieCover;
 import com.teamc8.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +25,15 @@ public class MovieController {
     @GetMapping
     public List<Movie> getMovies() {
         return movieService.getMovies();
+    }
+
+    @GetMapping(path = "/{id}")
+    public Movie getMovieById(@PathVariable("id") int id) {
+        return movieService.getMovieById(id);
+    }
+
+    @GetMapping(path = "/cover")
+    public List<MovieCover> getAllMovieTitleAndPicture() {
+        return movieService.getAllMovieTitleAndPicture();
     }
 }
