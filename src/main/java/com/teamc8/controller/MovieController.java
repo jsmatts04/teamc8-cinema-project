@@ -4,10 +4,7 @@ import com.teamc8.model.Movie;
 import com.teamc8.model.MovieCover;
 import com.teamc8.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,8 +29,15 @@ public class MovieController {
         return movieService.getMovieById(id);
     }
 
+//    @GetMapping(path = "/cover")
+//    public List<MovieCover> getAllMovieTitleAndPicture() {
+//        return movieService.getAllMovieTitleAndPicture();
+//    }
+
+
     @GetMapping(path = "/cover")
-    public List<MovieCover> getAllMovieTitleAndPicture() {
-        return movieService.getAllMovieTitleAndPicture();
+    public List<MovieCover> getAllMovieCoversForStatus(@RequestParam String status) {
+        return movieService.getAllMovieCoversForStatus(status);
     }
+
 }

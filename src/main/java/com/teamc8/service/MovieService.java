@@ -32,4 +32,8 @@ public class MovieService {
     public List<MovieCover> getAllMovieTitleAndPicture() {
         return movieRepository.findAllProjectedBy();
     }
+
+    public List<MovieCover> getAllMovieCoversForStatus(String status) {
+        return movieRepository.findAllProjectedByStatus(status);
+    }
 }
