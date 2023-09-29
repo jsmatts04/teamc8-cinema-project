@@ -1,13 +1,18 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/movie';
+const api = axios.create({
+    baseURL: 'http://localhost:8080/api/movie'
+});
 
 // Returns data for a specific movie specified by id 
-export const fetchMovieById = (id) => axios.get(`${API_URL}/${id}`);
-// Returns a list of all currently showing movies (their title and picture only)
-export const fetchMovieCoversCurrent = () => axios.get(`${API_URL}/cover?status=CURRENT`);
-// Returns a list of all upcoming movies (title and picture only)
-export const fetchMovieCoversUpcoming = () => axios.get(`${API_URL}/cover?status=UPCOMING`);
+// { id, title, synopsis, category, cast, director, producer, 
+//   reviewScore, trailerPicture, trailerVideo, filmRating, releaseDate, status }
+export const fetchMovieById = (id) => api.get(`/${id}`);
+
+// Returns a list of movies by status (CURRENT, UPCOMING)
+// Each movie object contains { id, title, trailerPicture, releaseDate }
+export const fetchMovieCoversCurrent = () => api.get('/cover?status=CURRENT');
+export const fetchMovieCoversUpcoming = () => api.get('/cover?status=UPCOMING');
 
 // export const fetchMovieCoversUpcoming = () => axios.get(`${API_URL}/cover`, {params:{status: "UPCOMING"}});
 // export const fetchMovieCoversCurrent = () => axios.get(`${API_URL}/cover`, {params:{status: "CURRENT"}});

@@ -17,3 +17,5 @@ class Movie {
         this.releaseDate = releaseDate;
     }
 }
+
+export default Movie;
