@@ -19,6 +19,7 @@ function Checkout() {
     const {time} = location.state.time;
     const dateString = location.state.date.dateString;
     const movieTitle = location.state.movie.movie.title;
+    const seats = location.state.seats;
 
     let totalAdultPrice = numAdult * adultPrice;
     let totalChildPrice = numChild * childPrice; 
@@ -43,6 +44,15 @@ function Checkout() {
         totalFees,
         totalTaxes,
         totalPrice
+    }
+
+    function printSeats() {
+        let string = "";
+        for (let i = 0; i < seats.length - 1; i++) {
+            string += seats[i] + ', ';
+        }
+        string += seats[seats.length - 1];
+        return string;
     }
 
     return (
@@ -101,6 +111,7 @@ function Checkout() {
             {numAdult !== 0 && printAdult()}
             {numChild !== 0 && printChild()}
             {numSenior !== 0 && printSenior()}
+            Seats {printSeats()}
             </div>
             FEES
             <div className='two-column-grid'>
@@ -115,7 +126,7 @@ function Checkout() {
             <div>TOTAL</div><div>$ {totalPrice.toFixed(2)}</div>
             </div>
             <div className='center-button'>
-            <Link state={{movie:{movieTitle}, date:{dateString}, time:{time}, orderInfo:{orderInfo}}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
+            <Link state={{movie:{movieTitle}, date:{dateString}, time:{time}, orderInfo:{orderInfo}, seats}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
             </div>
         </div>
         </div>

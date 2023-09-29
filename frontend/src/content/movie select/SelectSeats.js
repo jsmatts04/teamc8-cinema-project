@@ -1,5 +1,5 @@
 import YoutubeEmbed from "./YoutubeEmbed";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import '../../css/movie select/SelectSeats.css'
@@ -8,6 +8,8 @@ import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 
 function SelectSeats() {
     let[count,setCount] = useState(0);
+
+    let[selectedList, setSelectedList] = useState([]);
     const[seatList, setSeatList] = useState([0,0,0,0,0,0,0,0,0,0,
                                              0,0,0,0,0,0,0,0,0,0,
                                              0,0,0,0,0,0,0,0,0,0,
@@ -19,12 +21,16 @@ function SelectSeats() {
     const movieTitle = location.state.movie.movie.title;
     const movie = location.state.movie.movie;
     let dateString = JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11);
-    
+
     const handleChange = (event) => {
         if (event.target.checked) {
             count = count + 1;
+            const newList = selectedList.concat(event.target.value)
+            setSelectedList(newList);
         } else {
             count = count - 1;
+            const newList = selectedList.filter((item) => item !== event.target.value);
+            setSelectedList(newList);
         }
         setCount(count);
     }
@@ -38,23 +44,23 @@ function SelectSeats() {
         return String.fromCharCode('A'.charCodeAt(0) + (num - 1)/10) + newNum;
     }
 
-    function printSeatList(){
+    function printSeatList() {
         let list = 
         seatList.map((e,index) => (((e === 0) && <ToggleButton onChange={handleChange} id={'toggle-check' + index} type="checkbox" value={returnSeat(index+1)}>{returnSeat(index+1)}</ToggleButton>)||( 
-        (e === 1) && <ToggleButton value={returnSeat(index+1)} disabled >{returnSeat(index+1)}</ToggleButton>)));
+        (e === 1) && <ToggleButton variant='dark' value={returnSeat(index+1)} disabled >{returnSeat(index+1)}</ToggleButton>)));
         return list;
     }
 
     function disabledButton(path) {
         if (count !== 0)
-            return <Link state={{time:{time}, date:{dateString}, movie:{movie}, count:{count}}}  className='confirm-button active' to={path}>Continue</Link>;
+            return <Link state={{time:{time}, date:{dateString}, movie:{movie}, count:{count}, selectedList}}  className='confirm-button active' to={path}>Continue</Link>;
         return <Link className='confirm-button disabled' to=' '>Continue</Link>;
     }
 
     return (
         <>
             <YoutubeEmbed/>
-            <h1 id='date-time'>{movieTitle}, {dateString}, {time}</h1>
+            <h1 id='date-time'>{movieTitle} | {dateString} | {time}</h1>
             <h2 id='screen'>Screen</h2>
             <ToggleButtonGroup type="checkbox" id='cinema-layout'>
                 {printSeatList()}

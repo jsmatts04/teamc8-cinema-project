@@ -10,11 +10,22 @@ function OrderConfirmation () {
     const {time} = location.state.time;
     const dateString = location.state.date.dateString;
     const movieTitle = location.state.movie.movieTitle;
+    const seats = location.state.seats;
     let orderInfo = location.state.orderInfo.orderInfo;
     let {numAdult,numChild,numSenior,totalAdultPrice,totalChildPrice,totalSeniorPrice,totalFees,totalTaxes,totalPrice} = orderInfo;
     let printAdult = () => {return <><div>Adult Tickets ({numAdult})</div><div>$ {totalAdultPrice.toFixed(2)}</div></>}    
     let printChild = () => {return <><div>Child Tickets ({numChild})</div><div>$ {totalChildPrice.toFixed(2)}</div></>}
     let printSenior = () => {return <><div>Senior Tickets ({numSenior})</div><div>$ {totalSeniorPrice.toFixed(2)}</div></>}
+    
+    function printSeats() {
+        let string = "";
+        for (let i = 0; i < seats.length - 1; i++) {
+            string += seats[i] + ', ';
+        }
+        string += seats[seats.length - 1];
+        return string;
+    }
+
     return(
         <>
         <YoutubeEmbed/>
@@ -29,7 +40,7 @@ function OrderConfirmation () {
                 <h4>Date:</h4> <h4>{dateString}</h4>
                 <h4>Time:</h4> <h4>{time}</h4>
                 <h4>Theatre:</h4> <h4>Hall 3</h4>
-                <h4>Seats:</h4> <h4>C1, C2</h4>
+                <h4>Seats:</h4> <h4>{printSeats()}</h4>
                 </div>
                 <div className='two-column-grid'>
                 {numAdult !== 0 && printAdult()}

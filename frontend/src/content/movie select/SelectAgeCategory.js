@@ -9,6 +9,7 @@ function SelectAgeCategory() {
     const dateString = location.state.date.dateString;
     const movie = location.state.movie.movie;
     const {count} = location.state.count;
+    const seats = location.state.selectedList;
 
     let [numberTotalTickets, setNumberTotalTickets] = useState(count);
     let [numberAdultTickets, setNumberAdultTickets] = useState(0);
@@ -65,7 +66,7 @@ function SelectAgeCategory() {
 
     function disableLink(path) {
         if (numberTotalTickets===0) {
-            return <Link className='confirm-button active' state={{ time:{time}, date:{dateString}, movie:{movie}, numAdult:{numberAdultTickets},numChild:{numberChildTickets},numSenior:{numberSeniorTickets} }} to={path}>Continue</Link>
+            return <Link className='confirm-button active' state={{ time:{time}, date:{dateString}, movie:{movie}, numAdult:{numberAdultTickets},numChild:{numberChildTickets},numSenior:{numberSeniorTickets},seats }} to={path}>Continue</Link>
         } else {
             return <Link className='confirm-button disabled' to=' '>Checkout</Link>
         }
