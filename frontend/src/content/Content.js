@@ -14,6 +14,8 @@ import SelectSeats from './movie select/SelectSeats'
 import SelectAgeCategory from './movie select/SelectAgeCategory'
 import Checkout from './checkout/Checkout'
 import OrderConfirmation from './checkout/OrderConfirmation'
+import OrderHistory from '../OrderHistory'
+import EditProfile from '../EditProfile'
 
 function Content() {
     return (
@@ -32,6 +34,8 @@ function Content() {
         <Route path='/movie/ShowTime/Seats' element={<SelectAgeCategory/>}></Route>
         <Route path='/Checkout' element={<Checkout/>}></Route> 
         <Route path='/Order/Confirmation' element={<OrderConfirmation/>}></Route>
+        <Route path='/OrderHistory' element={<OrderHistory/>}></Route>
+        <Route path='/EditProfile' element={<EditProfile/>}></Route>
       </Routes>
     );
 }

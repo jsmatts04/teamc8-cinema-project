@@ -14,7 +14,7 @@ function Register() {
     return (
         <>
             {/* Registration Form */}
-            <div className="login-container d-flex justify-content-center align-items-center" style={gradientBackground}>
+            <div className="login-container d-flex justify-content-center align-items-center">
                 <div className="login-form-container p-4 rounded bg-white" style={shadowStyle}>
                     <form>
                         <h3 className="mb-4">Create Movie Account</h3>
