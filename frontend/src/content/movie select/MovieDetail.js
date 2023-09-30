@@ -1,12 +1,11 @@
 import tomatoImage from '../../Images/FreshTomato.png';
-import imdbImage from '../../Images/imdb.png';
 import Button from 'react-bootstrap/Button';
 import '../../css/movie select/MovieDetail.css'
 import YoutubeEmbed from './YoutubeEmbed';
 import SelectShowTime from './SelectShowTime';
 import { Link, useLocation } from 'react-router-dom';
 import { fetchMovieById } from '../../api/MovieApi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function MovieDetail (props) {
     let {loginState} = props;
@@ -14,9 +13,12 @@ function MovieDetail (props) {
     const location = useLocation();
     let movie = location.state.movie.movie;
 
-    fetchMovieById(movie.id).then(
-        response => setFullMovie(response.data)
-    )
+    useEffect(() => {
+        fetchMovieById(movie.id).then(
+            response => setFullMovie(response.data)
+        )
+    }, [movie.id]);
+    
     
     function printActors() {
         let string = fullMovie.actors

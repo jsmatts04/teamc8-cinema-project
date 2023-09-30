@@ -15,6 +15,7 @@ export const fetchMovieCoversCurrent = () => api.get('/cover?status=CURRENT');
 export const fetchMovieCoversUpcoming = () => api.get('/cover?status=UPCOMING');
 
 // Post the provided movie into the database
+// Make sure to convert movie to object with toJSON()
 export const postMovie = (movie) => api.post('/add', movie);
 
 // export const fetchMovieCoversUpcoming = () => axios.get(`${API_URL}/cover`, {params:{status: "UPCOMING"}});
