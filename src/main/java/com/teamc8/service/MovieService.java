@@ -36,4 +36,11 @@ public class MovieService {
     public List<MovieCover> getAllMovieCoversForStatus(String status) {
         return movieRepository.findAllProjectedByStatus(status);
     }
+
+    public Movie addMovie(Movie movie) {
+        Movie savedMovie = movieRepository.save(movie);
+        return movieRepository.save(movie);
+    }
+
+
 }

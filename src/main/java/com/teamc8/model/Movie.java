@@ -21,7 +21,7 @@ public class Movie {
     @Column(length = 50)
     private String category;
 
-    private String cast;
+    private String actors;
 
     @Column(length = 100)
     private String director;
@@ -80,12 +80,12 @@ public class Movie {
         this.category = category;
     }
 
-    public String getCast() {
-        return cast;
+    public String getActors() {
+        return actors;
     }
 
-    public void setCast(String cast) {
-        this.cast = cast;
+    public void setActors(String actors) {
+        this.actors = actors;
     }
 
     public String getDirector() {
@@ -159,7 +159,7 @@ public class Movie {
                 ", title='" + title + '\'' +
                 ", synopsis='" + synopsis + '\'' +
                 ", category='" + category + '\'' +
-                ", cast='" + cast + '\'' +
+                ", cast='" + actors + '\'' +
                 ", director='" + director + '\'' +
                 ", producer='" + producer + '\'' +
                 ", review_score=" + reviewScore +

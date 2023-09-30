@@ -34,4 +34,13 @@ public class MovieController {
         return movieService.getAllMovieCoversForStatus(status);
     }
 
+    @PostMapping(path = "/add")
+    public Movie addMovie(@RequestBody Movie movie) {
+        return movieService.addMovie(movie);
+    }
+
+
+
+
+
 }
