@@ -14,5 +14,8 @@ export const fetchMovieById = (id) => api.get(`/${id}`);
 export const fetchMovieCoversCurrent = () => api.get('/cover?status=CURRENT');
 export const fetchMovieCoversUpcoming = () => api.get('/cover?status=UPCOMING');
 
+// Post the provided movie into the database
+export const postMovie = (movie) => api.post('/add', movie);
+
 // export const fetchMovieCoversUpcoming = () => axios.get(`${API_URL}/cover`, {params:{status: "UPCOMING"}});
 // export const fetchMovieCoversCurrent = () => axios.get(`${API_URL}/cover`, {params:{status: "CURRENT"}});
