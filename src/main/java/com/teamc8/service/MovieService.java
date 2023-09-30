@@ -29,6 +29,8 @@ public class MovieService {
                 new MovieNotFoundException("Movie by id " + id + "does not exist in database."));
     }
 
+    //method that gets id of movie
+
     public List<MovieCover> getAllMovieTitleAndPicture() {
         return movieRepository.findAllProjectedBy();
     }
@@ -37,10 +39,25 @@ public class MovieService {
         return movieRepository.findAllProjectedByStatus(status);
     }
 
+    //check if movie exists
+    public boolean movieExists(int id) {
+        return movieRepository.existsById(id);
+    }
+
     public Movie addMovie(Movie movie) {
         Movie savedMovie = movieRepository.save(movie);
         return movieRepository.save(movie);
     }
 
+    //delete movie
+    public boolean deleteMovie(int id) {
+        movieRepository.deleteById(id);
+        return true;
+    }
+
+    //update movie
+    public Movie updateMovie(Movie movie) {
+        return movieRepository.save(movie);
+    }
 
 }
