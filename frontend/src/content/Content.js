@@ -19,10 +19,10 @@ import EditProfile from '../EditProfile'
 import AddMovie from '../AddMovie'
 
 function Content(props) {
-  const {loginState, setAdminState, setLoggedIn } = props;
+  const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
     return (
       <Routes>
-        <Route path='/' element={<Home loginState = {loginState}/>}></Route>
+        <Route path='/' element={<Home loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
         <Route path='/Login' element={<Login setLoggedIn = {setLoggedIn} setAdminState = {setAdminState}/>}></Route>
         <Route path='/Register' element={<Register />}></Route>
         <Route path='/VerifyAccount' element={<VerifyAccount />}></Route>

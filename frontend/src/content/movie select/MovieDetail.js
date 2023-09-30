@@ -4,51 +4,73 @@ import Button from 'react-bootstrap/Button';
 import '../../css/movie select/MovieDetail.css'
 import YoutubeEmbed from './YoutubeEmbed';
 import SelectShowTime from './SelectShowTime';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { fetchMovieById } from '../../api/MovieApi';
+import { useState } from 'react';
 
 function MovieDetail (props) {
     let {loginState} = props;
-    let movie = {
-        title: 'Oppenheimer'
+    const [fullMovie, setFullMovie] = useState();
+    const location = useLocation();
+    let {movie} = location.state.movie;
+
+    fetchMovieById(movie.id).then(
+        response => setFullMovie(response.data)
+    )
+    
+    function printActors() {
+        let string = fullMovie.actors
+        let array = string.split("\n")
+        return array;
     }
+
+    function printProducers() {
+        let string = fullMovie.producer
+        let array = string.split(",")
+        return array;
+    }
+
     return (
         <>
-        <YoutubeEmbed/>
-        <h1 id='detailsTitle'>OPPENHEIMER</h1>
-        {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:{movie}}} element={<SelectShowTime/>}>
-        <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
-        </Link>}
-        {!loginState && <Link to={'/Login'}>
-        <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
-        </Link>}
-        <div className="book-ticket-content">
-            <div className="left-column-detail">
-                <div id='ratingsDiv'>
-                    <img src={tomatoImage} alt='rotten tomatoes logo' className='ratings-logo'/><h2>98%</h2>
-                    <img src={imdbImage} alt='IMDb logo' className='ratings-logo'/><h2>98%</h2>
-                </div>
+        {(typeof fullMovie === 'undefined') ? (
+            <p>Loading...</p>
+        ) : (
+            <>
+            <YoutubeEmbed video={fullMovie.trailerVideo} thumbnail={fullMovie.trailerPicture}/>
+            <h1 id='detailsTitle'>{fullMovie.title}</h1>
+            {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:{movie}}} element={<SelectShowTime/>}>
+            <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
+            </Link>}
+            {!loginState && <Link to={'/Login'}>
+            <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
+            </Link>}
+            <div className="book-ticket-content">
+                <div className="left-column-detail">
                 <ul>
-                    <li>Director: Christopher Nolan</li>
-                    <li>Genre: Suspense/Thriller</li>
-                    <li>Release Date: July 21, 2023</li>
-                    <li>Movie Duration: 3 hours</li>
+                    <li>Director: {fullMovie.director}</li>
+                    <li>Genre: {fullMovie.category}</li>
+                    <li>Release Date: {fullMovie.releaseDate}</li>
                 </ul>
-                <h3>Cast and Crew</h3>
+                {fullMovie.reviewScore !== 0 && <><div id='ratingsDiv'>
+                    <img src={tomatoImage} alt='rotten tomatoes logo' className='ratings-logo'/><div><h3>{fullMovie.reviewScore}%</h3><h2>Rotten Tomatoes</h2></div>
+                </div></>}
+                <h3>Cast</h3>
                 <ul>
-                    <li>Cillian Murphy </li>
-                    <li>Emily Blunt</li>
-                    <li>David Krumholtz</li>
-                    <li>Aiden Ehrenrich</li>
-                    <li>Josh Harnett</li>
-                    <li>Robert Downey Jr.</li>
+                    {printActors().map((e)=>(<li>{e}</li>))}
+                </ul>
+                <h3>Crew</h3>
+                <ul>
+                    {printProducers().map((e)=>(<li>{e}</li>))}
                 </ul>
             </div>
             <div className="right-column-detail">
                 <p>
-                Written and directed by Christopher Nolan, Oppenheimer is an IMAX®-shot epic thriller that thrusts audiences into the pulse-pounding paradox of the enigmatic man who must risk destroying the world in order to save it. The film stars Cillian Murphy as J. Robert Oppenheimer and Emily Blunt as his wife, biologist and botanist Katherine “Kitty” Oppenheimer. Oscar® winner Matt Damon portrays General Leslie Groves Jr., director of the Manhattan Project, and Robert Downey, Jr. plays Lewis Strauss, a founding commissioner of the U.S. Atomic Energy Commission. Academy Award® nominee Florence Pugh plays psychiatrist Jean Tatlock, Benny Safdie plays theoretical physicist Edward Teller, Michael Angarano plays Robert Serber and Josh Hartnett plays pioneering American nuclear scientist Ernest Lawrence. Oppenheimer also stars Oscar® winner Rami Malek and reunites Nolan with eight-time Oscar® nominated actor, writer and filmmaker Kenneth Branagh. The cast includes Dane DeHaan (Valerian and the City of a Thousand Planets), Dylan Arnold (Halloween franchise), David Krumholtz (The Ballad of Buster Scruggs), Alden Ehrenreich (Solo: A Star Wars Story) and Matthew Modine (The Dark Knight Rises). The film is based on the Pulitzer Prize-winning book American Prometheus: The Triumph and Tragedy of J. Robert Oppenheimer by Kai Bird and the late Martin J. Sherwin. The film is produced by Emma Thomas, Atlas Entertainment’s Charles Roven and Christopher Nolan. Oppenheimer is filmed in a combination of IMAX® 65mm and 65mm large-format film photography including, for the first time ever, sections in IMAX® black and white analogue photography. Nolan’s films, including Tenet, Dunkirk, Interstellar, Inception and The Dark Knight trilogy, have earned more than $5 billion at the global box office and have been awarded 11 Oscars and 36 nominations, including two Best Picture nominations.
+                    {fullMovie.synopsis}
                 </p>
             </div>
         </div>
+            </>
+        )}
         </>
     );
 }

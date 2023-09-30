@@ -9,7 +9,7 @@
 }
 
 .ratings-logo {
-    height: 60px;
+    height: 50px;
 }
 
 .book-button-details {
@@ -39,16 +39,24 @@
 }
 
 #ratingsDiv {
-    margin-left: 40px;
     width: 100%;
     display:inline-flex;
-    justify-content:space-evenly;
-    margin-bottom: 60px;
+    column-gap: 15px;
+    margin-bottom: 10px;
 }
 
 #ratingsDiv h2 {
-    font-size: 50px;
+    font-size: 20px;
     color: white;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+#ratingsDiv h3 {
+    color: yellow;
+    font-size: 34px;
+    font-weight: bolder;
+    margin-bottom: 0px;
 }
 
 h3 {
@@ -63,5 +71,5 @@ li {
 }
 
 p {
-    font-size: 20px;
+    font-size: 25px;
 }

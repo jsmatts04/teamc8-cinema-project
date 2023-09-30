@@ -1,50 +1,76 @@
 import MovieCard from './MovieCard';
 import '../../css/homepage/MovieCarousel.css';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { fetchMovieById, fetchMovieCoversCurrent, fetchMovieCoversUpcoming } from '../../api/MovieApi';
 
-function MovieCarousel (props) {
-    let {loginState} = props;
-    const [backendData, setBackendData] = useState([{}]);
-    const [movieListCurrent, setMovieListCurrent] = useState([]);
-    const [movieListUpcoming, setMovieListUpcoming] = useState([]);
-    const url = '';
+function MovieCarousel({type, loginState, searchQuery}) {
+  const [movieListCurrent, setMovieListCurrent] = useState();
+  const [movieListUpcoming, setMovieListUpcoming] = useState();
 
-    
-    const responsive = {
-        desktop: {
-          breakpoint: { max: 3000, min: 1500 },
-          items: 6
-        },
-        tablet: {
-          breakpoint: { max: 1500, min: 600 },
-          items: 3
-        },
-        mobile: {
-          breakpoint: { max: 600, min: 0 },
-          items: 1
-        }
-    };
+  useEffect(() => {
+    fetchMovieCoversCurrent().then(
+      response => setMovieListCurrent(response.data)
+    )
+  },[])
+  useEffect(() => {
+    fetchMovieCoversUpcoming().then(
+      response => setMovieListUpcoming(response.data)
+    )
+  },[])
 
-    return (
-        <Carousel infinite responsive={responsive} draggable={false}>
-            <MovieCard loginState={loginState}/>
-            <MovieCard loginState={loginState}/>
-            <MovieCard loginState={loginState}/>
-            <MovieCard loginState={loginState}/>
-            <MovieCard loginState={loginState}/>
-            <MovieCard loginState={loginState}/>
+  function handleSearch(list) {
+    let filteredList =
+        list.filter(
+            (movie) => {
+                if (movie.title !== undefined)
+                    return movie.title.toLowerCase().includes(searchQuery.toLowerCase())  
+                else 
+                    return true;
+            }    
+        )
+    return filteredList;
+}
 
-            {(typeof backendData === 'undefined') ? (
-                <p>Loading...</p>
-            ) : (
-                backendData.map((movie) => (
-                    <MovieCard movie={movie} />
-            ))
-            )}
-        </Carousel>
-    );
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1500 },
+      items: 6
+    },
+    tablet: {
+      breakpoint: { max: 1500, min: 600 },
+      items: 3
+    },
+    mobile: {
+      breakpoint: { max: 600, min: 0 },
+      items: 1
+    }
+  };
+
+  const placeHolder = <div style={{ opacity:'0' }}></div> 
+
+  function displayList() {
+    if (type === 'current') {
+      return (typeof movieListCurrent === 'undefined') ? (
+        <p>Loading...</p>
+      ) : (
+        handleSearch(movieListCurrent).map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
+      )
+    } else {
+      return (typeof movieListUpcoming === 'undefined') ? (
+        <p>Loading...</p>
+      ) : (
+        handleSearch(movieListUpcoming).map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
+      )
+    }
+  }
+
+  return (
+    <Carousel infinite responsive={responsive} draggable={false}>
+      {displayList()}
+    </Carousel>
+  );
 }
 
 export default MovieCarousel;

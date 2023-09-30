@@ -9,12 +9,14 @@ import Content from './content/Content'
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setAdminState] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <Router>      
       {!isAdmin && <Navbar
         loginState={isLoggedIn}
         setLoggedIn={setLoggedIn}
+        setSearchQuery={setSearchQuery}
       />}
       {isAdmin && <AdminNavbar
         loginState={isLoggedIn}
@@ -25,6 +27,7 @@ function App() {
         loginState={isLoggedIn}
         setAdminState={setAdminState}
         setLoggedIn={setLoggedIn}
+        searchQuery={searchQuery}
       />
     </Router>
   );

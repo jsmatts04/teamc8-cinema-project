@@ -18,7 +18,7 @@ function Checkout() {
     const numSenior = location.state.numSenior.numberSeniorTickets;
     const {time} = location.state.time;
     const dateString = location.state.date.dateString;
-    const movieTitle = location.state.movie.movie.title;
+    const movie = location.state.movie.movie;
     const seats = location.state.seats;
 
     let totalAdultPrice = numAdult * adultPrice;
@@ -57,7 +57,7 @@ function Checkout() {
 
     return (
         <>
-        <YoutubeEmbed/>
+        <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
         <div className='checkoutGrid'>
         <Form>
         <Form.Group>
@@ -101,7 +101,7 @@ function Checkout() {
         <div className='order-summary'>
             <hr/>
             <div className='summary-movie-details'>
-            <h4>Movie</h4> <h4>{movieTitle}</h4>
+            <h4>Movie</h4> <h4>{movie.title}</h4>
             <h4>Date</h4> <h4>{dateString}</h4>
             <h4>Time</h4> <h4>{time}</h4>
             </div>
@@ -126,7 +126,7 @@ function Checkout() {
             <div>TOTAL</div><div>$ {totalPrice.toFixed(2)}</div>
             </div>
             <div className='center-button'>
-            <Link state={{movie:{movieTitle}, date:{dateString}, time:{time}, orderInfo:{orderInfo}, seats}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
+            <Link state={{movie:{movie}, date:{dateString}, time:{time}, orderInfo:{orderInfo}, seats}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
             </div>
         </div>
         </div>

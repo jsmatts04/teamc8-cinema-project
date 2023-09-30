@@ -11,14 +11,13 @@ function SelectShowTime() {
     const[timeList, setTimeList] = useState(['2:00 PM', '4:00 PM', '5:30 PM', '7:00 PM', '8:00 PM', '10:00 PM']);
 
     const location = useLocation();
-    const movieTitle = location.state.movie.movie.title;
-    let movie = location.state.movie.movie;
+    let movie = location.state.movie.fullMovie;
 
     return (
         <>
-        <YoutubeEmbed/>
+        <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
         <div className='body-margin'>
-        <div className="showtime-title"><h2>{movieTitle}</h2> <DatePicker minDate={new Date()} selected={startDate} onChange={(date) => setStartDate(date)} /></div>
+        <div className="showtime-title"><h2>{movie.title}</h2> <DatePicker minDate={new Date()} selected={startDate} onChange={(date) => setStartDate(date)} /></div>
         <div id='time-grid'>
         {timeList.map((time) => (
             <Link state={{ date:{startDate}, time:{time}, movie:{movie} }} id='timeLink' to='/movie/Showtime'>{time}</Link>

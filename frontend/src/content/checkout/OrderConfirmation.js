@@ -9,7 +9,7 @@ function OrderConfirmation () {
     const location = useLocation();
     const {time} = location.state.time;
     const dateString = location.state.date.dateString;
-    const movieTitle = location.state.movie.movieTitle;
+    const movie = location.state.movie.movie;
     const seats = location.state.seats;
     let orderInfo = location.state.orderInfo.orderInfo;
     let {numAdult,numChild,numSenior,totalAdultPrice,totalChildPrice,totalSeniorPrice,totalFees,totalTaxes,totalPrice} = orderInfo;
@@ -28,7 +28,7 @@ function OrderConfirmation () {
 
     return(
         <>
-        <YoutubeEmbed/>
+        <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
         <h2 className='center-text'>Order Completed Successfully</h2>   
         <h3 className='center-text'>A copy of this confirmation has been sent to {email}</h3>
         
@@ -36,7 +36,7 @@ function OrderConfirmation () {
             <Card.Header><h3>Booking #10056794</h3></Card.Header>
             <div id='order-summary' className='two-column-grid'>
                 <div className='summary-movie-details' id='order-summary'>
-                <h4>Movie:</h4> <h4>{movieTitle}</h4>
+                <h4>Movie:</h4> <h4>{movie.title}</h4>
                 <h4>Date:</h4> <h4>{dateString}</h4>
                 <h4>Time:</h4> <h4>{time}</h4>
                 <h4>Theatre:</h4> <h4>Hall 3</h4>

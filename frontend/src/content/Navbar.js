@@ -9,13 +9,17 @@ import filmLogo from '../Images/film.png'
 import '../css/Navbar.css'
 
 function Navbar(props) {
-    let {loginState,setLoggedIn} = props;
+    let {loginState,setLoggedIn,setSearchQuery} = props;
     const navigate = useNavigate();
 
     function logout() {
         setLoggedIn(false);
         navigate('/');
     }
+
+    const handleChange = e => {
+        setSearchQuery(e.target.value);
+    };
 
     return (
         <NavBar style={{ background: '#3B3B3C' }} data-bs-theme="dark" expand="lg" className="bg=body-tertiary">
@@ -40,8 +44,8 @@ function Navbar(props) {
                                     type="text"
                                     placeholder="Search"
                                     className="search-input"
+                                    onChange={handleChange}
                                 />
-                                <Button type="submit" variant="outline-light">Search</Button>
                             </InputGroup>
                         </Form>
                         {!loginState && <div style={{ color: 'white', marginTop: 'auto', marginBottom: 'auto' }}>

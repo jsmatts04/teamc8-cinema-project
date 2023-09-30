@@ -18,8 +18,7 @@ function SelectSeats() {
     const location = useLocation();
     const {time} = location.state.time;
     const {date} = location.state.date.startDate;
-    const movieTitle = location.state.movie.movie.title;
-    const movie = location.state.movie.movie;
+    let movie = location.state.movie.movie;
     let dateString = JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11);
 
     const handleChange = (event) => {
@@ -59,8 +58,8 @@ function SelectSeats() {
 
     return (
         <>
-            <YoutubeEmbed/>
-            <h1 id='date-time'>{movieTitle} | {dateString} | {time}</h1>
+            <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
+            <h1 id='date-time'>{movie.title} | {dateString} | {time}</h1>
             <h2 id='screen'>Screen</h2>
             <ToggleButtonGroup type="checkbox" id='cinema-layout'>
                 {printSeatList()}
