@@ -41,6 +41,9 @@ public class Movie {
     @Column(length = 10, name = "film_rating")
     private String filmRating;
 
+    @Column(name = "film_length")
+    private short filmLength;
+
     @Column(name = "release_date")
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
@@ -134,6 +137,14 @@ public class Movie {
 
     public void setFilmRating(String film_rating) {
         this.filmRating = film_rating;
+    }
+
+    public short getFilmLength() {
+        return filmLength;
+    }
+
+    public void setFilmLength(short filmLength) {
+        this.filmLength = filmLength;
     }
 
     public Date getReleaseDate() {
