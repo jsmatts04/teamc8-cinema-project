@@ -12,7 +12,7 @@ function MovieDetail (props) {
     let {loginState} = props;
     const [fullMovie, setFullMovie] = useState();
     const location = useLocation();
-    let {movie} = location.state.movie;
+    let movie = location.state.movie.movie;
 
     fetchMovieById(movie.id).then(
         response => setFullMovie(response.data)
@@ -38,7 +38,7 @@ function MovieDetail (props) {
             <>
             <YoutubeEmbed video={fullMovie.trailerVideo} thumbnail={fullMovie.trailerPicture}/>
             <h1 id='detailsTitle'>{fullMovie.title}</h1>
-            {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:{movie}}} element={<SelectShowTime/>}>
+            {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:{fullMovie}}} element={<SelectShowTime/>}>
             <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
             </Link>}
             {!loginState && <Link to={'/Login'}>
@@ -49,6 +49,7 @@ function MovieDetail (props) {
                 <ul>
                     <li>Director: {fullMovie.director}</li>
                     <li>Genre: {fullMovie.category}</li>
+                    <li>Movie Duration: {fullMovie.filmLength} minutes</li>
                     <li>Release Date: {fullMovie.releaseDate}</li>
                 </ul>
                 {fullMovie.reviewScore !== 0 && <><div id='ratingsDiv'>

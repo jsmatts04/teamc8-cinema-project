@@ -12,6 +12,7 @@ function SelectShowTime() {
 
     const location = useLocation();
     let movie = location.state.movie.fullMovie;
+    console.log(movie);
 
     return (
         <>

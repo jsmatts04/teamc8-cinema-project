@@ -5,17 +5,29 @@ import MovieDetail from '../movie select/MovieDetail';
 import { Link } from 'react-router-dom';
 import SelectShowTime from '../movie select/SelectShowTime';
 import { fetchMovieById } from '../../api/MovieApi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function truncateStr(string) {
-    if (string.length > 15)
-      return string.slice(0, 15) + "...";
-    return string
-  }
+
+
+
 
 function MovieCard(props) {
+    const [fullMovie, setFullMovie] = useState();
     let {loginState, movie} = props;
-    console.log(movie)
+    
+    useEffect(() => {
+        fetchMovieById(movie.id).then(
+            response => {
+                setFullMovie(response.data);
+            }
+        )
+    },[])
+
+    function truncateStr(string) {
+        if (string.length > 15)
+          return string.slice(0, 15) + "...";
+        return string
+    }
 
     return(
         <div style={{width:'fit-content'}}>
@@ -28,13 +40,14 @@ function MovieCard(props) {
                 {movie.filmRating !== 'null' && <Card.Title style={{color:'orange'}}>{movie.filmRating}</Card.Title>}
             </Card.Body>
         </Card>
-        {loginState && <Link state={{movie:{movie}}} to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
+        {loginState && <Link state={{movie:{fullMovie}}} to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
         <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         {!loginState && <Link to={'/Login'}>
         <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         </div>
+        
     );
 }
 
