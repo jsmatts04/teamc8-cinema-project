@@ -127,6 +127,7 @@ function Checkout() {
             </div>
             <div className='center-button'>
             <Link state={{movie:{movie}, date:{dateString}, time:{time}, orderInfo:{orderInfo}, seats}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
+            <Link id ='cancel-button' className='confirm-button' to='/'>Cancel</Link>
             </div>
         </div>
         </div>

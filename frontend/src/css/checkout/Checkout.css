@@ -35,3 +35,10 @@
 .order-summary hr {
     margin: 5px 0px 5px 0px;
 }
+
+#cancel-button {
+    margin-left: 20px;
+    background-color: rgba(230, 230, 230, 0.696);
+    color: black;
+    border: 2px gray solid;
+}

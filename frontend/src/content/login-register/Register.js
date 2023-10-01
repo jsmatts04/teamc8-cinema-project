@@ -19,6 +19,10 @@ function Register() {
                     <form>
                         <h3 className="mb-4">Create Movie Account</h3>
                         <div className="mb-3">
+                            <label htmlFor="name" className="form-label">Name<span className="text-danger">*</span></label>
+                            <input type="text" placeholder="Enter Name" className="form-control" />
+                        </div>
+                        <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email<span className="text-danger">*</span></label>
                             <input type="email" placeholder="Enter Email" className="form-control" />
                         </div>
@@ -27,16 +31,20 @@ function Register() {
                             <input type="password" placeholder="Enter Password" className="form-control" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="street" className="form-label">Street<span className="text-danger">*</span></label>
+                            <label htmlFor="tel" className="form-label">Phone Number<span className="text-danger">*</span></label>
+                            <input type="tel" placeholder="Enter Phone Number" className="form-control" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="street" className="form-label">Street<span className="text-danger"></span></label>
                             <input type="text" placeholder="Enter Street" className="form-control" />
                         </div>
                         <div className="row mb-3">
                             <div className="col">
-                                <label htmlFor="state" className="form-label">State<span className="text-danger">*</span></label>
+                                <label htmlFor="state" className="form-label">State<span className="text-danger"></span></label>
                                 <input type="text" placeholder="Enter State" className="form-control" />
                             </div>
                             <div className="col">
-                                <label htmlFor="zip" className="form-label">ZIP Code<span className="text-danger">*</span></label>
+                                <label htmlFor="zip" className="form-label">ZIP Code<span className="text-danger"></span></label>
                                 <input type="text" placeholder="Enter ZIP Code" className="form-control" />
                             </div>
                         </div>
