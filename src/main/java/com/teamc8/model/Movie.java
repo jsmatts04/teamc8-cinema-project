@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "movies")
+@Table(name = "movie")
 public class Movie {
 
     @Id
@@ -48,8 +48,8 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
 
-    @Column(length = 20)
-    private String status;
+    @Column(name = "status_id")
+    private short status;
 
     public int getId() {
         return id;
@@ -155,11 +155,11 @@ public class Movie {
         this.releaseDate = release_date;
     }
 
-    public String getStatus() {
+    public short getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(short status) {
         this.status = status;
     }
 

@@ -12,5 +12,5 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     List<MovieCover> findAllProjectedBy();
-    List<MovieCover> findAllProjectedByStatus(String status);
+    List<MovieCover> findAllProjectedByStatus(short status);
 }

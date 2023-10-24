@@ -24,10 +24,9 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Optional<Movie> getMovieById(int id) {
-//        return movieRepository.findById(id).orElseThrow(() ->
-//                new MovieNotFoundException("Movie by id " + id + "does not exist in database."));
-        return movieRepository.findById(id);
+    public Movie getMovieById(int id) {
+        return movieRepository.findById(id).orElseThrow(() ->
+                new MovieNotFoundException("Movie by id " + id + "does not exist in database."));
     }
 
     //method that gets id of movie
@@ -36,7 +35,7 @@ public class MovieService {
         return movieRepository.findAllProjectedBy();
     }
 
-    public List<MovieCover> getAllMovieCoversForStatus(String status) {
+    public List<MovieCover> getAllMovieCoversForStatus(short status) {
         return movieRepository.findAllProjectedByStatus(status);
     }
 
@@ -51,14 +50,19 @@ public class MovieService {
     }
 
     //delete movie
-    public boolean deleteMovie(int id) {
-        movieRepository.deleteById(id);
-        return true;
+    public void deleteMovie(int id) {
+        if (movieRepository.existsById(id))
+            movieRepository.deleteById(id);
+        else
+            throw new MovieNotFoundException("Movie by id " + id + " cannot be deleted because it does not exist");
     }
 
     //update movie
     public Movie updateMovie(Movie movie) {
-        return movieRepository.save(movie);
+        if (movieRepository.existsById(movie.getId()))
+            return movieRepository.save(movie);
+        else
+            throw new MovieNotFoundException("There is no movie by the id " + movie.getId() + " to be updated");
     }
 
 }

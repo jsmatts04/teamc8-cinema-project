@@ -1,11 +1,11 @@
 package com.teamc8.controller;
 
+import com.teamc8.exception.MovieNotFoundException;
 import com.teamc8.model.Movie;
 import com.teamc8.model.MovieCover;
 import com.teamc8.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,45 +31,32 @@ public class MovieController {
 
     //get movie by id
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> getMovieById(@PathVariable("id") int id) {
-        Optional<Movie> movie = movieService.getMovieById(id);
-
-        if (movie.isPresent())
-            return ResponseEntity.ok(movie.get());
-        else
-            return new ResponseEntity<>("Movie with ID " + id + " not found.", HttpStatus.NOT_FOUND);
-
+    public Movie getMovieById(@PathVariable("id") int id) {
+        return movieService.getMovieById(id);
     }
 
     //get all movie covers for a status
     @GetMapping(path = "/cover")
-    public ResponseEntity<?> getAllMovieCoversForStatus(@RequestParam String status) {
-        List<MovieCover> movieCoverList = movieService.getAllMovieCoversForStatus(status);
-        if (!movieCoverList.isEmpty())
-            return ResponseEntity.ok(movieCoverList);
-        else
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public List<MovieCover> getAllMovieCoversForStatus(@RequestParam short status) {
+        return movieService.getAllMovieCoversForStatus(status);
     }
 
     //add movie
     @PostMapping(path = "/add")
-    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
-        return ResponseEntity.ok(movieService.addMovie(movie));
+    public Movie addMovie(@RequestBody Movie movie) {
+        return movieService.addMovie(movie);
     }
 
     //delete movie
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<Void> deleteMovie(@RequestParam int id) {
-        boolean result = movieService.deleteMovie(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public void deleteMovie(@RequestParam int id) {
+        movieService.deleteMovie(id);
     }
 
 
     //update movie
     @PutMapping(path = "/update")
-    public ResponseEntity<Movie> updateMovie(@RequestParam int id, @RequestBody Movie movie) {
-        return ResponseEntity.ok(movieService.updateMovie(movie));
+    public Movie updateMovie(@RequestBody Movie movie) {
+        return movieService.updateMovie(movie);
     }
-
-
 }
