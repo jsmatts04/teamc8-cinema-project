@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/movie")
+@RequestMapping(path = "api/movie/")
 public class MovieController {
 
     private final MovieService movieService;
@@ -30,32 +30,32 @@ public class MovieController {
     }
 
     //get movie by id
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "{id}")
     public Movie getMovieById(@PathVariable("id") int id) {
         return movieService.getMovieById(id);
     }
 
     //get all movie covers for a status
-    @GetMapping(path = "/cover")
+    @GetMapping(path = "cover")
     public List<MovieCover> getAllMovieCoversForStatus(@RequestParam short status) {
         return movieService.getAllMovieCoversForStatus(status);
     }
 
     //add movie
-    @PostMapping(path = "/add")
+    @PostMapping(path = "add")
     public Movie addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);
     }
 
     //delete movie
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "delete")
     public void deleteMovie(@RequestParam int id) {
         movieService.deleteMovie(id);
     }
 
 
     //update movie
-    @PutMapping(path = "/update")
+    @PutMapping(path = "update")
     public Movie updateMovie(@RequestBody Movie movie) {
         return movieService.updateMovie(movie);
     }

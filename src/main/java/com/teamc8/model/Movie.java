@@ -156,12 +156,12 @@ public class Movie {
         this.releaseDate = release_date;
     }
 
-    public short getStatus() {
-        return status;
+    public MovieStatus getStatus() {
+        return movieStatus;
     }
 
-    public void setStatus(short status) {
-        this.status = status;
+    public void setStatus(MovieStatus movieStatus) {
+        this.movieStatus = movieStatus;
     }
 
     @Override
@@ -179,7 +179,7 @@ public class Movie {
                 ", trailer_video='" + trailerVideo + '\'' +
                 ", film_rating='" + filmRating + '\'' +
                 ", release_date=" + releaseDate +
-                ", status=" + status +
+                ", status=" + movieStatus +
                 '}';
     }
 }

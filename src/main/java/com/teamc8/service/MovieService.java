@@ -34,7 +34,7 @@ public class MovieService {
     }
 
     public List<MovieCover> getAllMovieCoversForStatus(short status) {
-        return movieRepository.findAllProjectedByStatus(status);
+        return movieRepository.findAllProjectedByMovieStatusId(status);
     }
 
     //check if movie exists
