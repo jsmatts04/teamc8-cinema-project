@@ -48,8 +48,9 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
 
-    @Column(name = "status_id")
-    private short status;
+    @ManyToOne
+    @JoinColumn(name = "movie_status_id", referencedColumnName = "id")
+    private MovieStatus movieStatus;
 
     public int getId() {
         return id;

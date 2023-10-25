@@ -29,8 +29,6 @@ public class MovieService {
                 new MovieNotFoundException("Movie by id " + id + "does not exist in database."));
     }
 
-    //method that gets id of movie
-
     public List<MovieCover> getAllMovieTitleAndPicture() {
         return movieRepository.findAllProjectedBy();
     }

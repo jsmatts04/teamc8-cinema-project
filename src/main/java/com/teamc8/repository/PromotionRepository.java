@@ -1,4 +1,4 @@
 package com.teamc8.repository;
 
-public class PromotionRepository {
+public interface PromotionRepository {
 }
