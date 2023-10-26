@@ -25,9 +25,10 @@ function Navbar(props) {
     };
 
     const sendSearch = e => {
-        if (currentQuery !== '') {
+        e.preventDefault();
+        if (currentQuery.trim() !== '') {
             setSearchQuery(currentQuery);
-            navigate('/search');
+            navigate('/Search')
         }
     }
 
@@ -48,7 +49,7 @@ function Navbar(props) {
                 <NavBar.Toggle aria-controls="basic-navbar-nav" />
                 <NavBar.Collapse id="basic-navbar-nav">
                     <Nav className="justify-content-evenly flex-grow-1">
-                        <Form inline style={{ width: '60%' }}>
+                        <Form inline style={{ width: '60%' }} onSubmit={sendSearch}>
                             <InputGroup className='searchbar'>
                                 <Form.Control
                                     type="text"
@@ -56,7 +57,7 @@ function Navbar(props) {
                                     className="search-input"
                                     onChange={handleChange}
                                 />
-                                <Button variant='secondary' onClick={sendSearch}>
+                                <Button variant='secondary' type='submit'>
                                     <img src={searchIcon} style={{width:'25px'}}alt='search icon'></img>
                                 </Button>
                             </InputGroup>

@@ -8,20 +8,27 @@ import { fetchMovieById, fetchMovieCoversCurrent, fetchMovieCoversUpcoming } fro
 function MovieCarousel({type, loginState, searchQuery}) {
   const [movieListCurrent, setMovieListCurrent] = useState();
   const [movieListUpcoming, setMovieListUpcoming] = useState();
-  const [numResults, setNumResults] = useState(0);
 
   useEffect(() => {
     fetchMovieCoversCurrent().then(
-      response => setMovieListCurrent(response.data)
+      response => {
+        setMovieListCurrent(response.data);
+      }
     )
   },[])
+  
   useEffect(() => {
     fetchMovieCoversUpcoming().then(
-      response => setMovieListUpcoming(response.data)
+      response => {
+        setMovieListUpcoming(response.data);
+      }
     )
   },[])
 
-  function handleSearch(list) {
+  function handleSearch() {
+    let list = [];
+    if (typeof movieListCurrent !== 'undefined' && typeof movieListUpcoming !== 'undefined')
+      list = movieListCurrent.concat(movieListUpcoming)
     let filteredList =
         list.filter(
             (movie) => {
@@ -30,8 +37,7 @@ function MovieCarousel({type, loginState, searchQuery}) {
                 else 
                     return true;
             }    
-        )
-      setNumResults(filteredList.size);
+    )
     return filteredList;
 }
 
@@ -63,12 +69,11 @@ function MovieCarousel({type, loginState, searchQuery}) {
       ) : (
         movieListUpcoming.map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
       )
-    } else if (type ==='Result(s) found for '){
-      return (typeof movieListUpcoming === 'undefined' || typeof movieListCurrent === 'undefined' || numResults === 0) ? (
+    } else if (type ==='result(s) found for '){
+      return (typeof movieListUpcoming === 'undefined' || typeof movieListCurrent === 'undefined') ? (
         <p>No Results Found</p>
       ) : (
-        handleSearch(movieListCurrent).map((movie) => (<MovieCard loginState={loginState} movie={movie} />)),
-        handleSearch(movieListUpcoming).map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
+        handleSearch().map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
       )
     }
   }
@@ -76,8 +81,9 @@ function MovieCarousel({type, loginState, searchQuery}) {
   return (
     <>
     <p1 className='title'>
-      {type} {type ==='Result(s) found for ' && '\''+searchQuery+'\''}
+    {type ==='result(s) found for ' && handleSearch().length} {type} {type ==='result(s) found for ' && '\''+searchQuery+'\''}
     </p1>
+    {handleSearch().length === 0 && type ==='result(s) found for ' && <p style={{color:'whitesmoke'}}>No Results Found</p>}
     <Carousel infinite responsive={responsive} draggable={false}>
       {displayList()}
     </Carousel>

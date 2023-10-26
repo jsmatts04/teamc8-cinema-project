@@ -5,7 +5,7 @@ function SearchResult(props) {
 
     
     return (
-        <MovieCarousel type={'Result(s) found for '} searchQuery={searchQuery} loginState={loginState} />
+        <MovieCarousel type={'result(s) found for '} searchQuery={searchQuery} loginState={loginState} />
     );
 }
 
