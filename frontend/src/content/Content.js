@@ -17,6 +17,7 @@ import OrderConfirmation from './checkout/OrderConfirmation'
 import OrderHistory from '../OrderHistory'
 import EditProfile from '../EditProfile'
 import AddMovie from '../AddMovie'
+import SearchResult from './homepage/SearchResult'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
@@ -39,6 +40,7 @@ function Content(props) {
         <Route path='/OrderHistory' element={<OrderHistory/>}></Route>
         <Route path='/EditProfile' element={<EditProfile/>}></Route>
         <Route path='/AddMovie' element={<AddMovie/>}></Route>
+        <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
       </Routes>
     );
 }

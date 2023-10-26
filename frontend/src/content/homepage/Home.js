@@ -6,14 +6,8 @@ function Home(props) {
 
     return (
         <>
-            <p1 className='title'>
-                CURRENTLY RUNNING
-            </p1>
-            <MovieCarousel type={'current'} searchQuery={searchQuery} loginState={loginState} />
-            <p1 className='title'>
-                UPCOMING MOVIES
-            </p1>
-            <MovieCarousel type={'upcoming'} searchQuery={searchQuery} loginState={loginState} />
+            <MovieCarousel type={'CURRENTLY RUNNING'} searchQuery={searchQuery} loginState={loginState} />
+            <MovieCarousel type={'UPCOMING MOVIES'} searchQuery={searchQuery} loginState={loginState} />
         </>
     );
 }

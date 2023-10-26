@@ -8,6 +8,7 @@ import { fetchMovieById, fetchMovieCoversCurrent, fetchMovieCoversUpcoming } fro
 function MovieCarousel({type, loginState, searchQuery}) {
   const [movieListCurrent, setMovieListCurrent] = useState();
   const [movieListUpcoming, setMovieListUpcoming] = useState();
+  const [numResults, setNumResults] = useState(0);
 
   useEffect(() => {
     fetchMovieCoversCurrent().then(
@@ -30,6 +31,7 @@ function MovieCarousel({type, loginState, searchQuery}) {
                     return true;
             }    
         )
+      setNumResults(filteredList.size);
     return filteredList;
 }
 
@@ -48,28 +50,38 @@ function MovieCarousel({type, loginState, searchQuery}) {
     }
   };
 
-  const placeHolder = <div style={{ opacity:'0' }}></div> 
-
   function displayList() {
-    if (type === 'current') {
+    if (type === 'CURRENTLY RUNNING') {
       return (typeof movieListCurrent === 'undefined') ? (
         <p>Loading...</p>
       ) : (
-        handleSearch(movieListCurrent).map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
+        movieListCurrent.map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
       )
-    } else {
+    } else if (type ==='UPCOMING MOVIES'){
       return (typeof movieListUpcoming === 'undefined') ? (
         <p>Loading...</p>
       ) : (
+        movieListUpcoming.map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
+      )
+    } else if (type ==='Result(s) found for '){
+      return (typeof movieListUpcoming === 'undefined' || typeof movieListCurrent === 'undefined' || numResults === 0) ? (
+        <p>No Results Found</p>
+      ) : (
+        handleSearch(movieListCurrent).map((movie) => (<MovieCard loginState={loginState} movie={movie} />)),
         handleSearch(movieListUpcoming).map((movie) => (<MovieCard loginState={loginState} movie={movie} />))
       )
     }
   }
 
   return (
+    <>
+    <p1 className='title'>
+      {type} {type ==='Result(s) found for ' && '\''+searchQuery+'\''}
+    </p1>
     <Carousel infinite responsive={responsive} draggable={false}>
       {displayList()}
     </Carousel>
+    </>
   );
 }
 

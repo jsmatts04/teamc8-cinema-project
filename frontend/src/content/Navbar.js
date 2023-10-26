@@ -6,10 +6,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import filmLogo from '../Images/film.png'
+import searchIcon from '../Images/search-icon.png'
+import { useState } from 'react';
 import '../css/Navbar.css'
 
 function Navbar(props) {
     let {loginState,setLoggedIn,setSearchQuery} = props;
+    const [currentQuery, setCurrentQuery] = useState('');
     const navigate = useNavigate();
 
     function logout() {
@@ -18,8 +21,15 @@ function Navbar(props) {
     }
 
     const handleChange = e => {
-        setSearchQuery(e.target.value);
+        setCurrentQuery(e.target.value);
     };
+
+    const sendSearch = e => {
+        if (currentQuery !== '') {
+            setSearchQuery(currentQuery);
+            navigate('/search');
+        }
+    }
 
     return (
         <NavBar style={{ background: '#3B3B3C' }} data-bs-theme="dark" expand="lg" className="bg=body-tertiary">
@@ -39,13 +49,16 @@ function Navbar(props) {
                 <NavBar.Collapse id="basic-navbar-nav">
                     <Nav className="justify-content-evenly flex-grow-1">
                         <Form inline style={{ width: '60%' }}>
-                            <InputGroup>
+                            <InputGroup className='searchbar'>
                                 <Form.Control
                                     type="text"
                                     placeholder="Search"
                                     className="search-input"
                                     onChange={handleChange}
                                 />
+                                <Button variant='secondary' onClick={sendSearch}>
+                                    <img src={searchIcon} style={{width:'25px'}}alt='search icon'></img>
+                                </Button>
                             </InputGroup>
                         </Form>
                         {!loginState && <div style={{ color: 'white', marginTop: 'auto', marginBottom: 'auto' }}>
