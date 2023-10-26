@@ -18,6 +18,7 @@ import OrderHistory from '../OrderHistory'
 import EditProfile from '../EditProfile'
 import AddMovie from '../AddMovie'
 import SearchResult from './homepage/SearchResult'
+import ErrorPage from './ErrorPage'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
@@ -41,6 +42,7 @@ function Content(props) {
         <Route path='/EditProfile' element={<EditProfile/>}></Route>
         <Route path='/AddMovie' element={<AddMovie/>}></Route>
         <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
+        <Route path='*' element={<ErrorPage/>}></Route>
       </Routes>
     );
 }
