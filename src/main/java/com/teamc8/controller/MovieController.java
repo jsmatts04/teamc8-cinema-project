@@ -1,16 +1,13 @@
 package com.teamc8.controller;
 
-import com.teamc8.exception.MovieNotFoundException;
 import com.teamc8.model.Movie;
-import com.teamc8.model.MovieCover;
+import com.teamc8.model.projection.MovieCover;
 import com.teamc8.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/movie")

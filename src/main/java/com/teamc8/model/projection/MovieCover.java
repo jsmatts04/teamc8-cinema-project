@@ -1,4 +1,4 @@
-package com.teamc8.model;
+package com.teamc8.model.projection;
 
 import java.util.Date;
 

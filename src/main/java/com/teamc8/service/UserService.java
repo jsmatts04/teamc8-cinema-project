@@ -2,6 +2,7 @@ package com.teamc8.service;
 
 import com.teamc8.exception.UserNotFoundException;
 import com.teamc8.model.User;
+import com.teamc8.model.projection.UserInfo;
 import com.teamc8.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,11 @@ public class UserService {
     }
 
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserInfo> getAllUsers() {
+        return userRepository.findAllProjectedBy();
     }
 
-    public User getUserById(int id) {
+    public UserInfo getUserById(int id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User by id " + id + " not found"));
     }

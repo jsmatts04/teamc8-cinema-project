@@ -1,6 +1,5 @@
-package com.teamc8.security;
+package com.teamc8.config;
 
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

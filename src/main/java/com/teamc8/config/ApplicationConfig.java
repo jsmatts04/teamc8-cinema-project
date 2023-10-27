@@ -1,4 +1,4 @@
-package com.teamc8.security;
+package com.teamc8.config;
 
 import com.teamc8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

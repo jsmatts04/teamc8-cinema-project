@@ -1,4 +1,4 @@
-package com.teamc8.security;
+package com.teamc8.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
