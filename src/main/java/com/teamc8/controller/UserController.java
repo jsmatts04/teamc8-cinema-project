@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping(path = "/add")
     public User addUser(@RequestBody User user) {
         System.out.println("POST USER");
-        return userService.addUser(user);
+        return userService.createUser(user);
     }
 
     @PutMapping (path = "/update")

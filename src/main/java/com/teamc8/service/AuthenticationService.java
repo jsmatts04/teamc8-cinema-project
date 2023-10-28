@@ -1,12 +1,10 @@
 package com.teamc8.service;
 
+import com.teamc8.config.email.EmailSender;
+import com.teamc8.config.token.ConfirmationToken;
+import com.teamc8.config.token.ConfirmationTokenService;
 import com.teamc8.exception.UserAlreadyExistsException;
-import com.teamc8.exception.UserStatusNotFoundException;
-import com.teamc8.exception.UserTypeNotFoundException;
 import com.teamc8.model.*;
-import com.teamc8.repository.UserRepository;
-import com.teamc8.repository.UserStatusRepository;
-import com.teamc8.repository.UserTypeRepository;
 import com.teamc8.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,36 +16,33 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserTypeRepository userTypeRepository;
-    private final UserStatusRepository userStatusRepository;
+    private final UserService userService;
+    private final UserTypeService userTypeService;
+    private final UserStatusService userStatusService;
+    private final ConfirmationTokenService confirmationTokenService;
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+
     private final AuthenticationManager authenticationManager;
     private final EmailSender emailSender;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        String userEmail = request.getEmail();
-        // Check if user with email already exists
-        if (userRepository.existsByEmail(userEmail))
-            throw new UserAlreadyExistsException("Username " + userEmail + " already exists");
-
         // Get customer user type
-        UserType customerType = userTypeRepository.findById((short) 2)
-                .orElseThrow(() -> new UserTypeNotFoundException("Customer user type not found"));
+        UserType customerType = userTypeService.getUserTypeById((short) 2);
         // Get inactive user status because newly registered user is not verified yet
-        UserStatus inactiveStatus = userStatusRepository.findById((short) 2)
-                .orElseThrow(() -> new UserStatusNotFoundException("Inactive user status not found"));
-
+        UserStatus inactiveStatus = userStatusService.getUserStatusById((short) 2);
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .email(userEmail)
+                .email(request.getEmail())
                 .userStatus(inactiveStatus)
                 .userType(customerType)
                 .build();
-        userRepository.save(user);
+        userService.createUser(user);
+        ConfirmationToken confirmationToken = confirmationTokenService.createNewToken(user);
+        String link = "http://localhost:8080/api/auth/confirm?token=" + confirmationToken.getToken();
+        emailSender.send(request.getEmail(), buildEmail(request.firstName(), link));
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
@@ -59,7 +54,11 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = userService.getUserByEmail(request.getEmail()).orElseThrow();
+        if (confirmationTokenService.isTokenExpired(confirmationTokenService.getLastTokenForUser(user))) {
+            confirmationTokenService.createNewToken(user);
+            // TODO: Send token email
+        }
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }

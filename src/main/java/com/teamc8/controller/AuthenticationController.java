@@ -1,5 +1,6 @@
 package com.teamc8.controller;
 
+import com.teamc8.config.token.ConfirmationTokenService;
 import com.teamc8.model.AuthenticationRequest;
 import com.teamc8.model.AuthenticationResponse;
 import com.teamc8.model.RegisterRequest;
@@ -7,10 +8,7 @@ import com.teamc8.repository.UserRepository;
 import com.teamc8.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
     Handles all endpoints regarding user registration and login.
@@ -29,7 +27,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(path = "/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
