@@ -1,6 +1,8 @@
 package com.teamc8.service;
 
+import com.teamc8.exception.UserAlreadyExistsException;
 import com.teamc8.exception.UserNotFoundException;
+import com.teamc8.model.RegisterRequest;
 import com.teamc8.model.User;
 import com.teamc8.model.projection.UserInfo;
 import com.teamc8.repository.UserRepository;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
