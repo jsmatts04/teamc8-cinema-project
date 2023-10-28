@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../App.css';
 
@@ -9,6 +9,12 @@ function Register() {
 
     const shadowStyle = {
         boxShadow: '0px 0px 50px rgba(0, 0, 0, 1.0)', // Adjust values as needed
+    };
+
+    const [registerForPromos, setRegisterForPromos] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setRegisterForPromos(!registerForPromos);
     };
 
     return (
@@ -26,6 +32,7 @@ function Register() {
                             <label htmlFor="email" className="form-label">Email<span className="text-danger">*</span></label>
                             <input type="email" placeholder="Enter Email" className="form-control" />
                         </div>
+                        {/* Add the checkbox for registering for promos */}
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Password<span className="text-danger">*</span></label>
                             <input type="password" placeholder="Enter Password" className="form-control" />
@@ -61,6 +68,16 @@ function Register() {
                                 <label htmlFor="securityCode" className="form-label">Security Code</label>
                                 <input type="text" placeholder="Enter Security Code" className="form-control" />
                             </div>
+                        </div>
+                        <div className="form-check mb-3">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="registerForPromos"
+                                checked={registerForPromos}
+                                onChange={handleCheckboxChange}
+                            />
+                            <label className="form-check-label" htmlFor="registerForPromos">Register for Promos</label>
                         </div>
                         <div className="d-grid mt-3">
                             {/* Use Link to navigate to the "VerifyAccount" page */}

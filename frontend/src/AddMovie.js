@@ -9,7 +9,6 @@ const AddMovie = () => {
     image: '',
     rating: 'G',
     rottenTomatoScore: '',
-    imdbScore: '',
     director: '',
     genre: '',
     releaseDate: null,
@@ -111,19 +110,6 @@ const AddMovie = () => {
                       type="text"
                       name="rottenTomatoScore"
                       value={movieData.rottenTomatoScore}
-                      onChange={handleInputChange}
-                      style={{ fontSize: '1rem' }}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6}>
-                  {/* IMDB Score */}
-                  <Form.Group controlId="imdbScore">
-                    <Form.Label style={{ fontSize: '1.2rem' }}>IMDB Score</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="imdbScore"
-                      value={movieData.imdbScore}
                       onChange={handleInputChange}
                       style={{ fontSize: '1rem' }}
                     />

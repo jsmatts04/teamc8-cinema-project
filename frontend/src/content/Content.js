@@ -19,6 +19,7 @@ import EditProfile from '../EditProfile'
 import AddMovie from '../AddMovie'
 import SearchResult from './homepage/SearchResult'
 import ErrorPage from './ErrorPage'
+import ForgetPassword from "./login-register/ForgetPassword";
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
@@ -29,6 +30,7 @@ function Content(props) {
         <Route path='/Register' element={<Register />}></Route>
         <Route path='/VerifyAccount' element={<VerifyAccount />}></Route>
         <Route path='/Movie' element={<MovieDetail loginState = {loginState}/>}></Route>
+        <Route path='ForgetPassword' element={<ForgetPassword />}></Route>
         <Route path='/AdminHomePage' element={<AdminHomePage />}></Route>
         <Route path='/ManageMovies' element={<ManageMovies />}></Route>
         <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>
