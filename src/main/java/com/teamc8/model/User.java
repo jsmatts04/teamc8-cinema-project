@@ -56,7 +56,11 @@ public class User implements UserDetails {
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    public User(String email, String password, String firstName, String lastName, UserStatus userStatus, UserType userType, String phoneNumber) {
+    //promotion eligibility
+    @Column(name = "promo")
+    private boolean promotionEligibility;
+
+    public User(String email, String password, String firstName, String lastName, UserStatus userStatus, UserType userType, String phoneNumber, boolean promotionEligibility) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -64,6 +68,7 @@ public class User implements UserDetails {
         this.userStatus = userStatus;
         this.userType = userType;
         this.phoneNumber = phoneNumber;
+        this.promotionEligibility = promotionEligibility;
     }
 
     @Override
