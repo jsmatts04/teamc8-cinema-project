@@ -20,6 +20,9 @@ import AddMovie from '../AddMovie'
 import SearchResult from './homepage/SearchResult'
 import ErrorPage from './ErrorPage'
 import ForgetPassword from "./login-register/ForgetPassword";
+import ChangePassword from "./login-register/ChangePassword";
+import AddAddress from "../AddAddress";
+import AddPayment from "../AddPayment";
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
@@ -31,6 +34,7 @@ function Content(props) {
         <Route path='/VerifyAccount' element={<VerifyAccount />}></Route>
         <Route path='/Movie' element={<MovieDetail loginState = {loginState}/>}></Route>
         <Route path='ForgetPassword' element={<ForgetPassword />}></Route>
+        <Route path='ChangePassword' element={<ChangePassword />}></Route>
         <Route path='/AdminHomePage' element={<AdminHomePage />}></Route>
         <Route path='/ManageMovies' element={<ManageMovies />}></Route>
         <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>
@@ -42,6 +46,8 @@ function Content(props) {
         <Route path='/Order/Confirmation' element={<OrderConfirmation/>}></Route>
         <Route path='/OrderHistory' element={<OrderHistory/>}></Route>
         <Route path='/EditProfile' element={<EditProfile/>}></Route>
+        <Route path='/AddAddress' element={<AddAddress/>}></Route>
+        <Route path='/AddPayment' element={<AddPayment/>}></Route>
         <Route path='/AddMovie' element={<AddMovie/>}></Route>
         <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
         <Route path='*' element={<ErrorPage/>}></Route>
