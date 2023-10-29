@@ -54,7 +54,7 @@ function EditProfile() {
           </div>
           <div style={{ marginBottom: '15px', fontSize: '20px' }}>
             <label>Password:</label>
-            <a href="#"> Reset Password</a>
+            <a href="#"> Change Password</a>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button type="submit" style={{ backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer' }}>Save Changes</button>
