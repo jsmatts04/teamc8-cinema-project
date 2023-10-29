@@ -2,6 +2,8 @@ package com.teamc8.controller;
 
 import com.teamc8.model.User;
 import com.teamc8.model.projection.UserInfo;
+import com.teamc8.model.request.EditUserPasswordRequest;
+import com.teamc8.model.request.EditUserRequest;
 import com.teamc8.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,6 +46,11 @@ public class UserController {
     @PutMapping(path = "/editProfile")
     public User editUser(@RequestBody EditUserRequest user) {
         return userService.editUser(user);
+    }
+
+    @PutMapping(path = "/editProfile/resetPassword")
+    public User resetPassword(@RequestBody EditUserPasswordRequest passwordRequest) {
+        return userService.resetUserPassword(passwordRequest);
     }
 
     //delete user by id

@@ -66,6 +66,6 @@ public class ConfirmationTokenService {
 
     // Get last token for user
     public ConfirmationToken getLastTokenForUser(User user) {
-        return confirmationTokenRepository.findByUserIdOrderByTimeCreatedAtDesc(user.getId());
+        return confirmationTokenRepository.findFirstByUserIdOrderByTimeCreatedAtDesc(user.getId());
     }
 }

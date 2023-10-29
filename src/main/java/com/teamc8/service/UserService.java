@@ -2,15 +2,17 @@ package com.teamc8.service;
 
 import com.teamc8.exception.UserAlreadyExistsException;
 import com.teamc8.exception.UserNotFoundException;
-import com.teamc8.model.RegisterRequest;
 import com.teamc8.model.User;
-import com.teamc8.model.UserStatus;
-import com.teamc8.model.UserType;
 import com.teamc8.model.projection.UserInfo;
+import com.teamc8.model.request.EditUserPasswordRequest;
+import com.teamc8.model.request.EditUserRequest;
 import com.teamc8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +24,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserStatusService userStatusService;
     private final PasswordEncoder passwordEncoder;
-    private final UserTypeService userTypeService;
+    private final AuthenticationManager authenticationManager;
 
+    // Get all users
     public List<UserInfo> getAllUsers() {
         return userRepository.findAllProjectedBy();
     }
@@ -55,6 +58,24 @@ public class UserService {
         return oldUser;
     }
 
+    //edit user password
+    @Transactional
+    public User resetUserPassword(EditUserPasswordRequest passwordRequest) {
+        User oldUser = userRepository.findByEmail(passwordRequest.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("There is no user by the id " + passwordRequest.getEmail() + " to be updated"));
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        passwordRequest.getEmail(),
+                        passwordRequest.getOldPassword()
+                )
+        );
+
+        oldUser.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
+        return oldUser;
+    }
+
+    //make user active
     public void makeUserActive(User user) {
         user.setUserStatus(userStatusService.getUserStatusById((short) 1));
     }
