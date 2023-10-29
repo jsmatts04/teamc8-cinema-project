@@ -9,6 +9,6 @@ public interface UserInfo {
     String getEmail();
     String getFirstName();
     String getLastName();
-    UserStatus getUserStatus();
+    String getUserStatusStatus();
     String getUserTypeType();
 }

@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<UserInfo> findAllProjectedBy();
 
     //find user by id
-    Optional<UserInfo> findById(int id);
+    Optional<UserInfo> findProjectedById(int id);
 
     //exists user by email
     boolean existsByEmail(String email);

@@ -23,14 +23,13 @@ public class UserController {
 
     //get all users
     @GetMapping
-    @PreAuthorize("hasAuthority('CUSTOMER')")
     public List<UserInfo> getAllUsers() {
         return userService.getAllUsers();
     }
 
     //get user by id
     @GetMapping(path = "/{id}")
-    public UserInfo getUserById(int id) {
+    public UserInfo getUserById(@PathVariable("id") int id) {
         return userService.getUserById(id);
     }
 

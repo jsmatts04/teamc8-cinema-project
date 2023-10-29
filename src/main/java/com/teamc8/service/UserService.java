@@ -33,7 +33,7 @@ public class UserService {
 
     //get user by id
     public UserInfo getUserById(int id) {
-        return userRepository.findById(id).orElseThrow(
+        return userRepository.findProjectedById(id).orElseThrow(
                 () -> new UserNotFoundException("User by id " + id + " not found"));
     }
 
