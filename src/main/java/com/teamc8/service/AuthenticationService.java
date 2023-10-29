@@ -3,8 +3,10 @@ package com.teamc8.service;
 import com.teamc8.config.email.EmailSender;
 import com.teamc8.config.token.ConfirmationToken;
 import com.teamc8.config.token.ConfirmationTokenService;
+import com.teamc8.exception.UserNotActiveException;
 import com.teamc8.model.*;
 import com.teamc8.config.JwtService;
+import com.teamc8.model.dto.UserDTO;
 import com.teamc8.model.request.AuthenticationRequest;
 import com.teamc8.model.request.RegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +52,7 @@ public class AuthenticationService {
     }
 
     //authenticate user
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws UserNotActiveException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -58,12 +60,14 @@ public class AuthenticationService {
                 )
         );
         User user = userService.getUserByEmail(request.getEmail()).orElseThrow();
-        if (confirmationTokenService.isTokenExpired(confirmationTokenService.getLastTokenForUser(user))) {
-            confirmationTokenService.createNewToken(user);
-            // TODO: Send token email
+        if (!user.getUserStatus().getStatus().equals("ACTIVE")) {
+            throw new UserNotActiveException("User is " + user.getUserStatus().getStatus());
         }
         String jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .user(new UserDTO(user))
+                .build();
     }
 
     //email verification format

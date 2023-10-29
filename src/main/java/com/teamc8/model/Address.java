@@ -1,11 +1,13 @@
 package com.teamc8.model;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "address")
 public class Address {
 
@@ -31,13 +33,5 @@ public class Address {
     //postal_code
     @Column(length = 5)
     private String postalCode;
-
-    public Address(User user, String street, String city, String state, String postalCode) {
-        this.user = user;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.postalCode = postalCode;
-    }
 
 }
