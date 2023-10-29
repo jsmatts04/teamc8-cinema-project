@@ -144,4 +144,15 @@ public class AuthenticationService {
                 "</div></div>";
     }
 
+
+    private String buildProfileEditNotificationEmail(String name) {
+        return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">" +
+                // ... (similar structure as your verification email) ...
+                "<span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Profile Updated Successfully</span>" +
+                // ... (similar structure as your verification email) ...
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Your profile has been successfully updated. If you didn't make these changes, please contact our support.</p>" +
+                // ... (similar structure as your verification email) ...
+                "</div>";
+    }
+
 }

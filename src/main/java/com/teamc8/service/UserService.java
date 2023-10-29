@@ -4,10 +4,13 @@ import com.teamc8.config.JwtService;
 import com.teamc8.config.email.ForgotPasswordEmailService;
 import com.teamc8.exception.UserAlreadyExistsException;
 import com.teamc8.exception.UserNotFoundException;
+import com.teamc8.model.ForgetPasswordToken;
 import com.teamc8.model.User;
 import com.teamc8.model.projection.UserInfo;
 import com.teamc8.model.request.EditUserPasswordRequest;
 import com.teamc8.model.request.EditUserRequest;
+import com.teamc8.model.request.PasswordResetRequest;
+import com.teamc8.repository.ForgetPasswordTokenRepository;
 import com.teamc8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +88,46 @@ public class UserService {
 
     public void sendForgotPasswordEmail(String email) {
 
+        //Generate a unique token for resetting the password
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("There is no user by the email " + email + " to be found"));
+        String token = UUID.randomUUID().toString();
+        LocalDateTime now = LocalDateTime.now();
+        ForgetPasswordToken forgetPasswordToken = new ForgetPasswordToken();
+        forgetPasswordToken.setToken(token);
+        forgetPasswordToken.setTimeCreatedAt(now);
+        forgetPasswordToken.setTimeExpiredAt(now.plusMinutes(15));
+        forgetPasswordToken.setUser(user);
+        tokenRepository.save(forgetPasswordToken);
+
+        //build the email and send it
+        String resetLink = "http://localhost:8080/api/user/forgotPassword?token=" + token;
+        String emailContent = buildForgotPasswordEmail(user.getFirstName(), resetLink);
+        ForgotPasswordEmailService.send(email, emailContent);
+
+    }
+
+    public void resetPassword(String token, PasswordResetRequest passwordResetRequest) {
+        // 1. Validate the token
+        ForgetPasswordToken forgetPasswordToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalStateException("Token not found"));
+
+        // 2. Check if the token has expired
+        LocalDateTime now = LocalDateTime.now();
+        if (forgetPasswordToken.getTimeExpiredAt().isBefore(now)) {
+            throw new IllegalStateException("Token has expired");
+        }
+
+        // 3. Get the user associated with the token
+        User user = forgetPasswordToken.getUser();
+
+        // 4. Update the user's password
+        String encodedPassword = passwordEncoder.encode(passwordResetRequest.getNewPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+
+        // 5. Invalidate the token (by deleting it)
+        tokenRepository.delete(forgetPasswordToken);
     }
 
     //make user active

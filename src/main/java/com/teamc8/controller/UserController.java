@@ -77,6 +77,14 @@ public class UserController {
         return "email sent";
     }
 
+    @PostMapping(path = "/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody PasswordResetRequest passwordResetRequest) {
+        userService.resetPassword(token, passwordResetRequest);
+        return ResponseEntity.ok("Password reset successfully");
+    }
+
+
+
     //delete user by id
     @DeleteMapping (path = "/delete")
     public void deleteUser(@RequestParam int id) {
