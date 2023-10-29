@@ -26,20 +26,20 @@ function Register() {
                         <h3 className="mb-4">Create Movie Account</h3>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Name<span className="text-danger">*</span></label>
-                            <input type="text" placeholder="Enter Name" className="form-control" />
+                            <input required type="text" placeholder="Enter Name" className="form-control" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email<span className="text-danger">*</span></label>
-                            <input type="email" placeholder="Enter Email" className="form-control" />
+                            <input required type="email" placeholder="Enter Email" className="form-control" />
                         </div>
                         {/* Add the checkbox for registering for promos */}
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Password<span className="text-danger">*</span></label>
-                            <input type="password" placeholder="Enter Password" className="form-control" />
+                            <input required type="password" placeholder="Enter Password" className="form-control" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="tel" className="form-label">Phone Number<span className="text-danger">*</span></label>
-                            <input type="tel" placeholder="Enter Phone Number" className="form-control" />
+                            <input required type="tel" placeholder="Enter Phone Number" className="form-control" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="street" className="form-label">Street<span className="text-danger"></span></label>
@@ -81,7 +81,7 @@ function Register() {
                         </div>
                         <div className="d-grid mt-3">
                             {/* Use Link to navigate to the "VerifyAccount" page */}
-                            <Link to="/VerifyAccount">
+                            <Link to='/Login' state={{showToast:true}}>
                                 <button className="btn btn-primary" style={{ backgroundColor: '#C84B31' }}>
                                     Continue
                                 </button>

@@ -15,8 +15,7 @@ const shadowStyle = {
     boxShadow: '0px 0px 50px rgba(0, 0, 0, 1.0)', // Adjust values as needed
   };
 
-  const [showToast, setShowToast] = useState(true);
-  const closeToast = () => setShowToast(false);
+  
 
   return (
     <div style={gradientBackground} >
@@ -37,24 +36,6 @@ const shadowStyle = {
             </div>
           </form>
         </div>
-      </div>
-      <div
-        aria-live="polite"
-        aria-atomic="true"
-        className="position-block"
-      >
-        <ToastContainer
-          className="p-3"
-          position='top-center'
-          style={{ zIndex: 1 }}
-        >
-          <Toast show={showToast} bg={'success'} onClose={closeToast} animation={true} delay={4000} autohide>
-            <Toast.Header closeButton={true} style={{background:'#00000010'}}>
-              <strong className="me-auto">Registration Sucessful</strong>
-            </Toast.Header>
-            <Toast.Body>An email has been sent containing your verification code.</Toast.Body>
-          </Toast>
-        </ToastContainer>
       </div>
     </div>
   );
