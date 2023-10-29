@@ -14,4 +14,6 @@ public interface UserInfo {
     String getUserStatusStatus();
     @JsonProperty("userType")
     String getUserTypeType();
+
+    boolean getPromotionEligibility();
 }

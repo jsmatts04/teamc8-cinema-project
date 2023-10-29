@@ -1,6 +1,7 @@
 package com.teamc8.model.dto;
 
 import com.teamc8.model.User;
+import lombok.Builder;
 import lombok.Data;
 
 @Data

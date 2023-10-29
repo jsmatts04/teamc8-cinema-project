@@ -1,6 +1,7 @@
 package com.teamc8.controller;
 
 import com.teamc8.model.PaymentCard;
+import com.teamc8.model.projection.PaymentCardProjection;
 import com.teamc8.model.request.NewPaymentCardRequest;
 import com.teamc8.service.PaymentCardService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,11 @@ public class PaymentCardController {
         return paymentCardService.getPaymentCardById(id);
     }
 
+    @GetMapping(path = "/user")
+    public List<PaymentCardProjection> getAllPaymentCardsForUser(@RequestParam String email) {
+        return paymentCardService.getAllPaymentCardsForUserByEmail(email);
+    }
+
     //add payment card to user
     @PostMapping("/add")
     public PaymentCard addPaymentCard(@RequestBody NewPaymentCardRequest paymentCard) {
@@ -35,8 +41,8 @@ public class PaymentCardController {
 
     //delete payment card from user
     @DeleteMapping("/delete/{id}")
-    public void deletePaymentCard(@PathVariable int id) {
-        paymentCardService.deletePaymentCard(id);
+    public void deletePaymentCard(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
+        paymentCardService.deletePaymentCard(id, authHeader);
     }
 
     //update payment card in user

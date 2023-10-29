@@ -11,8 +11,10 @@ import java.util.Optional;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
+    Optional<Address> findByUserId(int id);
     List<AddressProjection> findAllProjectedBy();
-    Optional<AddressProjection> findByUserId(int id);
+    Optional<AddressProjection> findProjectedByUserId(int id);
     Optional<AddressProjection> findProjectedById(int id);
 
+    boolean existsByUserId(int id);
 }

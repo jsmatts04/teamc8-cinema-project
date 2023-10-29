@@ -1,5 +1,6 @@
 package com.teamc8.service;
 
+import com.teamc8.config.JwtService;
 import com.teamc8.config.email.ForgotPasswordEmailService;
 import com.teamc8.exception.UserAlreadyExistsException;
 import com.teamc8.exception.UserNotFoundException;
@@ -26,6 +27,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final ForgotPasswordEmailService forgotPasswordEmailService;
+    private final JwtService jwtService;
+    private final ForgetPasswordTokenRepository tokenRepository;
+    private final ForgotPasswordEmailService ForgotPasswordEmailService;
 
     // Get all users
     public List<UserInfo> getAllUsers() {
@@ -90,13 +94,37 @@ public class UserService {
     public void deleteUser(int id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
-        }
-        else throw new UserNotFoundException("User by id " + id + " cannot be deleted because it does not exist");
+        } else throw new UserNotFoundException("User by id " + id + " cannot be deleted because it does not exist");
     }
 
     //get user by email
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User by email not found: " + email));
+    }
+
+    public UserInfo getUserInfoByEmail(String email) {
+        return userRepository.findProjectedByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User by email not found: " + email));
+    }
+
+    public UserInfo getUserInfoByJwtToken(String token) {
+        String email = jwtService.extractUsername(token);
+        return getUserInfoByEmail(email);
+    }
+
+    private String buildForgotPasswordEmail(String name, String link) {
+        return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">" +
+                "<span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">" +
+                "Reset Your Password</span>" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
+                "Hi " + name + "," +
+                "</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
+                "We received a request to reset your password. Click on the below link to set a new password: " +
+                "</p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\">" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
+                "<a href=\"" + link + "\">Reset Password</a>" +
+                "</p></blockquote>\n If you didn't request a password reset, please ignore this email." +
+                "</div>";
     }
 }

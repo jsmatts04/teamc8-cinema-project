@@ -1,6 +1,5 @@
-package com.teamc8.model;
+package com.teamc8.model.request;
 
-import com.teamc8.model.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String jwtToken;
-    private UserDTO user;
+public class PasswordResetRequest {
+    private String newPassword;
 }

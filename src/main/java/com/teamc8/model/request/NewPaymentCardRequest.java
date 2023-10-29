@@ -13,4 +13,5 @@ public class NewPaymentCardRequest {
     private String cardNumber;
     private String nameOnCard;
     private int addressId;
+
 }

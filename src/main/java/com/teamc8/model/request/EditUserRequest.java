@@ -9,5 +9,6 @@ public class EditUserRequest {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private boolean promotionEligibility;
 
 }

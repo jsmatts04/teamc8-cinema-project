@@ -30,6 +30,7 @@ public class PaymentCard {
 
     //expiration date
     @Column(name = "exp_date")
+    @Temporal(TemporalType.DATE)
     private Date expirationDate;
 
     //card number

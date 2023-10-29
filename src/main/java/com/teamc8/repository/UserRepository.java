@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     //find user by id
     Optional<UserInfo> findProjectedById(int id);
 
+    Optional<UserInfo> findProjectedByEmail(String email);
+
     //exists user by email
     boolean existsByEmail(String email);
 

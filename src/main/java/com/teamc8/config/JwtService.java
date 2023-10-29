@@ -19,6 +19,14 @@ public class JwtService {
 
     private static final String SECRET_KEY = "866f555b1e331fb6d08d9e7b90a471a232eee5574adbe1cad3f00709ef02f753";
 
+    public String getTokenFromHeader(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        } else {
+            throw new RuntimeException("No Bearer authorization header provided");
+        }
+    }
+
     //extract username
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

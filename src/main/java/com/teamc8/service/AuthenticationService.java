@@ -49,7 +49,10 @@ public class AuthenticationService {
         String link = "http://localhost:8080/api/auth/confirm?token=" + confirmationToken.getToken();
         emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         String jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder()
+                .jwtToken(jwtToken)
+                .user(new UserDTO(user))
+                .build();
     }
 
     //authenticate user
@@ -66,7 +69,7 @@ public class AuthenticationService {
         }
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .jwtToken(jwtToken)
                 .user(new UserDTO(user))
                 .build();
     }
