@@ -26,7 +26,7 @@ function Login(props) {
     if (data.state !== null) {
       setShowToast(data.state.showToast);
     }
-  },[])
+  },[data.state])
   
 
   function login() {

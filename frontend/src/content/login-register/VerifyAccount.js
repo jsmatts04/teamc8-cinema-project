@@ -1,7 +1,4 @@
 import React from 'react';
-import Toast from 'react-bootstrap/Toast'
-import {useState} from 'react';
-import ToastContainer from 'react-bootstrap/ToastContainer'
 import '../../App.css'
 
 
@@ -15,7 +12,6 @@ const shadowStyle = {
     boxShadow: '0px 0px 50px rgba(0, 0, 0, 1.0)', // Adjust values as needed
   };
 
-  
 
   return (
     <div style={gradientBackground} >
