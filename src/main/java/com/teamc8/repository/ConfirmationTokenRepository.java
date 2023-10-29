@@ -1,5 +1,6 @@
-package com.teamc8.config.token;
+package com.teamc8.repository;
 
+import com.teamc8.model.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

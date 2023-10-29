@@ -6,7 +6,6 @@ import com.teamc8.model.request.EditUserPasswordRequest;
 import com.teamc8.model.request.EditUserRequest;
 import com.teamc8.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,9 +46,15 @@ public class UserController {
         return userService.editUser(user);
     }
 
-    @PutMapping(path = "/editProfile/resetPassword")
-    public User resetPassword(@RequestBody EditUserPasswordRequest passwordRequest) {
-        return userService.resetUserPassword(passwordRequest);
+    @PutMapping(path = "/editProfile/changePassword")
+    public User changePassword(@RequestBody EditUserPasswordRequest passwordRequest) {
+        return userService.changeUserPassword(passwordRequest);
+    }
+
+    @GetMapping(path = "/forgotPassword")
+    public String forgotPassword(@RequestParam String email) {
+        userService.sendForgotPasswordEmail(email);
+        return "email sent";
     }
 
     //delete user by id

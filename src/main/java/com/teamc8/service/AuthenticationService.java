@@ -1,8 +1,8 @@
 package com.teamc8.service;
 
+import com.teamc8.config.email.ConfirmationEmailService;
 import com.teamc8.config.email.EmailSender;
-import com.teamc8.config.token.ConfirmationToken;
-import com.teamc8.config.token.ConfirmationTokenService;
+import com.teamc8.model.ConfirmationToken;
 import com.teamc8.exception.UserNotActiveException;
 import com.teamc8.model.*;
 import com.teamc8.config.JwtService;
@@ -27,7 +27,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
-    private final EmailSender emailSender;
+    private final ConfirmationEmailService emailSender;
 
     //register new user
     public AuthenticationResponse register(RegisterRequest request) {

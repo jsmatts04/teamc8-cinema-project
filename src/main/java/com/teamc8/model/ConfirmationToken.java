@@ -1,4 +1,4 @@
-package com.teamc8.config.token;
+package com.teamc8.model;
 
 import com.teamc8.model.User;
 import jakarta.persistence.*;

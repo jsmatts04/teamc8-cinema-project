@@ -23,7 +23,6 @@ public class MovieController {
 
     //get all movies
     @GetMapping
-    @PreAuthorize("hasAuthority('CUSTOMER')")
     public List<Movie> getMovies() {
         return movieService.getMovies();
     }

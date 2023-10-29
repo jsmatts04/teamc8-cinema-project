@@ -1,5 +1,6 @@
 package com.teamc8.service;
 
+import com.teamc8.config.email.ForgotPasswordEmailService;
 import com.teamc8.exception.UserAlreadyExistsException;
 import com.teamc8.exception.UserNotFoundException;
 import com.teamc8.model.User;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +25,7 @@ public class UserService {
     private final UserStatusService userStatusService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final ForgotPasswordEmailService forgotPasswordEmailService;
 
     // Get all users
     public List<UserInfo> getAllUsers() {
@@ -60,10 +61,11 @@ public class UserService {
 
     //edit user password
     @Transactional
-    public User resetUserPassword(EditUserPasswordRequest passwordRequest) {
+    public User changeUserPassword(EditUserPasswordRequest passwordRequest) {
         User oldUser = userRepository.findByEmail(passwordRequest.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("There is no user by the id " + passwordRequest.getEmail() + " to be updated"));
 
+        // Check that provided current password is current
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         passwordRequest.getEmail(),
@@ -73,6 +75,10 @@ public class UserService {
 
         oldUser.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
         return oldUser;
+    }
+
+    public void sendForgotPasswordEmail(String email) {
+
     }
 
     //make user active

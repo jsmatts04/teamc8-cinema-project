@@ -1,6 +1,8 @@
-package com.teamc8.config.token;
+package com.teamc8.service;
 
+import com.teamc8.model.ConfirmationToken;
 import com.teamc8.model.User;
+import com.teamc8.repository.ConfirmationTokenRepository;
 import com.teamc8.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

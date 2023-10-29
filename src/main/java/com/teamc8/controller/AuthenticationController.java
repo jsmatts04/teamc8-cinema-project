@@ -1,6 +1,6 @@
 package com.teamc8.controller;
 
-import com.teamc8.config.token.ConfirmationTokenService;
+import com.teamc8.service.ConfirmationTokenService;
 import com.teamc8.exception.UserNotActiveException;
 import com.teamc8.model.request.AuthenticationRequest;
 import com.teamc8.model.AuthenticationResponse;
