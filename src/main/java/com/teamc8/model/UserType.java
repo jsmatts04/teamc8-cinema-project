@@ -8,11 +8,13 @@ import lombok.Data;
 @Table(name = "user_type")
 public class UserType {
 
+    //id
     @Id
     private short id;
+
+    //type
     @Column(name = "type")
     private String type;
-
 
     @Override
     public String toString() {

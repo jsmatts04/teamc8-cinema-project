@@ -3,9 +3,10 @@ package com.teamc8.service;
 import com.teamc8.config.email.EmailSender;
 import com.teamc8.config.token.ConfirmationToken;
 import com.teamc8.config.token.ConfirmationTokenService;
-import com.teamc8.exception.UserAlreadyExistsException;
 import com.teamc8.model.*;
 import com.teamc8.config.JwtService;
+import com.teamc8.model.request.AuthenticationRequest;
+import com.teamc8.model.request.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final EmailSender emailSender;
 
+    //register new user
     public AuthenticationResponse register(RegisterRequest request) {
         // Get customer user type
         UserType customerType = userTypeService.getUserTypeById((short) 2);
@@ -47,6 +49,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
+    //authenticate user
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -63,6 +66,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
+    //email verification format
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +

@@ -29,19 +29,23 @@ public class ConfirmationTokenService {
         return confirmationTokenRepository.save(confirmationToken);
     }
 
+    // Get confirmation token
     public Optional<ConfirmationToken> getToken(String token) {
         return confirmationTokenRepository.findByToken(token);
     }
 
+    // Set confirmation
     public void setConfirmedAt(ConfirmationToken token) {
         token.setTimeConfirmedAt(LocalDateTime.now());
         confirmationTokenRepository.save(token);
     }
 
+    // Check if token is expired
     public boolean isTokenExpired(ConfirmationToken confirmationToken) {
         return confirmationToken.getTimeExpiredAt().isBefore(LocalDateTime.now());
     }
 
+    // Confirm token
     @Transactional
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = getToken(token)
@@ -60,6 +64,7 @@ public class ConfirmationTokenService {
         return "confirmed";
     }
 
+    // Get last token for user
     public ConfirmationToken getLastTokenForUser(User user) {
         return confirmationTokenRepository.findByUserIdOrderByTimeCreatedAtDesc(user.getId());
     }

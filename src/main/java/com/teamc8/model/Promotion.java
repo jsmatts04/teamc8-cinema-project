@@ -23,16 +23,20 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    //booking
     @OneToOne
     @JoinColumn(name = "id", referencedColumnName = "promotion_id")
     private Booking booking;
 
+    //discount amount
     @Column(name = "discount_amount")
     private int discountAmount;
 
+    //start date
     @Column(name = "start_date")
     private Date startDate;
 
+    //end date
     @Column(name = "end_date")
     private Date endDate;
 

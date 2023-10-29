@@ -10,6 +10,5 @@ public interface UserInfo {
     String getFirstName();
     String getLastName();
     UserStatus getUserStatus();
-//    UserType getUserType();
     String getUserTypeType();
 }

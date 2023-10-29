@@ -8,6 +8,8 @@ import java.util.Properties;
 
 public class EmailConfig {
 
+
+    //mail sender
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

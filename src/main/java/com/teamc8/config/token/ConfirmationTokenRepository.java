@@ -5,11 +5,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+
+//repository for confirmation token
 @Repository
 public interface ConfirmationTokenRepository
         extends JpaRepository <ConfirmationToken, Long> {
 
-    Optional<ConfirmationToken> findByToken(String token);
+    Optional<ConfirmationToken> findByToken(String token); //find confirmation token by token
 
-    ConfirmationToken findByUserIdOrderByTimeCreatedAtDesc(int id);
+    ConfirmationToken findFirstByUserIdOrderByTimeCreatedAtDesc(int id); //find confirmation token by
 }

@@ -1,10 +1,9 @@
 package com.teamc8.controller;
 
 import com.teamc8.config.token.ConfirmationTokenService;
-import com.teamc8.model.AuthenticationRequest;
+import com.teamc8.model.request.AuthenticationRequest;
 import com.teamc8.model.AuthenticationResponse;
-import com.teamc8.model.RegisterRequest;
-import com.teamc8.repository.UserRepository;
+import com.teamc8.model.request.RegisterRequest;
 import com.teamc8.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +20,19 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final ConfirmationTokenService confirmationTokenService;
 
+    //register a new user
     @PostMapping(path = "/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
+    //authenticate a user
     @PostMapping(path = "/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
+    //confirm a user
     @GetMapping(path = "/confirm")
     public String confirm(@RequestParam("token") String token) {
         return confirmationTokenService.confirmToken(token);

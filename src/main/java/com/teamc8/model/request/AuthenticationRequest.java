@@ -1,4 +1,4 @@
-package com.teamc8.model;
+package com.teamc8.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

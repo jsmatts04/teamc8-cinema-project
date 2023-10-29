@@ -13,10 +13,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "room")
 public class Room {
 
+    //id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    //number of seats
     @Column(name = "num_seats")
     private int numSeats;
 

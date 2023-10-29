@@ -8,9 +8,12 @@ import lombok.Data;
 @Table(name = "user_status")
 public class UserStatus {
 
+    //id
     @Id
     @GeneratedValue
     private short id;
+
+    //status
     @Column(name = "status", length = 20)
     private String status;
 

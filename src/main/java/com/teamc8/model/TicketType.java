@@ -14,13 +14,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "ticket_type")
 public class TicketType {
 
+    //id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "type")
+    //type
+    @Column(name = "type", length = 10)
     private char type;
 
+    //price
     @Column(name = "price")
     private int price;
 

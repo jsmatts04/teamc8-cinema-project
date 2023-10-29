@@ -6,10 +6,12 @@ import jakarta.persistence.*;
 @Table(name = "movie_status")
 public class MovieStatus {
 
+    //id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private short id;
 
+    //status
     @Column(name = "status")
     private String statusType;
 

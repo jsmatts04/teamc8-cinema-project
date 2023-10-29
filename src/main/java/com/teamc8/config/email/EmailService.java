@@ -14,10 +14,14 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class EmailService implements EmailSender {
 
+    //logger to log messages
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
+    //dependency injection
     private final JavaMailSender mailSender;
 
+
+    //send email to user
     @Override
     @Async
     public void send(String to, String email) {

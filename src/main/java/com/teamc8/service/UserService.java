@@ -28,6 +28,7 @@ public class UserService {
         return userRepository.findAllProjectedBy();
     }
 
+    //get user by id
     public UserInfo getUserById(int id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User by id " + id + " not found"));
@@ -41,17 +42,24 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(User user) {
-        if (userRepository.existsById(user.getId())) {
-            return userRepository.save(user);
-        }
-        else throw new UserNotFoundException("There is no user by the id " + user.getId() + " to be updated");
+    //edit user profile
+    @Transactional
+    public User editUser(EditUserRequest user) {
+        User oldUser = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("There is no user by the id " + user.getEmail() + " to be updated"));
+
+        oldUser.setFirstName(user.getFirstName());
+        oldUser.setLastName(user.getLastName());
+        oldUser.setPhoneNumber(user.getPhoneNumber());
+
+        return oldUser;
     }
 
     public void makeUserActive(User user) {
         user.setUserStatus(userStatusService.getUserStatusById((short) 1));
     }
 
+    //delete user
     public void deleteUser(int id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
@@ -59,6 +67,7 @@ public class UserService {
         else throw new UserNotFoundException("User by id " + id + " cannot be deleted because it does not exist");
     }
 
+    //get user by email
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }

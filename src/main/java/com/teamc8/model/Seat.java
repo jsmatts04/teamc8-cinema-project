@@ -14,18 +14,20 @@ import lombok.NoArgsConstructor;
 @Table(name = "seat")
 public class Seat {
 
+    //id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
+    //seat number
     @Column(name = "seat_num")
     private int seatNum;
 
-
+    //reserved
     @Column(name = "reserved")
     private boolean reserved;
 
+    //showtime
     @ManyToOne
     @JoinColumn(name = "show_id", referencedColumnName = "id")
     private Showtime showtime;

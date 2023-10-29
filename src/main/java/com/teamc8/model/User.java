@@ -20,31 +20,50 @@ import java.util.List;
 @Table(name = "cinema_user")
 public class User implements UserDetails {
 
+    //id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+
+    //email
     @Column(name = "email")
     private String email;
+
+    //password
     @Column(name = "password")
     private String password;
+
+    //first_name
     @Column(name = "first_name")
     private String firstName;
+
+    //last_name
     @Column(name = "last_name")
     private String lastName;
+
+    //user_status_id
     @ManyToOne
     @JoinColumn(name = "user_status_id")
     private UserStatus userStatus;
+
+    //user_type_id
     @ManyToOne
     @JoinColumn(name = "user_type_id")
     private UserType userType;
 
-    public User(String email, String password, String firstName, String lastName, UserStatus userStatus, UserType userType) {
+    //phone number
+    @Column(name = "phone_number", length = 20)
+    private String phoneNumber;
+
+    public User(String email, String password, String firstName, String lastName, UserStatus userStatus, UserType userType, String phoneNumber) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userStatus = userStatus;
         this.userType = userType;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -76,19 +95,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", userStatus=" + userStatus + '\'' +
-                ", userType=" + userType +
-                '}';
-    }
-
 
 }

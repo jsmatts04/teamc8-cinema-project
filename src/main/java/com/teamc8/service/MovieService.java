@@ -14,24 +14,29 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
+    //constructor
     @Autowired
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
+    //get all movies
     public List<Movie> getMovies() {
         return movieRepository.findAll();
     }
 
+    //get movie by id
     public Movie getMovieById(int id) {
         return movieRepository.findById(id).orElseThrow(() ->
                 new MovieNotFoundException("Movie by id " + id + "does not exist in database."));
     }
 
+    //get movie by title and picture
     public List<MovieCover> getAllMovieTitleAndPicture() {
         return movieRepository.findAllProjectedBy();
     }
 
+    //get movie cover by status
     public List<MovieCover> getAllMovieCoversForStatus(short status) {
         return movieRepository.findAllProjectedByMovieStatusId(status);
     }
@@ -41,6 +46,7 @@ public class MovieService {
         return movieRepository.existsById(id);
     }
 
+    //add movie
     public Movie addMovie(Movie movie) {
         Movie savedMovie = movieRepository.save(movie);
         return movieRepository.save(movie);

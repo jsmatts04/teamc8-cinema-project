@@ -14,19 +14,22 @@ import lombok.NoArgsConstructor;
 @Table(name = "ticket")
 public class Ticket {
 
-
+    //id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    //booking id
     @ManyToOne
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     private Booking booking;
 
+    //ticket type
     @ManyToOne
     @JoinColumn(name = "type", referencedColumnName = "id")
     private com.teamc8.model.TicketType type;
 
+    //seat
     @ManyToOne
     @JoinColumn(name = "seat_id", referencedColumnName = "id")
     private Seat seat;

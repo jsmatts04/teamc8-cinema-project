@@ -17,19 +17,24 @@ import java.time.LocalDateTime;
 @Table(name = "confirmation_token")
 public class ConfirmationToken {
 
+    //id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //token
     @Column(nullable = false)
     private String token;
 
+    //time created at
     @Column(nullable = false)
     private LocalDateTime timeCreatedAt;
 
+    //time expired at
     @Column(nullable = false)
     private LocalDateTime timeExpiredAt;
 
+    //time confirmed at
     private LocalDateTime timeConfirmedAt;
 
     @ManyToOne
@@ -37,6 +42,7 @@ public class ConfirmationToken {
             nullable = false,
             name = "user_id"
     )
+    //user
     private User user;
 
 }

@@ -15,30 +15,35 @@ public class UserController {
 
     private final UserService userService;
 
+    //constructor
     @Autowired
     public UserController(UserService userService) { this.userService = userService; }
 
+    //get all users
     @GetMapping
     @PreAuthorize("hasAuthority('CUSTOMER')")
     public List<UserInfo> getAllUsers() {
         return userService.getAllUsers();
     }
 
+    //get user by id
     @GetMapping(path = "/{id}")
     public UserInfo getUserById(int id) {
         return userService.getUserById(id);
     }
 
 
+    //add user
     @PostMapping(path = "/add")
     public User addUser(@RequestBody User user) {
         System.out.println("POST USER");
         return userService.createUser(user);
     }
 
-    @PutMapping (path = "/update")
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    //update user
+    @PutMapping(path = "/editProfile")
+    public User editUser(@RequestBody EditUserRequest user) {
+        return userService.editUser(user);
     }
 
     //delete user by id
