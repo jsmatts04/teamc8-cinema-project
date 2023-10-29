@@ -13,5 +13,6 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
 
     List<AddressProjection> findAllProjectedBy();
     Optional<AddressProjection> findByUserId(int id);
+    Optional<AddressProjection> findProjectedById(int id);
 
 }

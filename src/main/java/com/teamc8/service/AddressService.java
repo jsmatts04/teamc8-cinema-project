@@ -21,4 +21,8 @@ public class AddressService {
     public AddressProjection getAddressByUserId(int id) {
         return addressRepository.findByUserId(id).orElseThrow(() -> new RuntimeException("Address not found"));
     }
+    //get address by id
+    public Address getAddressById(int id) {
+        return addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Address not found"));
+    }
 }

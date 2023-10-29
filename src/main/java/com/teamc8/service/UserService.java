@@ -40,7 +40,7 @@ public class UserService {
     // Create user
     public User createUser(User user) {
         // Check if user with email already exists
-        if (getUserByEmail(user.getEmail()).isPresent())
+        if (userRepository.existsByEmail(user.getEmail()))
             throw new UserAlreadyExistsException("Username " + user.getEmail() + " already exists");
         return userRepository.save(user);
     }
@@ -89,7 +89,8 @@ public class UserService {
     }
 
     //get user by email
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User by email not found: " + email));
     }
 }

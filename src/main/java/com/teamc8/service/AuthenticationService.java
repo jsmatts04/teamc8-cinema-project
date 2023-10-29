@@ -59,7 +59,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        User user = userService.getUserByEmail(request.getEmail()).orElseThrow();
+        User user = userService.getUserByEmail(request.getEmail());
         if (!user.getUserStatus().getStatus().equals("ACTIVE")) {
             throw new UserNotActiveException("User is " + user.getUserStatus().getStatus());
         }
