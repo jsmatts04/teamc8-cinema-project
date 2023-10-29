@@ -42,11 +42,12 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .userStatus(inactiveStatus)
                 .userType(customerType)
+                .promotionEligibility(request.isPromotionEligibility())
                 .build();
         userService.createUser(user);
         ConfirmationToken confirmationToken = confirmationTokenService.createNewToken(user);
         String link = "http://localhost:8080/api/auth/confirm?token=" + confirmationToken.getToken();
-        emailSender.send(request.getEmail(), buildEmail(request.firstName(), link));
+        emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
