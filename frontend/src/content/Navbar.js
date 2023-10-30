@@ -9,6 +9,7 @@ import filmLogo from '../Images/film.png'
 import searchIcon from '../Images/search-icon.png'
 import { useState } from 'react';
 import '../css/Navbar.css'
+import { removeJwtToken } from '../api/AxiosConfig';
 
 function Navbar(props) {
     let {loginState,setLoggedIn,setSearchQuery} = props;
@@ -17,7 +18,7 @@ function Navbar(props) {
 
     function handleLogout() {
         setLoggedIn(false);
-        localStorage.clear();
+        removeJwtToken();
         navigate('/');
     }
 

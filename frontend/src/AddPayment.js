@@ -1,21 +1,11 @@
-import React, { Component } from 'react';
+import React,{useState} from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-import { Link } from 'react-router-dom';
+import { addPaymentCard } from './api/PaymentCardApi';
+import Button from 'react-bootstrap/Button'
 
-class AddPayment extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showToast: false,
-        };
-    }
-
-    toggleToast = () => {
-        this.setState({ showToast: true });
-    };
-
-    render() {
+function AddPayment() {
         const gradientBackground = {
             background: 'linear-gradient(180deg, #12100E 0%, #2B4162 100%)',
             height: '100vh',
@@ -28,54 +18,68 @@ class AddPayment extends Component {
         const inputLabelStyle = {
             fontSize: '20px',
         };
+        
+        const [expirationDate, setExpirationDate] = useState('');
+        const [cardNumber, setCardNumber] = useState('');
+        const [nameOnCard, setNameOnCard] = useState('');
+        const [securityCode, setSecurityCode] = useState('');
+
+        const location = useLocation();
+        const nav = useNavigate();
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            let req = {
+                email: location.state.email,
+                addressId: location.state.addressId,
+                cardType: '',
+                expirationDate: expirationDate,
+                cardNumber: cardNumber,
+                nameOnCard: nameOnCard
+            }
+            addPaymentCard(req).then(
+                (response) => {
+                    console.log(response.data)
+                    nav('/EditProfile', {state: {showPaymentToast: true}});
+                }
+            ).catch((err) => (console.log(err)))
+        }
 
         return (
             <div style={gradientBackground}>
                 <div className="login-container d-flex justify-content-center align-items-center vh-100">
                     <div className="login-form-container p-5 rounded bg-white" style={shadowStyle}>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <h3 style={{ color: 'black' }}>Add Payment</h3>
                             <div className="mb-3">
                                 <label htmlFor="nameOnCard" style={inputLabelStyle}>Name on Card</label>
-                                <input type="text" placeholder="Enter Name on Card" className="form-control" id="nameOnCard" />
+                                <input required type="text" placeholder="Enter Name on Card" className="form-control" id="nameOnCard" onChange={(e)=>(setNameOnCard(e.target.value))}/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="cardNumber" style={inputLabelStyle}>Card Number</label>
-                                <input type="text" placeholder="Enter Card Number" className="form-control" id="cardNumber" />
+                                <input required type="text" placeholder="Enter Card Number" className="form-control" id="cardNumber" onChange={(e)=>(setCardNumber(e.target.value))}/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="expirationDate" style={inputLabelStyle}>Expiration Date</label>
-                                <input type="text" placeholder="Enter Expiration Date" className="form-control" id="expirationDate" />
+                                <input required type="text" placeholder="MM/YY" className="form-control" id="expirationDate" onChange={(e)=>(setExpirationDate(e.target.value))}/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="cvv" style={inputLabelStyle}>CVV</label>
-                                <input type="text" placeholder="Enter CVV" className="form-control" id="cvv" />
+                                <input required type="text" placeholder="Enter CVV" className="form-control" id="cvv" onChange={(e)=>(setSecurityCode(e.target.value))}/>
                             </div>
                             <div className="d-grid">
-                                <button
-                                    className="btn btn-primary"
-                                    style={{ backgroundColor: '#C84B31' }}
-                                    onClick={this.toggleToast}
+                                <Button
+                                    type='submit'
+                                    variant='success'
                                 >
                                     Save Payment
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div aria-live="polite" aria-atomic="true" className="position-block">
-                    <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
-                        <Toast show={this.state.showToast} bg="success" onClose={() => this.setState({ showToast: false })} animation={true} delay={4000} autohide>
-                            <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
-                                <strong className="me-auto">Payment Added</strong>
-                            </Toast.Header>
-                            <Toast.Body>Your payment details have been successfully added.</Toast.Body>
-                        </Toast>
-                    </ToastContainer>
-                </div>
             </div>
         );
     }
-}
+
 
 export default AddPayment;
