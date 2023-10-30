@@ -7,7 +7,7 @@ import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 import Alert from 'react-bootstrap/Alert';
 import { authenticateUser, resendConfirmationEmail } from '../../api/AuthenticationApi';
-import { getAllUserInfo } from '../../api/UserApi';
+import { storeJwtToken } from '../../api/AxiosConfig';
 
 function Login(props) {
   let { setLoggedIn, setAdminState } = props;
@@ -28,6 +28,7 @@ function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [check, setCheck] = useState(false);
 
   const data = useLocation();
   useEffect (() => {
@@ -45,10 +46,12 @@ function Login(props) {
       email:email,
       password:password
     };
-    console.log(user);
     authenticateUser(user).then(
-      (response) => {console.log(response.data.user);
-        localStorage.setItem('auth-token', response.data.jwtToken);
+      (response) => {
+        console.log(response.data.user);
+        if (check) {
+          storeJwtToken(response.data.jwtToken)
+        }
         setLoggedIn(true);
         if (response.data.user.userType === "CUSTOMER") {
           navigate('/');
@@ -61,6 +64,9 @@ function Login(props) {
     ).catch((err) => {
       if (err.response.data == 'User is INACTIVE') {
         setShow(true);
+      }
+      else {
+        setError(true);
       }
     })
   }
@@ -78,6 +84,10 @@ function Login(props) {
     setLoggedIn(true);
     setAdminState(true);
     navigate('/adminhomepage');
+  }
+
+  const updateCheck = () => {
+    setCheck(!check);
   }
 
   return (
@@ -98,6 +108,7 @@ function Login(props) {
           you don't see it, we can <Alert.Link onClick={resendConfirmation}>Resend Verification Email</Alert.Link>.
           </p>
           </Alert>
+              {error && <p style={{color:'red', fontSize:'16px'}}>Invalid Email/Password</p>}
               <div className="mb-2">
                 <label htmlFor="email">Email</label>
                 <input required onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter Email" className="form-control" />
@@ -107,7 +118,7 @@ function Login(props) {
                 <input required onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter Password" className="form-control" />
               </div>
               <div className="mb-2">
-                <input type="checkbox" className="custom-control custom-checkbox" id="check" style={{marginRight: '2px'}}/>
+                <input type="checkbox" onClick={updateCheck} className="custom-control custom-checkbox" id="check" style={{marginRight: '2px'}}/>
                 <label htmlFor="check" className="custom-input-label">
                   Remember me
                 </label>
