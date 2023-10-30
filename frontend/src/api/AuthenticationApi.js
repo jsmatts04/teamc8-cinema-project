@@ -4,7 +4,7 @@ const BASE_URL = 'http://localhost:8080/api'
 
 // Register user into database. 
 // Returns a AUTHENTICATION_RESPONSE object. See reference.
-// user = { firstName, lastName, email, password, promotionEligibility } JSON object
+// user = { firstName, lastName, email, password, promotionEligibility, phoneNumber } JSON object
 export const registerUser = (user) => axios.post(`${BASE_URL}/auth/register`, user); 
 
 // Authenticate credentials from database.
