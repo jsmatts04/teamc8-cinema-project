@@ -6,4 +6,7 @@ export const registerUser = (user) => api.post(`/auth/register`, user);
 
 // Authenticate credentials from database. Returns JWT token.
 // req = { email, password } JSON object
-export const authenticateUser = (req) => api.post(`/auth/authenticate`, req)
+export const authenticateUser = (req) => api.post(`/auth/authenticate`, req);
+
+// Resend confirmation email. Requires email
+export const resendConfirmationEmail = (email) => api.get(`/auth/resendConfirmation?email=${email}`);
