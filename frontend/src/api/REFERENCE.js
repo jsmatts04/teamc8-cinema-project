@@ -1,9 +1,11 @@
 /*
     This file serves as a reference that contains the structures of objects that are related to the backend.
-    These are represented as JSON objects, so I am only providing the key names.
+    These are represented as JSON objects, so I am only providing the key names. Ctrl+F if you need
 */
 
 
+// RESPONSE OBJECTS - Objects you can expect to receive from endpoints.
+// ----------------
 MOVIE_COVER = { 
     id: 1, 
     title: '', 
@@ -59,7 +61,6 @@ ADDRESS = {
 PAYMENT_CARD = { 
     id: 1,
     userId: 1,
-    addressId: 1,
     nameOnCard: '',
     cardNumber: '',
     cardType: '',
@@ -72,7 +73,7 @@ ALL_USER_INFO = {
     address: {ADDRESS}
 }
 
-// REQUEST OBJECTS
+// REQUEST OBJECTS - Objects you should be providing to endpoints.
 // ---------------
 EDIT_ADDRESS_REQUEST = {
     id: 1,
@@ -80,6 +81,14 @@ EDIT_ADDRESS_REQUEST = {
     city: '',
     state: '',
     postalCode: ''
+}
+
+NEW_PAYMENT_CARD_REQUEST = {
+    email: '',
+    cardType: '',
+    expirationDate: '',
+    cardNumber: '',
+    nameOnCard: ''
 }
 
 EDIT_PAYMENT_CARD_REQUEST = {
