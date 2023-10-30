@@ -47,11 +47,20 @@ USER_INFO = { id,
     promotionEligibility: true
 }
 
-ADDRESS = { id, 
+ADDRESS = { 
+    id: 1, 
     userId: 1,
     street: '', 
     city: '', 
     state: '', 
+    postalCode: ''
+}
+
+EDIT_ADDRESS_REQUEST = {
+    id: 1,
+    street: '',
+    city: '',
+    state: '',
     postalCode: ''
 }
 
