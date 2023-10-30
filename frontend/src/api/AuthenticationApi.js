@@ -18,7 +18,7 @@ export const resendConfirmationEmail = (email) => axios.get(`${BASE_URL}/auth/re
 
 // Reset password without verifying old password
 // Requires token from search params and newPassword from text field
-export const resetPassword = (token, newPassword) => axios.put(`${BASE_URL}/user/resetPassword?${token}`, {'newPassword': newPassword});
+export const resetPassword = (token, newPassword) => axios.put(`${BASE_URL}/user/resetPassword?token=${token}`, {'newPassword': newPassword});
 
 // Sends the email to reset password. Takes in the user email
 export const sendResetPasswordEmail = (email) => axios.get(`${BASE_URL}/user/forgotPassword?email=${email}`);
