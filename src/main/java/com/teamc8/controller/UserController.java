@@ -77,8 +77,9 @@ public class UserController {
         return "email sent";
     }
 
-    @PostMapping(path = "/resetPassword")
+    @PutMapping(path = "/resetPassword")
     public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody PasswordResetRequest passwordResetRequest) {
+        System.out.println("RESET PASSWORD!!");
         userService.resetPassword(token, passwordResetRequest);
         return ResponseEntity.ok("Password reset successfully");
     }

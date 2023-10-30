@@ -41,6 +41,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .userStatus(inactiveStatus)
                 .userType(customerType)
+                .phoneNumber(request.getPhoneNumber())
                 .promotionEligibility(request.isPromotionEligibility())
                 .build();
         userService.createUser(user);

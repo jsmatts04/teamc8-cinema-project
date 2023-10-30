@@ -70,7 +70,7 @@ public class UserService {
         oldUser.setFirstName(user.getFirstName());
         oldUser.setLastName(user.getLastName());
         oldUser.setPhoneNumber(user.getPhoneNumber());
-        // TODO: edit user profile
+        oldUser.setPromotionEligibility(user.isPromotionEligibility());
         String emailContent = buildProfileEditNotificationEmail(oldUser.getFirstName());
         editProfileConfirmationEmailService.send(oldUser.getEmail(), emailContent);
         System.out.println("CHECKPOINT!!!");
