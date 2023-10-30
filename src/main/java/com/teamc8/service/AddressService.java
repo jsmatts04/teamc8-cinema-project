@@ -4,7 +4,7 @@ import com.teamc8.config.JwtService;
 import com.teamc8.exception.UserNotFoundException;
 import com.teamc8.model.Address;
 import com.teamc8.model.User;
-import com.teamc8.model.dto.EditAddressDTO;
+import com.teamc8.model.request.EditAddressRequest;
 import com.teamc8.model.projection.AddressProjection;
 import com.teamc8.model.projection.UserInfo;
 import com.teamc8.model.request.NewAddressRequest;
@@ -70,15 +70,15 @@ public class AddressService {
     }
 
     @Transactional
-    public String editAddress(EditAddressDTO editAddressDTO) {
-        Optional<Address> address = addressRepository.findById(editAddressDTO.getId());
+    public String editAddress(EditAddressRequest editAddressRequest) {
+        Optional<Address> address = addressRepository.findById(editAddressRequest.getId());
 
         if (address.isPresent()) {
             Address updatedAddress = address.get();
-            updatedAddress.setStreet(editAddressDTO.getStreet());
-            updatedAddress.setCity(editAddressDTO.getCity());
-            updatedAddress.setState(editAddressDTO.getState());
-            updatedAddress.setPostalCode(editAddressDTO.getPostalCode());
+            updatedAddress.setStreet(editAddressRequest.getStreet());
+            updatedAddress.setCity(editAddressRequest.getCity());
+            updatedAddress.setState(editAddressRequest.getState());
+            updatedAddress.setPostalCode(editAddressRequest.getPostalCode());
             return "Address successfully updated";
         } else
             return "Address could not be updated";

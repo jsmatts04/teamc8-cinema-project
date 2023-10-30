@@ -6,12 +6,15 @@ import com.teamc8.exception.PaymentCardNotFoundException;
 import com.teamc8.model.PaymentCard;
 import com.teamc8.model.projection.PaymentCardProjection;
 import com.teamc8.model.projection.UserInfo;
+import com.teamc8.model.request.EditPaymentCardRequest;
 import com.teamc8.model.request.NewPaymentCardRequest;
 import com.teamc8.repository.PaymentCardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +23,6 @@ public class PaymentCardService {
     private final PaymentCardRepository paymentCardRepository;
     private final AESEncryptionUtil aesEncryptionUtil;
     private final UserService userService;
-    private final AddressService addressService;
     private final JwtService jwtService;
 
     //get all payment cards from user
@@ -44,7 +46,6 @@ public class PaymentCardService {
                 .expirationDate(paymentCardRequest.getExpirationDate())
                 .cardType(paymentCardRequest.getCardType())
                 .nameOnCard(paymentCardRequest.getNameOnCard())
-                .address(addressService.getAddressById(paymentCardRequest.getAddressId()))
                 .build();
         return paymentCardRepository.save(newCard);
     }
@@ -63,8 +64,25 @@ public class PaymentCardService {
     }
 
     //update payment card in user
-    public PaymentCard updatePaymentCard(int id, PaymentCard paymentCard) {
-        return paymentCardRepository.save(paymentCard);
+    @Transactional
+    public PaymentCard updatePaymentCard(EditPaymentCardRequest paymentCardRequest) {
+        Optional<PaymentCard> paymentCardOptional = paymentCardRepository.findById(paymentCardRequest.getId());
+
+        if (paymentCardOptional.isPresent()) {
+            PaymentCard oldPaymentCard = paymentCardOptional.get();
+            // Extract last 4 digits
+            String lastFourDigits = paymentCardRequest.getCardNumber().substring(paymentCardRequest.getCardNumber().length() - 4);
+            // Encrypt card number
+            String encryptedCardNumber = aesEncryptionUtil.encrypt(paymentCardRequest.getCardNumber());
+            oldPaymentCard.setLastFourDigits(lastFourDigits);
+            oldPaymentCard.setCardNumber(encryptedCardNumber);
+            oldPaymentCard.setCardType(paymentCardRequest.getCardType());
+            oldPaymentCard.setNameOnCard(paymentCardRequest.getNameOnCard());
+            oldPaymentCard.setExpirationDate(paymentCardRequest.getExpirationDate());
+            return oldPaymentCard;
+        } else {
+            throw new PaymentCardNotFoundException("No payment card by id: " + paymentCardRequest.getId());
+        }
     }
 
     public List<PaymentCardProjection> getAllPaymentCardsForUserByEmail(String email) {

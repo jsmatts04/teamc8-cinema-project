@@ -1,6 +1,6 @@
 package com.teamc8.controller;
 
-import com.teamc8.model.dto.EditAddressDTO;
+import com.teamc8.model.request.EditAddressRequest;
 import com.teamc8.model.projection.AddressProjection;
 import com.teamc8.model.request.NewAddressRequest;
 import com.teamc8.service.AddressService;
@@ -32,8 +32,8 @@ public class AddressController {
     }
 
     @PutMapping(path = "/edit")
-    public String editAddress(@RequestBody EditAddressDTO editAddressDTO) {
-        return addressService.editAddress(editAddressDTO);
+    public String editAddress(@RequestBody EditAddressRequest editAddressRequest) {
+        return addressService.editAddress(editAddressRequest);
     }
 
     @DeleteMapping(path = "/delete")

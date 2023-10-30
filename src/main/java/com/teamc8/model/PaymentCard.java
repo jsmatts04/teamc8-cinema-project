@@ -29,9 +29,8 @@ public class PaymentCard {
     private String cardType;
 
     //expiration date
-    @Column(name = "exp_date")
-    @Temporal(TemporalType.DATE)
-    private Date expirationDate;
+    @Column(name = "exp_date", length = 5)
+    private String expirationDate;
 
     //card number
     @Column(name = "card_number")
@@ -45,18 +44,12 @@ public class PaymentCard {
     @Column(name = "last_four_digits")
     private String lastFourDigits;
 
-    //address id
-    @ManyToOne
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;
-
-    public PaymentCard(User user, String cardType, Date expirationDate, String cardNumber, String nameOnCard, Address address, String lastFourDigits) {
+    public PaymentCard(User user, String cardType, String expirationDate, String cardNumber, String nameOnCard, String lastFourDigits) {
         this.user = user;
         this.cardType = cardType;
         this.expirationDate = expirationDate;
         this.cardNumber = cardNumber;
         this.nameOnCard = nameOnCard;
-        this.address = address;
         this.lastFourDigits = lastFourDigits;
     }
 

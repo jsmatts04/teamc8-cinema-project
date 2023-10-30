@@ -2,12 +2,10 @@ package com.teamc8.model.request;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class NewPaymentCardRequest {
+public class EditPaymentCardRequest {
 
-    private String email;
+    private int id;
     private String cardType;
     private String expirationDate;
     private String cardNumber;

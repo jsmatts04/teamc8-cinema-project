@@ -1,9 +1,9 @@
-package com.teamc8.model.dto;
+package com.teamc8.model.request;
 
 import lombok.Data;
 
 @Data
-public class EditAddressDTO {
+public class EditAddressRequest {
 
     private int id;
     private String street;

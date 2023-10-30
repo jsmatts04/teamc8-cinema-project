@@ -2,6 +2,7 @@ package com.teamc8.controller;
 
 import com.teamc8.model.PaymentCard;
 import com.teamc8.model.projection.PaymentCardProjection;
+import com.teamc8.model.request.EditPaymentCardRequest;
 import com.teamc8.model.request.NewPaymentCardRequest;
 import com.teamc8.service.PaymentCardService;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +47,9 @@ public class PaymentCardController {
     }
 
     //update payment card in user
-    @PutMapping("/update/{id}")
-    public PaymentCard updatePaymentCard(@PathVariable int id, PaymentCard paymentCard) {
-        return paymentCardService.updatePaymentCard(id, paymentCard);
+    @PutMapping("/update")
+    public PaymentCard updatePaymentCard(@RequestBody EditPaymentCardRequest paymentCardRequest) {
+        return paymentCardService.updatePaymentCard(paymentCardRequest);
     }
 
 }
