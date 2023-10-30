@@ -1,6 +1,8 @@
 package com.teamc8.service;
 
 import com.teamc8.config.JwtService;
+import com.teamc8.config.email.EditProfileConfirmationEmailService;
+import com.teamc8.config.email.EmailSender;
 import com.teamc8.config.email.ForgotPasswordEmailService;
 import com.teamc8.exception.UserAlreadyExistsException;
 import com.teamc8.exception.UserNotFoundException;
@@ -12,7 +14,11 @@ import com.teamc8.model.request.EditUserRequest;
 import com.teamc8.model.request.PasswordResetRequest;
 import com.teamc8.repository.ForgetPasswordTokenRepository;
 import com.teamc8.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
@@ -33,7 +39,8 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final ForgetPasswordTokenRepository tokenRepository;
-    private final ForgotPasswordEmailService ForgotPasswordEmailService;
+    private final EmailSender forgotPasswordEmailService;
+    private final EmailSender editProfileConfirmationEmailService;
 
     // Get all users
     public List<UserInfo> getAllUsers() {
@@ -63,7 +70,10 @@ public class UserService {
         oldUser.setFirstName(user.getFirstName());
         oldUser.setLastName(user.getLastName());
         oldUser.setPhoneNumber(user.getPhoneNumber());
-
+        // TODO: edit user profile
+        String emailContent = buildProfileEditNotificationEmail(oldUser.getFirstName());
+        editProfileConfirmationEmailService.send(oldUser.getEmail(), emailContent);
+        System.out.println("CHECKPOINT!!!");
         return oldUser;
     }
 
@@ -169,6 +179,16 @@ public class UserService {
                 "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "<a href=\"" + link + "\">Reset Password</a>" +
                 "</p></blockquote>\n If you didn't request a password reset, please ignore this email." +
+                "</div>";
+    }
+
+    private String buildProfileEditNotificationEmail(String name) {
+        return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">" +
+                // ... (similar structure as your verification email) ...
+                "<span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Profile Updated Successfully</span>" +
+                // ... (similar structure as your verification email) ...
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Your profile has been successfully updated. If you didn't make these changes, please contact our support.</p>" +
+                // ... (similar structure as your verification email) ...
                 "</div>";
     }
 }

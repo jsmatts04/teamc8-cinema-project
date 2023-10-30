@@ -1,6 +1,5 @@
 package com.teamc8.service;
 
-import com.teamc8.config.email.ConfirmationEmailService;
 import com.teamc8.config.email.EmailSender;
 import com.teamc8.model.ConfirmationToken;
 import com.teamc8.exception.UserNotActiveException;
@@ -27,7 +26,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
-    private final ConfirmationEmailService emailSender;
+    private final EmailSender confirmationEmailService;
 
     //register new user
     public AuthenticationResponse register(RegisterRequest request) {
@@ -47,7 +46,7 @@ public class AuthenticationService {
         userService.createUser(user);
         ConfirmationToken confirmationToken = confirmationTokenService.createNewToken(user);
         String link = "http://localhost:8080/api/auth/confirm?token=" + confirmationToken.getToken();
-        emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+        confirmationEmailService.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .jwtToken(jwtToken)
