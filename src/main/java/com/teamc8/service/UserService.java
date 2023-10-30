@@ -145,10 +145,10 @@ public class UserService {
     }
 
     //delete user
-    public void deleteUser(int id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        } else throw new UserNotFoundException("User by id " + id + " cannot be deleted because it does not exist");
+    public void deleteUser(String email) {
+        if (userRepository.existsByEmail(email)) {
+            userRepository.deleteByEmail(email);
+        } else throw new UserNotFoundException("User by id " + email + " cannot be deleted because it does not exist");
     }
 
     //get user by email
