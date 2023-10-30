@@ -4,6 +4,7 @@ import com.teamc8.config.JwtService;
 import com.teamc8.exception.UserNotFoundException;
 import com.teamc8.model.Address;
 import com.teamc8.model.User;
+import com.teamc8.model.dto.EditAddressDTO;
 import com.teamc8.model.projection.AddressProjection;
 import com.teamc8.model.projection.UserInfo;
 import com.teamc8.model.request.NewAddressRequest;
@@ -11,6 +12,7 @@ import com.teamc8.repository.AddressRepository;
 import com.teamc8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,5 +67,20 @@ public class AddressService {
             return "Address successfully deleted";
         } else
             return "No address associated with email " + user.getEmail();
+    }
+
+    @Transactional
+    public String editAddress(EditAddressDTO editAddressDTO) {
+        Optional<Address> address = addressRepository.findById(editAddressDTO.getId());
+
+        if (address.isPresent()) {
+            Address updatedAddress = address.get();
+            updatedAddress.setStreet(editAddressDTO.getStreet());
+            updatedAddress.setCity(editAddressDTO.getCity());
+            updatedAddress.setState(editAddressDTO.getState());
+            updatedAddress.setPostalCode(editAddressDTO.getPostalCode());
+            return "Address successfully updated";
+        } else
+            return "Address could not be updated";
     }
 }

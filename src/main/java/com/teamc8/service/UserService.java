@@ -31,7 +31,6 @@ public class UserService {
     private final UserStatusService userStatusService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final ForgotPasswordEmailService forgotPasswordEmailService;
     private final JwtService jwtService;
     private final ForgetPasswordTokenRepository tokenRepository;
     private final ForgotPasswordEmailService ForgotPasswordEmailService;
@@ -101,9 +100,9 @@ public class UserService {
         tokenRepository.save(forgetPasswordToken);
 
         //build the email and send it
-        String resetLink = "http://localhost:8080/api/user/forgotPassword?token=" + token;
+        String resetLink = "http://localhost:3000/resetPassword?token=" + token;
         String emailContent = buildForgotPasswordEmail(user.getFirstName(), resetLink);
-        ForgotPasswordEmailService.send(email, emailContent);
+        forgotPasswordEmailService.send(email, emailContent);
 
     }
 

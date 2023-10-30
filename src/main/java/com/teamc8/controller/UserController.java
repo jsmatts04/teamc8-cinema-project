@@ -83,8 +83,6 @@ public class UserController {
         return ResponseEntity.ok("Password reset successfully");
     }
 
-
-
     //delete user by id
     @DeleteMapping (path = "/delete")
     public void deleteUser(@RequestParam int id) {
