@@ -13,7 +13,7 @@ export const getJwtToken = () => {
 }
 
 // Removes token from localStorage. Mainly used when logging out
-export const removeToken = () => {
+export const removeJwtToken = () => {
     localStorage.removeItem('jwtToken');
 }
 
