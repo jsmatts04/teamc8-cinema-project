@@ -15,8 +15,9 @@ function Navbar(props) {
     const [currentQuery, setCurrentQuery] = useState('');
     const navigate = useNavigate();
 
-    function logout() {
+    function handleLogout() {
         setLoggedIn(false);
+        localStorage.clear();
         navigate('/');
     }
 
@@ -74,7 +75,7 @@ function Navbar(props) {
                         {loginState && <div className='nav-buttons'>
                         <Link to='/OrderHistory' variant="primary" className="mx-2">Order History</Link>
                         <Link to='/EditProfile' variant="primary" className="mx-2">My Profile</Link>
-                        <Button onClick={logout} variant="primary" className="mx-2">LOGOUT</Button>
+                        <Button onClick={handleLogout} variant="primary" className="mx-2">LOGOUT</Button>
                         </div>}
                     </Nav>
                 </NavBar.Collapse>
