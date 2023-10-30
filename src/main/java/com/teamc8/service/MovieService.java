@@ -28,7 +28,7 @@ public class MovieService {
     //get movie by id
     public Movie getMovieById(int id) {
         return movieRepository.findById(id).orElseThrow(() ->
-                new MovieNotFoundException("Movie by id " + id + "does not exist in database."));
+                new MovieNotFoundException("Movie by id " + id + " does not exist in database."));
     }
 
     //get movie by title and picture
