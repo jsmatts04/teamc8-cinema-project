@@ -1,12 +1,11 @@
 import api from './AxiosConfig';
 
 // Returns data for a specific movie specified by id 
-// { id, title, synopsis, category, cast, director, producer, 
-//   reviewScore, trailerPicture, trailerVideo, filmRating, releaseDate, status }
+// See MOVIE_INFO in reference
 export const fetchMovieById = (id) => api.get(`/movie/${id}`);
 
 // Returns a list of movies by status (CURRENT, UPCOMING)
-// Each movie object contains { id, title, trailerPicture, releaseDate, filmRating }
+// See MOVIE_COVER in reference
 export const fetchMovieCoversCurrent = () => api.get('/movie/cover?status=1');
 export const fetchMovieCoversUpcoming = () => api.get('/movie/cover?status=2');
 

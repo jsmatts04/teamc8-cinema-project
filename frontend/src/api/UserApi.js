@@ -13,7 +13,5 @@ export const changePassword = (passwordRequest) => api.put('/user/editProfile/ch
 export const resetPassword = (token, newPassword) => api.put(`resetPassword?${token}`, {newPassword: newPassword})
 
 // Returns all user info: user, address, and [payment cards]
-// user = { id, email, firstName, lastName, userStatus, userType }
-// address = { id, userId, street, city, state, postalCode }
-// paymentCards = [{ id, userId, addressId, nameOnCard, cardNumber, cardType, lastFourDigits }]
+// ALL_USER_INFO in reference.
 export const getAllUserInfo = () => api.get('/user/getAllInfo');
