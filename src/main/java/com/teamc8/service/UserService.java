@@ -145,6 +145,7 @@ public class UserService {
     }
 
     //delete user
+    @Transactional
     public void deleteUser(String email) {
         if (userRepository.existsByEmail(email)) {
             userRepository.deleteByEmail(email);
