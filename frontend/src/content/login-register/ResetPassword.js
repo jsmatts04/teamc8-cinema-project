@@ -26,8 +26,9 @@ function ResetPassword() {
         });
         let value = params.token;
         if (newPassword.trim !== '') {
-            resetPassword(value, newPassword).then(
-                nav('/Login', {state: {showResetToast: true}})
+            resetPassword(value, newPassword).then((response)=>{
+                console.log(response.data)
+                }
             ).catch((err)=>{console.log(err)})
         }
     }
