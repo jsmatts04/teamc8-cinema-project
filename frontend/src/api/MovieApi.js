@@ -6,7 +6,7 @@ import api from './AxiosConfig';
 export const fetchMovieById = (id) => api.get(`/movie/${id}`);
 
 // Returns a list of movies by status (CURRENT, UPCOMING)
-// Each movie object contains { id, title, trailerPicture, releaseDate }
+// Each movie object contains { id, title, trailerPicture, releaseDate, filmRating }
 export const fetchMovieCoversCurrent = () => api.get('/movie/cover?status=1');
 export const fetchMovieCoversUpcoming = () => api.get('/movie/cover?status=2');
 
