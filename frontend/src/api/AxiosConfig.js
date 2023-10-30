@@ -4,7 +4,7 @@ import { getToken, jwtToken } from './SharedService';
 const api = axios.create({
     baseURL: 'http://localhost:8080/api',
     headers: {
-        // 'Authorization': `Bearer ${getToken}`,
+        'Authorization': `Bearer ${getToken()}`,
         'Content-Type': 'application/json'
     }
 });
