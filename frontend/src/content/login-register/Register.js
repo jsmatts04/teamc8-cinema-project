@@ -81,7 +81,7 @@ function Register() {
                         </div>
                         <div className="d-grid mt-3">
                             {/* Use Link to navigate to the "VerifyAccount" page */}
-                            <Link to='/Login' state={{showToast:true}}>
+                            <Link to='/Login' state={{showToast:true, showResetToast:false}}>
                                 <button className="btn btn-primary" style={{ backgroundColor: '#C84B31' }}>
                                     Continue
                                 </button>

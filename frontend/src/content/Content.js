@@ -23,6 +23,7 @@ import ForgetPassword from "./login-register/ForgetPassword";
 import ChangePassword from "./login-register/ChangePassword";
 import AddAddress from "../AddAddress";
 import AddPayment from "../AddPayment";
+import ResetPassword from './login-register/ResetPassword'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
@@ -50,6 +51,7 @@ function Content(props) {
         <Route path='/AddPayment' element={<AddPayment/>}></Route>
         <Route path='/AddMovie' element={<AddMovie/>}></Route>
         <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
+        <Route path='/ResetPassword/' element={<ResetPassword/>}></Route>
         <Route path='*' element={<ErrorPage/>}></Route>
       </Routes>
     );
