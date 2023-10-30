@@ -1,5 +1,6 @@
 package com.teamc8.controller;
 
+import com.teamc8.model.User;
 import com.teamc8.service.ConfirmationTokenService;
 import com.teamc8.exception.UserNotActiveException;
 import com.teamc8.model.request.AuthenticationRequest;
@@ -42,6 +43,11 @@ public class AuthenticationController {
     @GetMapping(path = "/confirm")
     public String confirm(@RequestParam("token") String token) {
         return confirmationTokenService.confirmToken(token);
+    }
+
+    @GetMapping(path = "/resendConfirmation")
+    public String resendConfirmationEmail(@RequestParam String email) {
+        return authenticationService.sendConfirmationEmail(email);
     }
 
 }

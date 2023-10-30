@@ -44,9 +44,7 @@ public class AuthenticationService {
                 .promotionEligibility(request.isPromotionEligibility())
                 .build();
         userService.createUser(user);
-        ConfirmationToken confirmationToken = confirmationTokenService.createNewToken(user);
-        String link = "http://localhost:8080/api/auth/confirm?token=" + confirmationToken.getToken();
-        confirmationEmailService.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+        sendConfirmationEmail(user.getEmail());
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .jwtToken(jwtToken)
@@ -71,6 +69,14 @@ public class AuthenticationService {
                 .jwtToken(jwtToken)
                 .user(new UserDTO(user))
                 .build();
+    }
+
+    public String sendConfirmationEmail(String email) {
+        User user = userService.getUserByEmail(email);
+        ConfirmationToken confirmationToken = confirmationTokenService.createNewToken(user);
+        String link = "http://localhost:8080/api/auth/confirm?token=" + confirmationToken.getToken();
+        confirmationEmailService.send(user.getEmail(), buildEmail(user.getFirstName(), link));
+        return "email sent";
     }
 
     //email verification format
