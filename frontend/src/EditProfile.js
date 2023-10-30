@@ -61,7 +61,6 @@ function EditProfile() {
     ).catch(
       (err) => {
         console.log(err.code)
-        window.location.reload(false);
       }
     )
   },[getJwtToken(),showPaymentToastDelete,showPaymentToast])
