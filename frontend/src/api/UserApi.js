@@ -12,9 +12,6 @@ export const changePassword = (passwordRequest) => api.put('/user/editProfile/ch
 // Requires token from search params and newPassword from text field
 export const resetPassword = (token, newPassword) => api.put(`/user/resetPassword?${token}`, {newPassword: newPassword});
 
-// Sends the email to reset password. Takes in the user email
-export const sendResetPasswordEmail = (email) => api.get(`/user/forgotPassword?email=${email}`);
-
 // Returns all user info: user, address, and [payment cards]
 // ALL_USER_INFO in reference.
 export const getAllUserInfo = () => api.get(`/user/getAllInfo`);

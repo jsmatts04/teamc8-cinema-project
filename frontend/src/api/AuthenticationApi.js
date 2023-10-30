@@ -15,3 +15,6 @@ export const authenticateUser = (req) => axios.post(`${BASE_URL}/auth/authentica
 // Resend confirmation email. Requires email
 // Returns a message if email was sent.
 export const resendConfirmationEmail = (email) => axios.get(`${BASE_URL}/auth/resendConfirmation?email=${email}`);
+
+// Sends the email to reset password. Takes in the user email
+export const sendResetPasswordEmail = (email) => axios.get(`${BASE_URL}/user/forgotPassword?email=${email}`);
