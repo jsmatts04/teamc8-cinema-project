@@ -1,9 +1,10 @@
-export let jwtToken = '';
+import api from "./AxiosConfig";
+
 
 //store in localStorage
 export const storeToken = (token) => {
     localStorage.setItem('jwtToken', token);
-    jwtToken = token;
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
 // Retrieve jwt token from localStorage

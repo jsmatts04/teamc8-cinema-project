@@ -10,7 +10,7 @@ export const changePassword = (passwordRequest) => api.put('/user/editProfile/ch
 
 // Reset password without verifying old password
 // Requires token from search params and newPassword from text field
-export const resetPassword = (token, newPassword) => api.put(`resetPassword?${token}`, {newPassword: newPassword})
+export const resetPassword = (token, newPassword) => api.put(`/user/resetPassword?${token}`, {newPassword: newPassword})
 
 // Returns all user info: user, address, and [payment cards]
 // ALL_USER_INFO in reference.
