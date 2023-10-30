@@ -6,7 +6,6 @@ import lombok.Data;
 public class EditAddressDTO {
 
     private int id;
-    private int userId;
     private String street;
     private String city;
     private String state;
