@@ -47,8 +47,8 @@ public class UserController {
     }
 
     @GetMapping(path = "/getAllInfo")
-    public AllUserInfoDTO getAllUserInfo(@RequestHeader("Authorization") String authHeader) {
-        String jwtToken = jwtService.getTokenFromHeader(authHeader);
+    public AllUserInfoDTO getAllUserInfo(@RequestParam String jwtToken) {
+//        String jwtToken = jwtService.getTokenFromHeader(authHeader);
         String email = jwtService.extractUsername(jwtToken);
         return generalService.getAllUserInfoByEmail(email);
     }
