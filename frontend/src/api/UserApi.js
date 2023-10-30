@@ -14,4 +14,4 @@ export const resetPassword = (token, newPassword) => api.put(`/user/resetPasswor
 
 // Returns all user info: user, address, and [payment cards]
 // ALL_USER_INFO in reference.
-export const getAllUserInfo = (jwtToken) => api.get(`/user/getAllInfo?jwtToken=${jwtToken}`);
+export const getAllUserInfo = () => api.get(`/user/getAllInfo`);
