@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import '../../App.css';
+import { changePassword } from '../../api/UserApi';
 
 function ChangePassword() {
     const gradientBackground = {
@@ -15,10 +17,23 @@ function ChangePassword() {
     };
 
     const [showToast, setShowToast] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
-    const toggleToast = () => {
-        setShowToast(true);
-    };
+    const location = useLocation();
+    const nav = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let req = {
+            email: location.state.email,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        }
+        changePassword(req).then(
+            nav('/EditProfile', {state: {showPasswordToast: true}})
+        ).catch((err)=>(console.log(err)))
+    }
 
     const inputLabelStyle = {
         fontSize: '20px', // Increase font size
@@ -28,37 +43,27 @@ function ChangePassword() {
         <div style={gradientBackground}>
             <div className="login-container d-flex justify-content-center align-items-center vh-100">
                 <div className="login-form-container p-5 rounded bg-white" style={shadowStyle}>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <h3 style={{ color: 'black' }}>Change Password</h3>
                         <div className="mb-3">
                             <label htmlFor="oldPassword" style={inputLabelStyle}>Enter Old Password</label>
-                            <input type="password" placeholder="Enter Old Password" className="form-control" id="oldPassword" />
+                            <input type="password" placeholder="Enter Old Password" className="form-control" id="oldPassword" onChange={(e)=>{setOldPassword(e.target.value)}}/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="newPassword" style={inputLabelStyle}>Enter New Password</label>
-                            <input type="password" placeholder="Enter New Password" className="form-control" id="newPassword" />
+                            <input type="password" placeholder="Enter New Password" className="form-control" id="newPassword" onChange={(e)=>{setNewPassword(e.target.value)}}/>
                         </div>
                         <div className="d-grid">
                             <button
                                 className="btn btn-primary"
                                 style={{ backgroundColor: '#C84B31' }}
-                                onClick={toggleToast}
+                                type='submit'
                             >
-                                Save Changes
+                                Change Password
                             </button>
                         </div>
                     </form>
                 </div>
-            </div>
-            <div aria-live="polite" aria-atomic="true" className="position-block">
-                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
-                    <Toast show={showToast} bg="success" onClose={() => setShowToast(false)} animation={true} delay={4000} autohide>
-                        <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
-                            <strong className="me-auto">Password Changed</strong>
-                        </Toast.Header>
-                        <Toast.Body>Your password has been successfully changed.</Toast.Body>
-                    </Toast>
-                </ToastContainer>
             </div>
         </div>
     );
