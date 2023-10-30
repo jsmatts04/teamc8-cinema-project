@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 import Alert from 'react-bootstrap/Alert';
+import { authenticateUser, resendConfirmationEmail } from '../../api/AuthenticationApi';
+import { getAllUserInfo } from '../../api/UserApi';
 
 function Login(props) {
   let { setLoggedIn, setAdminState } = props;
@@ -23,6 +25,10 @@ function Login(props) {
   const toggleToast = () => setShowToast(!showToast);
   const toggleResetToast = () => setShowResetToast(!showResetToast);
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
   const data = useLocation();
   useEffect (() => {
     console.log(data.state);
@@ -33,10 +39,41 @@ function Login(props) {
     
   },[data.state])
 
-  function login() {
-    setLoggedIn(true);
-    navigate('/');
+  function handleLogin(e) {
+    e.preventDefault()
+    let user = {
+      email:email,
+      password:password
+    };
+    console.log(user);
+    authenticateUser(user).then(
+      (response) => {console.log(response.data.user);
+        localStorage.setItem('auth-token', response.data.jwtToken);
+        setLoggedIn(true);
+        if (response.data.user.userType === "CUSTOMER") {
+          navigate('/');
+        } else if (response.data.user.userType === "ADMIN") {
+          setAdminState(true)
+          navigate('/adminhomepage')
+        }
+    }
+      
+    ).catch((err) => {
+      if (err.response.data == 'User is INACTIVE') {
+        setShow(true);
+      }
+    })
   }
+
+  function resendConfirmation() {
+    resendConfirmationEmail(email).then(
+      (data) => {console.log(data)}
+    )
+    .catch(
+      (err) => {console.log(err)}
+    )
+  }
+
   function loginAdmin() {
     setLoggedIn(true);
     setAdminState(true);
@@ -58,16 +95,16 @@ function Login(props) {
           <Alert.Heading style={{fontSize:'20px'}}>Oh snap! The account you're logging into is not verified yet!</Alert.Heading>
           <p className="alert-p" style={{fontSize:'13px'}}>
           Check all the inboxes in your email for the verification link we sent. If 
-          you don't see it, we can <Alert.Link>Resend Verification Email</Alert.Link>.
+          you don't see it, we can <Alert.Link onClick={resendConfirmation}>Resend Verification Email</Alert.Link>.
           </p>
           </Alert>
               <div className="mb-2">
                 <label htmlFor="email">Email</label>
-                <input required type="email" placeholder="Enter Email" className="form-control" />
+                <input required onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter Email" className="form-control" />
               </div>
               <div className="mb-2">
                 <label htmlFor="password">Password</label>
-                <input required type="password" placeholder="Enter Password" className="form-control" />
+                <input required onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter Password" className="form-control" />
               </div>
               <div className="mb-2">
                 <input type="checkbox" className="custom-control custom-checkbox" id="check" style={{marginRight: '2px'}}/>
@@ -76,12 +113,8 @@ function Login(props) {
                 </label>
               </div>
               <div className="d-grid">
-                <Button onClick={login} style={{ marginBottom: 5 }}>
+                <Button onClick={handleLogin} style={{ marginBottom: 5 }}>
                   Sign in
-                </Button>
-
-                <Button onClick={loginAdmin}>
-                  Sign in (as Admin)
                 </Button>
               </div>
               <p style={{fontSize:'15px'}}className="text-right">
