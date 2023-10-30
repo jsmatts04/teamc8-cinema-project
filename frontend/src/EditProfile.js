@@ -32,6 +32,7 @@ function EditProfile() {
   const [showAddressToastDelete, setShowAddressToastDelete] = useState(false);
   const [showPaymentToast, setShowPaymentToast] = useState(false);
   const [showPaymentToastDelete, setShowPaymentToastDelete] = useState(false);
+  const [showPasswordToast, setShowPasswordToast] = useState(false);
 
   useEffect(() => {
     getAllUserInfo().then(
@@ -58,7 +59,10 @@ function EditProfile() {
         setUnsubscribePromos(data.user.promotionEligibility)
       }
     ).catch(
-      (err) => (console.log(err.code))
+      (err) => {
+        console.log(err.code)
+        window.location.reload(false);
+      }
     )
   },[getJwtToken(),showPaymentToastDelete,showPaymentToast])
 
@@ -114,6 +118,8 @@ function EditProfile() {
         setShowPaymentToast(location.state.showPaymentToast)
       if (location.state.showPaymentToastDelete)
         setShowPaymentToastDelete(location.state.showPaymentToastDelete)
+      if (location.state.showPasswordToast)
+        setShowPasswordToast(location.state.showPasswordToast)
     }
   },[location.state])
 
@@ -194,7 +200,7 @@ function EditProfile() {
               </div>
               <div style={{ marginBottom: '5px', fontSize: '20px' }}>
                 <label>Password:</label>
-                <Link to="/ChangePassword" style={{ marginLeft:'2px', color: 'blue', textDecoration: 'underline' }}>Change Password</Link>
+                <Link to="/ChangePassword" state={{email:email}} style={{ marginLeft:'2px', color: 'blue', textDecoration: 'underline' }}>Change Password</Link>
               </div>
             </form>
 
@@ -261,6 +267,16 @@ function EditProfile() {
             </Toast>
           </ToastContainer>
         </div>
+        <div aria-live="polite" aria-atomic="true" className="position-block">
+                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
+                    <Toast show={showPasswordToast} bg="success" onClose={() => setShowPasswordToast(false)} animation={true} delay={4000} autohide>
+                        <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
+                            <strong className="me-auto">Password Changed</strong>
+                        </Toast.Header>
+                        <Toast.Body>Your password has been successfully changed.</Toast.Body>
+                    </Toast>
+                </ToastContainer>
+            </div>
       </div>
       
   );

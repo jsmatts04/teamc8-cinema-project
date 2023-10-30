@@ -3,6 +3,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import '../../App.css';
+import { sendResetPasswordEmail } from '../../api/AuthenticationApi'
 
 function ForgetPassword() {
     const gradientBackground = {
@@ -15,7 +16,18 @@ function ForgetPassword() {
     };
 
     const [showToast, setShowToast] = useState(false);
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState(false);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        sendResetPasswordEmail(email).then(
+            toggleToast()
+        ).catch((err)=>{
+            console.log(err)
+            setError(true)
+        })
+    }
     const toggleToast = () => {
         setShowToast(true);
     };
@@ -30,9 +42,11 @@ function ForgetPassword() {
                 <div className="login-form-container p-5 rounded bg-white" style={shadowStyle}>
                     <form>
                         <h3 style={{ color: 'black' }}>Forgot Password</h3>
+                        {error && <p style={{color:'red', fontSize:'16px'}}>Email does not exist on system</p>}
                         <div className="mb-3">
                             <label htmlFor="email">Enter your email</label>
-                            <input type="email" placeholder="Enter Email" className="form-control" />
+                            <input type="email" placeholder="Enter Email" className="form-control"  onChange={(e)=>{setEmail(e.target.value)
+                            setError(false)}}/>
                         </div>
                         <p className="text-right" style={smallerText}>
                             Remember your password? <Link to="/login">Go back to Login</Link>
@@ -41,7 +55,7 @@ function ForgetPassword() {
                             <button
                                 className="btn btn-primary"
                                 style={{ backgroundColor: '#C84B31' }}
-                                onClick={toggleToast}
+                                onClick={handleSubmit}
                             >
                                 Reset Password
                             </button>
