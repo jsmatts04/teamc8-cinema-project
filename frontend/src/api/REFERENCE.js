@@ -56,14 +56,6 @@ ADDRESS = {
     postalCode: ''
 }
 
-EDIT_ADDRESS_REQUEST = {
-    id: 1,
-    street: '',
-    city: '',
-    state: '',
-    postalCode: ''
-}
-
 PAYMENT_CARD = { 
     id: 1,
     userId: 1,
@@ -80,4 +72,20 @@ ALL_USER_INFO = {
     address: {ADDRESS}
 }
 
+// REQUEST OBJECTS
+// ---------------
+EDIT_ADDRESS_REQUEST = {
+    id: 1,
+    street: '',
+    city: '',
+    state: '',
+    postalCode: ''
+}
 
+EDIT_PAYMENT_CARD_REQUEST = {
+    id: 1,
+    cardType: '',
+    expirationDate: '',
+    cardNumber: '',
+    nameOnCard: '' 
+}
