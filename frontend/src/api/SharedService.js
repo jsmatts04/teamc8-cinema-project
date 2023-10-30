@@ -4,13 +4,14 @@ export let userInfo = {}
 
 //store in localStorage
 export const storeToken = (token) => {
-    localStorage.setItem('token', token);
+    localStorage.setItem('jwtToken', token);
+    jwtToken = token;
 }
 
 export const getToken = () => {
-    return localStorage.getItem('token');
+    return jwtToken;
 }
 
 export const removeToken = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwtToken');
 }
