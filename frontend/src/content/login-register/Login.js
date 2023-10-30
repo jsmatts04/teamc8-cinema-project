@@ -18,16 +18,20 @@ function Login(props) {
   };
   const navigate = useNavigate();
   const [showToast, setShowToast] = useState(false);
+  const [showResetToast, setShowResetToast] = useState(false);
   const [show, setShow] = useState(false);
   const toggleToast = () => setShowToast(!showToast);
+  const toggleResetToast = () => setShowResetToast(!showResetToast);
 
   const data = useLocation();
   useEffect (() => {
+    console.log(data.state);
     if (data.state !== null) {
       setShowToast(data.state.showToast);
+      setShowResetToast(data.state.showResetToast);
     }
+    
   },[data.state])
-  
 
   function login() {
     setLoggedIn(true);
@@ -107,6 +111,18 @@ function Login(props) {
               <strong className="me-auto">Registration Sucessful</strong>
             </Toast.Header>
             <Toast.Body>An email has been sent containing your verification code.</Toast.Body>
+          </Toast>
+        </ToastContainer>
+        <ToastContainer
+          className="p-3"
+          position='top-center'
+          style={{ zIndex: 1}}
+        >
+          <Toast show={showResetToast} bg={'success'} onClose={toggleResetToast} animation={true} delay={4000} autohide>
+            <Toast.Header closeButton={true} style={{background:'#00000010'}}>
+              <strong className="me-auto">Password Reset Sucessful</strong>
+            </Toast.Header>
+            <Toast.Body>Your password has been reset sucessfully.</Toast.Body>
           </Toast>
         </ToastContainer>
       </div>
