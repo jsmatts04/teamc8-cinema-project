@@ -26,9 +26,8 @@ function ResetPassword() {
         });
         let value = params.token;
         if (newPassword.trim !== '') {
-            resetPassword(value, newPassword).then((response)=>{
-                console.log(response.data)
-                }
+            resetPassword(value, newPassword).then(
+                nav('/Login', {state: {showResetToast: true, showToast: false}})
             ).catch((err)=>{console.log(err)})
         }
     }
@@ -44,7 +43,6 @@ function ResetPassword() {
                             <input required type="password" placeholder="New Password" className="form-control" onChange={(e)=>setNewPassword(e.target.value)}/>
                         </div>
                         <div className="d-grid">
-                            <Link to='/Login' state={{showResetToast:true, showToast:false}}>
                             <button
                                 className="btn btn-primary"
                                 type='submit'
@@ -52,7 +50,6 @@ function ResetPassword() {
                             >
                                 Reset Password
                             </button>
-                            </Link>
                         </div>
                     </form>
                 </div>
