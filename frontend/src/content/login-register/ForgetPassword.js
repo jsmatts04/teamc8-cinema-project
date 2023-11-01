@@ -21,15 +21,16 @@ function ForgetPassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        sendResetPasswordEmail(email).then(
-            toggleToast()
+        sendResetPasswordEmail(email).then(() => {
+            setShowToast(true)
+        }
         ).catch((err)=>{
             console.log(err)
             setError(true)
         })
     }
     const toggleToast = () => {
-        setShowToast(true);
+        
     };
 
     const smallerText = {

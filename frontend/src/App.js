@@ -15,10 +15,14 @@ function App() {
 
   useEffect(() => {
     if (getJwtToken() !== '') {
-      getAllUserInfo().then(setLoggedIn(true),(err) => console.log(err.code))
+      getAllUserInfo().then(
+          setLoggedIn(true)
+        ).catch(
+          setLoggedIn(false)
+        )
     }
   }
-  );
+  ,[]);
 
   return (
     <Router>      
