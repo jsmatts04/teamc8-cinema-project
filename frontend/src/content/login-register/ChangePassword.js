@@ -31,7 +31,7 @@ function ChangePassword() {
             newPassword: newPassword
         }
         changePassword(req).then(
-            nav('/EditProfile', {state: {showPasswordToast: true}})
+            nav('/EditProfile', {state: {toastId:'password-toast'}})
         ).catch((err)=>(console.log(err)))
     }
 

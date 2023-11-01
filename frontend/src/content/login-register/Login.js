@@ -19,11 +19,8 @@ function Login(props) {
     width:'30%'
   };
   const navigate = useNavigate();
-  const [showToast, setShowToast] = useState(false);
-  const [showResetToast, setShowResetToast] = useState(false);
+  const [toastId, setToastId] = useState('');
   const [show, setShow] = useState(false);
-  const toggleToast = () => setShowToast(!showToast);
-  const toggleResetToast = () => setShowResetToast(!showResetToast);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,10 +31,9 @@ function Login(props) {
   useEffect (() => {
     console.log(data.state);
     if (data.state !== null) {
-      setShowToast(data.state.showToast);
-      setShowResetToast(data.state.showResetToast);
+      setToastId(data.state.toastId)
+      setTimeout(()=>setToastId(''), 3000)
     }
-    
   },[data.state])
 
   function handleLogin(e) {
@@ -80,12 +76,6 @@ function Login(props) {
     )
   }
 
-  function loginAdmin() {
-    setLoggedIn(true);
-    setAdminState(true);
-    navigate('/adminhomepage');
-  }
-
   const updateCheck = () => {
     setCheck(!check);
   }
@@ -94,11 +84,8 @@ function Login(props) {
     <>
       <div>
         {/* Login Form */}
-        
         <div className="login-container d-flex justify-content-center align-items-center vh-100" style={gradientBackground}>
-          
           <div className="login-form-container p-5 rounded bg-white" style={shadowStyle}>
-          
             <form>
               <h3 className="mb-4">Sign In</h3>
               <Alert style={{width:'100%'}} show={show} variant="danger" onClose={() => setShow(false)} dismissible>
@@ -150,7 +137,7 @@ function Login(props) {
           position='top-center'
           style={{ zIndex: 1}}
         >
-          <Toast show={showToast} bg={'success'} onClose={toggleToast} animation={true} delay={4000} autohide>
+          <Toast show={toastId==='registration-toast'} bg={'success'} onClose={()=>setToastId('')} animation={true}>
             <Toast.Header closeButton={true} style={{background:'#00000010'}}>
               <strong className="me-auto">Registration Sucessful</strong>
             </Toast.Header>
@@ -162,7 +149,7 @@ function Login(props) {
           position='top-center'
           style={{ zIndex: 1}}
         >
-          <Toast show={showResetToast} bg={'success'} onClose={toggleResetToast} animation={true} delay={4000} autohide>
+          <Toast show={toastId==='reset-toast'} bg={'success'} onClose={()=>setToastId('')} animation={true}>
             <Toast.Header closeButton={true} style={{background:'#00000010'}}>
               <strong className="me-auto">Password Reset Sucessful</strong>
             </Toast.Header>

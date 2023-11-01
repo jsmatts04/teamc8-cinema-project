@@ -35,7 +35,7 @@ function AddAddress() {
         addAddress(address).then(
             (response) => {
                 console.log(response.data)
-                nav('/EditProfile', {state: {showAddressToast: true}});
+                nav('/EditProfile', {state: {toastId:'address-toast'}});
             }
         ).catch((err) => (err));
     }

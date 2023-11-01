@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import { registerUser } from '../../api/AuthenticationApi';
 import { addPaymentCard } from '../../api/PaymentCardApi';
@@ -33,6 +33,9 @@ function Register() {
         setRegisterForPromos(!registerForPromos);
     };
 
+
+    const nav = useNavigate();
+
     function handleRegister(e) {
         e.preventDefault();
         let user = {
@@ -58,25 +61,16 @@ function Register() {
             nameOnCard: cardholderName,
         }
 
-        registerUser(user).then(
-            (data) => {console.log(data)}    
-        ).then(() => {
+        registerUser(user).then(() => {
             if (cardholderName !== '' && cardNum !== '' && expirationDate !== '' && securityCode !== '') {
-                addPaymentCard(cardReq)
-                .catch(
-                    (err) => console.log(err)
-                )
+                addPaymentCard(cardReq).catch((err) => console.log(err))
             }
-        })
-        .then(
-            () => {
-                if (street !== '' && city !== '' && state !== '' && postalCode !== '') {
-                    addAddress(addressReq)
-                .catch(
-                    (err) => console.log(err)
-                )
-                }
+        }).then(() => {
+            if (street !== '' && city !== '' && state !== '' && postalCode !== '') {
+                addAddress(addressReq).catch((err) => console.log(err))
             }
+        }).then(
+            nav('/VerifyAccount')
         ).catch(
             (err) => console.log(err)
         )

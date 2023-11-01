@@ -35,11 +35,14 @@ function EditPayment(props) {
             nameOnCard: name        
         }
         editPaymentCard(card).then(() => {
-            nav('/EditProfile', {state: {showPaymentToast: true, showPaymentToastDelete: false}})
+            nav('/EditProfile', {state: {toastId: 'payment-toast'}})
             setShowEdit(false)
-            window.location.reload(false);
         }
         ).catch((err)=>(console.log(err)))
+    }
+
+    const handleCancel = (e) => {
+        setShowEdit(false)
     }
 
     return(
@@ -80,6 +83,13 @@ function EditPayment(props) {
                                 variant='danger'
                             >
                                 Delete Payment
+                            </Button>
+                            <Button
+                                className="col"
+                                onClick={handleCancel}
+                                variant='primary'
+                            >
+                                Cancel Edit
                             </Button>
                         </div>
                         <hr/>

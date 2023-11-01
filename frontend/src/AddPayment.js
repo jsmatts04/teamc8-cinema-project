@@ -39,7 +39,7 @@ function AddPayment() {
             addPaymentCard(req).then(
                 (response) => {
                     console.log(response.data)
-                    nav('/EditProfile', {state: {showPaymentToast: true}});
+                    nav('/EditProfile', {state: {toastId: 'payment-toast'}});
                 }
             ).catch((err) => (console.log(err)))
         }

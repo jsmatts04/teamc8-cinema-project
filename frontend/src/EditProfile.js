@@ -12,6 +12,7 @@ import EditPayment from './EditPayment';
 import { deletePaymentCard } from './api/PaymentCardApi';
 
 function EditProfile() {
+  const location = useLocation();
   const [hasAddress, setHasAddress] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
 
@@ -29,12 +30,8 @@ function EditProfile() {
 
   // State for addresses and payment methods
   const [paymentMethods, setPaymentMethods] = useState([]);
-  const [changesSaved, setChangesSaved] = useState(false);
-  const [showAddressToast, setShowAddressToast] = useState(false);
-  const [showAddressToastDelete, setShowAddressToastDelete] = useState(false);
-  const [showPaymentToast, setShowPaymentToast] = useState(false);
-  const [showPaymentToastDelete, setShowPaymentToastDelete] = useState(false);
-  const [showPasswordToast, setShowPasswordToast] = useState(false);
+  const [toastId, setToastId] = useState('');
+  const closeToast = () => setToastId('');
 
   useEffect(() => {
     async function getAllUsers() {
@@ -67,7 +64,7 @@ function EditProfile() {
       }
     }
     getAllUsers();
-  },[getJwtToken(),showPaymentToastDelete,showPaymentToast])
+  },[getJwtToken(),location.state])
 
   
 
@@ -110,21 +107,17 @@ function EditProfile() {
     return paymentMethods.map((card) => (<EditPayment setList={setPaymentMethods} list={paymentMethods} id={card.id} expirationDate={card.expirationDate} cardType={card.cardType} lastFourDigits={card.lastFourDigits} nameOnCard={card.nameOnCard}></EditPayment>))
   }
 
-  const location = useLocation();
   useEffect (() => {
     if (location.state !== null) {
-      setShowAddressToast(location.state.showAddressToast)
-      if (location.state.showAddressToast) {
-        setHasAddress(true)
-      }
-      if (location.state.showPaymentToast)
-        setShowPaymentToast(location.state.showPaymentToast)
-      if (location.state.showPaymentToastDelete)
-        setShowPaymentToastDelete(location.state.showPaymentToastDelete)
-      if (location.state.showPasswordToast)
-        setShowPasswordToast(location.state.showPasswordToast)
+      setToastId(location.state.toastId)
+      setTimeout(()=>setToastId(''),2000)
     }
   },[location.state])
+
+  const showToastWithId= (toastId) => {
+    setToastId(toastId)
+    setTimeout(()=>setToastId(''),2000)
+  }
 
   const handleUpdateAddress = () => {
     let address = {
@@ -134,22 +127,18 @@ function EditProfile() {
         state: state,
         postalCode: postalCode
     }
-    updateAddress(address).then(
-      setShowAddressToast(true)
+    updateAddress(address).then(()=>showToastWithId('address-toast')
     ).catch((err) => (console.log(err)))
   }
 
   const handleDeleteAddress = () => {
-    deleteAddress().then(
-      setShowAddressToastDelete(true)
+    deleteAddress().then(()=>showToastWithId('address-delete-toast')
     ).catch((err)=>(console.log(err)));
     setHasAddress(false)
   }
 
   const handleDeletePayment = (id) => {
     deletePaymentCard(id).then(()=> {
-        setShowAddressToast(false)
-        setShowAddressToastDelete(true)
         setPaymentMethods(paymentMethods.filter((card) => card.id !== id).map((card, index) => ({...card, id: index})));
       }
     )
@@ -168,12 +157,8 @@ function EditProfile() {
       phoneNumber: phoneNumber,
       promotionEligibility: unsubscribePromos
     }
-    editUserProfile(user).then((data)=>
-      {
-        setChangesSaved(true)
-      }
+    editUserProfile(user).then(()=>showToastWithId('changes-saved-toast')
     ).catch((err)=>(console.log(err)))
-    
     // You can add logic here to save changes to a database or perform other actions.
   };
   
@@ -238,7 +223,7 @@ function EditProfile() {
 
               </div>
             </div><ToastContainer position="top-center" style={{ zIndex: 1 }}>
-                <Toast show={changesSaved} bg="success" onClose={() => setChangesSaved(false)} animation={true} delay={4000} autohide>
+                <Toast show={toastId==='changes-saved-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                   <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                     <strong className="me-auto">Changes Saved</strong>
                   </Toast.Header>
@@ -246,7 +231,7 @@ function EditProfile() {
                 </Toast>
               </ToastContainer><div aria-live="polite" aria-atomic="true" className="position-block">
                 <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
-                  <Toast show={showAddressToast} bg="success" onClose={() => setShowAddressToast(false)} animation={true} delay={4000} autohide>
+                  <Toast show={toastId==='address-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Address Updated</strong>
                     </Toast.Header>
@@ -255,7 +240,7 @@ function EditProfile() {
                 </ToastContainer>
               </div><div aria-live="polite" aria-atomic="true" className="position-block">
                 <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
-                  <Toast show={showAddressToastDelete} bg="warning" onClose={() => setShowAddressToastDelete(false)} animation={true} delay={4000} autohide>
+                  <Toast show={toastId==='address-delete-toast'} bg="warning" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Address Deleted</strong>
                     </Toast.Header>
@@ -264,7 +249,7 @@ function EditProfile() {
                 </ToastContainer>
               </div><div aria-live="polite" aria-atomic="true" className="position-block">
                 <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
-                  <Toast show={showAddressToast} bg="success" onClose={() => setShowAddressToast(false)} animation={true} delay={4000} autohide>
+                  <Toast show={toastId==='payment-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Payment Method Updated</strong>
                     </Toast.Header>
@@ -273,7 +258,7 @@ function EditProfile() {
                 </ToastContainer>
               </div><div aria-live="polite" aria-atomic="true" className="position-block">
                 <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
-                  <Toast show={showPasswordToast} bg="success" onClose={() => setShowPasswordToast(false)} animation={true} delay={4000} autohide>
+                  <Toast show={toastId==='password-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Password Changed</strong>
                     </Toast.Header>
