@@ -1,0 +1,28 @@
+.small-movie-header {
+    display:flex;
+    background-color: #001636da;
+    padding: 10px 10px 10px 10px;
+}
+
+.small-movie-header h3{
+    margin: auto 0;
+    color: rgb(235, 235, 235);
+}
+
+.small-movie-header img {
+    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.showtime-card{
+    background-color: #2424244d;
+	backdrop-filter: blur(10px);
+	box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1);
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 20px;
+    padding: 10px 20px 10px 20px;
+}

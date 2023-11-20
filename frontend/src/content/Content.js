@@ -24,6 +24,7 @@ import ChangePassword from "./login-register/ChangePassword";
 import AddAddress from "../AddAddress";
 import AddPayment from "../AddPayment";
 import ResetPassword from './login-register/ResetPassword'
+import ShowtimeBrowser from '../ShowtimeBrowser'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
@@ -52,6 +53,7 @@ function Content(props) {
         <Route path='/AddMovie' element={<AddMovie/>}></Route>
         <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
         <Route path='/ResetPassword/' element={<ResetPassword/>}></Route>
+        <Route path='/Showtimes/' element={<ShowtimeBrowser/>}/>
         <Route path='*' element={<ErrorPage/>}></Route>
       </Routes>
     );
