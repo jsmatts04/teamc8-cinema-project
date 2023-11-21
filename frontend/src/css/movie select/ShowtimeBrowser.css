@@ -1,7 +1,32 @@
 .small-movie-header {
     display:flex;
-    background-color: #001636da;
-    padding: 10px 10px 10px 10px;
+    position: relative;
+}
+
+.showtime-hr {
+    color: white;
+    margin: 10px auto;
+}
+
+.showtime-navbar {
+    display:flex;
+    justify-content: space-around;
+    padding-left:20%;
+    padding-right:20%;
+    background-color: #ffffff30;
+}
+
+.showtime-navbar select {
+    margin: 2px 10px;
+    background-color: #00000005;
+    color: white;
+}
+
+.showtime-navbar p {
+    color: white;
+    font-size: 20px;
+    white-space: nowrap;
+    margin: auto auto;
 }
 
 .small-movie-header h3{
@@ -24,5 +49,19 @@
     margin-left: 20%;
     margin-right: 20%;
     margin-top: 20px;
-    padding: 10px 20px 10px 20px;
+    padding: 2% 2%;
+}
+
+.showtime-browser-content {
+    display:grid;
+    grid-template-columns: 3fr 2fr;
+}
+
+.movie-details-col {
+    padding: 20px 20px;
+}
+
+.grid-2-col {
+    display: flex;
+    justify-content: space-between;
 }

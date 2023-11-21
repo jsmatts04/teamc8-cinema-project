@@ -24,7 +24,7 @@ import ChangePassword from "./login-register/ChangePassword";
 import AddAddress from "../AddAddress";
 import AddPayment from "../AddPayment";
 import ResetPassword from './login-register/ResetPassword'
-import ShowtimeBrowser from '../ShowtimeBrowser'
+import ShowtimeBrowser from './showtime-browser/ShowtimeBrowser'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery } = props;

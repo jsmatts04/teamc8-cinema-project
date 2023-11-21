@@ -10,7 +10,7 @@ function SelectShowTime() {
 
     const location = useLocation();
     const[startDate, setStartDate] = useState(new Date());
-    let movie = location.state.movie.fullMovie;
+    let movie = location.state.movie;
     console.log(movie);
 
     return (

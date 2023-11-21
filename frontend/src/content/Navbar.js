@@ -51,7 +51,7 @@ function Navbar(props) {
                 <NavBar.Toggle aria-controls="basic-navbar-nav" />
                 <NavBar.Collapse id="basic-navbar-nav">
                     <Nav className="justify-content-evenly flex-grow-1">
-                        <Form inline style={{ width: '60%' }} onSubmit={sendSearch}>
+                        <Form inline style={{ width: '60%' , flexGrow:'2'}} onSubmit={sendSearch}>
                             <InputGroup className='searchbar'>
                                 <Form.Control
                                     type="text"
@@ -64,6 +64,11 @@ function Navbar(props) {
                                 </Button>
                             </InputGroup>
                         </Form>
+                    <Link to='/Showtimes'>
+                        <Button variant="warning" className="mx-2">
+                        SHOWTIMES
+                        </Button>
+                    </Link>
                         {!loginState && <div style={{ color: 'white', marginTop: 'auto', marginBottom: 'auto' }}>
                             <Link to="/Login">
                                 <Button variant="primary" className="mx-2">LOGIN</Button>

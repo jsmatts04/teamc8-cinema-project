@@ -11,7 +11,7 @@ function MovieDetail (props) {
     let {loginState} = props;
     const [fullMovie, setFullMovie] = useState();
     const location = useLocation();
-    let movie = location.state.movie.movie;
+    let movie = location.state.movie;
 
     useEffect(() => {
         fetchMovieById(movie.id).then(

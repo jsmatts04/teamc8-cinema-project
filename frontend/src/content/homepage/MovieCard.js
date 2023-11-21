@@ -8,13 +8,10 @@ import { fetchMovieById } from '../../api/MovieApi';
 import { useState, useEffect } from 'react';
 
 
-
-
-
 function MovieCard(props) {
     const [fullMovie, setFullMovie] = useState();
     let {loginState, movie} = props;
-    
+
     useEffect(() => {
         fetchMovieById(movie.id).then(
             response => {
@@ -32,7 +29,7 @@ function MovieCard(props) {
     return(
         <div style={{width:'fit-content'}}>
         <Card style={{width:'15rem', marginBottom: -10, backgroundColor:'transparent', color: 'white', borderColor:'transparent'}}>
-            <Link state = {{movie:{movie}}} to={'/movie'} element={<MovieDetail/>}>
+            <Link state = {{movie:fullMovie}} to={'/movie'} element={<MovieDetail/>}>
             <Card.Img variant='top' alt='movie-poster' style={{ height:330, width: '100%', objectFit:'cover' }} src={movie.trailerPicture}/>
             </Link>
             <Card.Body className="d-flex justify-content-between">
@@ -40,14 +37,13 @@ function MovieCard(props) {
                 {movie.filmRating !== 'null' && <Card.Title style={{color:'orange'}}>{movie.filmRating}</Card.Title>}
             </Card.Body>
         </Card>
-        {loginState && <Link state={{movie:{fullMovie}}} to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
+        {loginState && <Link state={{movie:fullMovie}} to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
         <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         {!loginState && <Link to={'/Login'}>
         <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         </div>
-        
     );
 }
 

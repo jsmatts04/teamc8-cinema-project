@@ -1,6 +1,4 @@
-
-import DatePicker from 'react-datepicker';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 function ShowTimeGrid({startDate,movie}) {
