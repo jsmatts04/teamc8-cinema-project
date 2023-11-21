@@ -42,7 +42,7 @@ function ShowtimeBrowser() {
                 }
             )
         }
-    },[movieListCurrent.length, movieListUpcoming.length, movieList, movieSelected.id])
+    }, [movieListCurrent,movieListUpcoming])
     
     function truncateStr(string) {
         if (string.length > 15)
