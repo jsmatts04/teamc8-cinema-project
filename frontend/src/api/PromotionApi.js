@@ -1,6 +1,6 @@
 import api from "./AxiosConfig";
 
-const API_URL = '/api/promotion'
+const API_URL = '/promotion'
 
 export const getAllPromos = () => api.get(`${API_URL}`);
 

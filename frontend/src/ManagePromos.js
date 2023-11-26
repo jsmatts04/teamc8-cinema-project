@@ -1,43 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Card, Table, Toast, Form } from 'react-bootstrap';
-import AdminNavbar from './AdminNavbar';
+import { getAllPromos, addPromo } from './api/PromotionApi';
 
 const ManagePromo = () => {
-    const [promos, setPromos] = useState([
-        { id: 1, name: 'Discount Promo 1', amount: '20%', code: 'ABC123' },
-        { id: 2, name: 'Summer Sale Promo', amount: '15%', code: 'DEF456' },
-        // Add more promos as needed
-    ]);
+    const [promos, setPromos] = useState([]);
+
+    useEffect(() => {
+        getAllPromos().then(
+            (response) => {
+                setPromos(response.data)
+            }
+        ).catch(
+            (err) => (console.log(err))
+        )
+    },[promos.length])
 
     const [showToast, setShowToast] = useState(false);
     const [showAddPromo, setShowAddPromo] = useState(false);
-    const [newPromo, setNewPromo] = useState({ name: '', amount: '', code: '' });
-
-    const handleEditPromo = (promoId) => {
-        // Handle editing the selected promo (promoId)
-        console.log(`Edit promo with ID: ${promoId}`);
-    };
-
-    const handleDeletePromo = (promoId) => {
-        // Handle deleting the selected promo (promoId)
-        const updatedPromos = promos.filter((promo) => promo.id !== promoId);
-        setPromos(updatedPromos);
-        setShowToast(true);
-    };
+    const [newPromo, setNewPromo] = useState({
+        discountAmount: 0,
+        startDate: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate(),
+        endDate: new Date().getFullYear()  + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate(),
+        code: ''
+    })
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [errMessage, setErrMessage] = useState('');
+    // Assumed no delete and edit cause we send out emails instantly after adding a promotion
 
     const handleSaveChanges = () => {
-        // Save the newly added promo to the list
-        const updatedPromos = [...promos];
-        updatedPromos.push({
-            id: promos.length + 1,
-            name: newPromo.name,
-            amount: newPromo.amount,
-            code: newPromo.code,
-        });
-        setPromos(updatedPromos);
-        setShowAddPromo(false);
-        setNewPromo({ name: '', amount: '', code: '' });
+        console.log(newPromo)
+        if (newPromo.startDate > newPromo.endDate) {
+            setErrMessage('Inputted dates are not in a valid order');
+            setShowErrorMessage(true)
+        } else if (newPromo.discountAmount <= 0) {
+            setErrMessage('Discount amount must be greater than 0');
+            setShowErrorMessage(true);
+        } else if (newPromo.code.trim() === '' || newPromo.code === 'undefined') {
+            setErrMessage('Code cannot be empty');
+            setShowErrorMessage(true);
+        } else {
+            addPromo(newPromo).then((response) => {
+                console.log(response.data)
+                setShowAddPromo(false);
+                setShowToast(true);
+            }).catch((err) => (console.log(err)))
+        }
     };
 
     return (
@@ -56,29 +64,53 @@ const ManagePromo = () => {
                             </Button>
                             {showAddPromo && (
                                 <div style={{ marginBottom: '20px' }}>
+                                    {showErrorMessage && (
+                                        <h4 style={{fontSize:'15px',color: 'red'}}>ERROR: {errMessage}</h4>
+                                    )}
                                     <Form>
-                                        <Form.Group controlId="promoName">
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                value={newPromo.name}
-                                                onChange={(e) => setNewPromo({ ...newPromo, name: e.target.value })}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group controlId="promoAmount">
-                                            <Form.Label>Amount</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                value={newPromo.amount}
-                                                onChange={(e) => setNewPromo({ ...newPromo, amount: e.target.value })}
-                                            />
-                                        </Form.Group>
                                         <Form.Group controlId="promoCode">
                                             <Form.Label>Code</Form.Label>
                                             <Form.Control
                                                 type="text"
                                                 value={newPromo.code}
-                                                onChange={(e) => setNewPromo({ ...newPromo, code: e.target.value })}
+                                                placeholder='Enter code here'
+                                                onChange={(e) => {
+                                                    setNewPromo({ ...newPromo, code: e.target.value })
+                                                    setShowErrorMessage(false);
+                                                }}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group controlId="promoAmount">
+                                            <Form.Label>Amount</Form.Label>
+                                            <Form.Control
+                                                type="number"
+                                                value={newPromo.discountAmount}
+                                                onChange={(e) => {
+                                                    setNewPromo({ ...newPromo, discountAmount: e.target.value });
+                                                    setShowErrorMessage(false);
+                                                }}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group controlId="promoStartDate">
+                                            <Form.Label>Start Date</Form.Label>
+                                            <Form.Control
+                                                type="date"
+                                                value={newPromo.startDate}
+                                                onChange={(e) => {
+                                                    setNewPromo({ ...newPromo, startDate: e.target.value });
+                                                    setShowErrorMessage(false);
+                                                }}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group controlId="promoEndDate">
+                                            <Form.Label>End Date</Form.Label>
+                                            <Form.Control
+                                                type="date"
+                                                value={newPromo.endDate}
+                                                onChange={(e) => {
+                                                    setNewPromo({ ...newPromo, endDate: e.target.value });
+                                                    setShowErrorMessage(false);
+                                                }}
                                             />
                                         </Form.Group>
                                         <Button variant="primary" onClick={handleSaveChanges}>
@@ -91,34 +123,20 @@ const ManagePromo = () => {
                                 {/* Table header */}
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Amount</th>
                                     <th>Code</th>
-                                    <th>Actions</th>
+                                    <th>Amount</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                 </tr>
                                 </thead>
                                 {/* Table body */}
                                 <tbody>
                                 {promos.map((promo) => (
                                     <tr key={promo.id}>
-                                        <td>{promo.name}</td>
-                                        <td>{promo.amount}</td>
                                         <td>{promo.code}</td>
-                                        <td>
-                                            <Button
-                                                variant="success"
-                                                className="mr-2"
-                                                onClick={() => handleEditPromo(promo.id)}
-                                            >
-                                                Edit
-                                            </Button>
-                                            <Button
-                                                variant="danger"
-                                                onClick={() => handleDeletePromo(promo.id)}
-                                            >
-                                                Delete
-                                            </Button>
-                                        </td>
+                                        <td>{promo.discountAmount}</td>
+                                        <td>{promo.startDate}</td>
+                                        <td>{promo.endDate}</td>
                                     </tr>
                                 ))}
                                 </tbody>
@@ -141,7 +159,7 @@ const ManagePromo = () => {
                                 delay={3000}
                                 autohide
                             >
-                                <Toast.Body>Promo Successfully Deleted!</Toast.Body>
+                                <Toast.Body>Promo Successfully Added!</Toast.Body>
                             </Toast>
                         </Card.Body>
                     </Card>
