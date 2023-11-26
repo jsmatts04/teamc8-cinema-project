@@ -1,5 +1,6 @@
 package com.teamc8.repository;
 
+import com.teamc8.model.Promotion;
 import com.teamc8.model.User;
 import com.teamc8.model.projection.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsByEmail(String email);
 
     void deleteByEmail(String email);
+
+    List<User> findByPromotionEligibility(boolean promotionEligibility);
 }
