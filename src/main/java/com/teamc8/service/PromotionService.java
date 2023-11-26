@@ -18,7 +18,10 @@ public class PromotionService {
     }
 
     public Promotion addPromo(Promotion promotion) {
-        return promotionRepository.save(promotion);
+        Promotion newPromotion = promotionRepository.save(promotion);
+        // TODO: send email
+        sendPromotionEmail(newPromotion);
+        return newPromotion;
     }
 
     public Promotion updatePromo(Promotion promotion) {
