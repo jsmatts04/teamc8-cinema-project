@@ -39,7 +39,8 @@ AUTHENTICATION_RESPONSE = {
     user: {USER_INFO}
 }
 
-USER_INFO = { id, 
+USER_INFO = { 
+    id: 1, 
     email: '',
     firstName: '', 
     lastName: '',
@@ -47,6 +48,14 @@ USER_INFO = { id,
     userType: '',
     phoneNumber: '',
     promotionEligibility: true
+}
+
+PROMOTION = {
+    id: 1,
+    discountAmount: 1,
+    startDate: '2023-11-25',
+    endDate: '2023-11-25',
+    code: 'ABCD'
 }
 
 ADDRESS = { 
@@ -97,4 +106,10 @@ EDIT_PAYMENT_CARD_REQUEST = {
     expirationDate: '',
     cardNumber: '',
     nameOnCard: '' 
+}
+
+NEW_SHOWTIME_REQUEST = {
+    movieId: 1,
+    timestamp: '2023-11-25T03:30:00',
+    roomId: 1
 }
