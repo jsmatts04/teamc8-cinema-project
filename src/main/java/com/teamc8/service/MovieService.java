@@ -48,7 +48,6 @@ public class MovieService {
 
     //add movie
     public Movie addMovie(Movie movie) {
-        Movie savedMovie = movieRepository.save(movie);
         return movieRepository.save(movie);
     }
 

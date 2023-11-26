@@ -23,6 +23,9 @@ public class Seat {
     @Column(name = "seat_num")
     private int seatNum;
 
+    @Column(name = "seat_row")
+    private char seatRow;
+
     //reserved
     @Column(name = "reserved")
     private boolean reserved;
@@ -31,15 +34,5 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "show_id", referencedColumnName = "id")
     private Showtime showtime;
-
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", seatNum='" + seatNum + '\'' +
-                ", reserved='" + reserved + '\'' +
-                ", showtime='" + showtime + '\'' +
-                '}';
-    }
-
 
 }
