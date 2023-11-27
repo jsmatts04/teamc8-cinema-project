@@ -7,6 +7,7 @@ import Navbar from './content/Navbar'
 import Content from './content/Content'
 import { getAllUserInfo } from './api/UserApi'
 import { getJwtToken } from './api/AxiosConfig'
+import Cookies from 'js-cookie';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -14,12 +15,15 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    if (getJwtToken() !== '') {
+    if (Cookies.get('jwtToken') === getJwtToken()) {
       getAllUserInfo().then(
-          setLoggedIn(true)
-        ).catch(
-          setLoggedIn(false)
-        )
+        setLoggedIn(true)
+      ).catch(
+        (err) => {
+          console.log('retrieval of jwtToken failed or does not exist')
+          setLoggedIn(false);
+        }
+      )
     }
   }
   ,[]);
