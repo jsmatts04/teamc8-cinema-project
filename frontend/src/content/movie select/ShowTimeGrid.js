@@ -8,7 +8,7 @@ function ShowTimeGrid({startDate,movie}) {
     <div className='body-margin'>
         <div id='time-grid'>
         {timeList.map((time) => (
-            <Link state={{ date:{startDate}, time:{time}, movie:{movie} }} id='timeLink' to='/movie/Showtime'>{time}</Link>
+            <Link state={{ date:{startDate}, time:{time}, movie:{movie} }} id='timeLink' to='../seats'>{time}</Link>
         ))}
         </div>
     </div>

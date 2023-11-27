@@ -2,44 +2,44 @@ import tomatoImage from '../../Images/FreshTomato.png';
 import Button from 'react-bootstrap/Button';
 import '../../css/movie select/MovieDetail.css'
 import YoutubeEmbed from './YoutubeEmbed';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useOutletContext,useParams } from 'react-router-dom';
 import { fetchMovieById } from '../../api/MovieApi';
 import { useEffect, useState } from 'react';
 
-function MovieDetail (props) {
-    let {loginState} = props;
-    const [fullMovie, setFullMovie] = useState();
-    const location = useLocation();
-    let movie = location.state.movie;
-
-    useEffect(() => {
-        fetchMovieById(movie.id).then(
-            response => setFullMovie(response.data)
-        )
-    }, [movie.id]);
+function MovieDetail ({loginState}) {
+    let movie = useOutletContext();
     
-    
-    function printActors() {
-        let string = fullMovie.actors
-        let array = string.split("\n")
-        return array;
+    const {movieId} = useParams();
+    if (movie.title === undefined) {
+        console.log(movieId)
+        fetchMovieById(movieId).then(
+            response => {
+                movie = response.data
+            }
+        ).catch(err => console.log(err))
     }
 
+    function printActors() {
+        let array =[];
+        if (movie.actors !== undefined)
+            array = movie.actors.split("\n")
+        return array;
+    }
     function printProducers() {
-        let string = fullMovie.producer
-        let array = string.split(",")
+        let array =[];
+        if (movie.producer !== undefined)
+            array = movie.producer.split(",")
         return array;
     }
 
     return (
         <>
-        {(typeof fullMovie === 'undefined') ? (
+        {(typeof movie === 'undefined') ? (
             <p>Loading...</p>
         ) : (
             <>
-            <YoutubeEmbed video={fullMovie.trailerVideo} thumbnail={fullMovie.trailerPicture}/>
-            <h1 id='detailsTitle'>{fullMovie.title}</h1>
-            {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:fullMovie}}>
+            <h1 id='detailsTitle'>{movie.title}</h1>
+            {loginState && <Link to={'../booking/select-show-time'}>
             <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
             </Link>}
             {!loginState && <Link to={'/Login'}>
@@ -48,13 +48,13 @@ function MovieDetail (props) {
             <div className="book-ticket-content">
                 <div className="left-column-detail">
                 <ul>
-                    <li>Director: {fullMovie.director}</li>
-                    <li>Genre: {fullMovie.category}</li>
-                    <li>Movie Duration: {fullMovie.filmLength} minutes</li>
-                    <li>Release Date: {fullMovie.releaseDate}</li>
+                    <li>Director: {movie.director}</li>
+                    <li>Genre: {movie.category}</li>
+                    <li>Movie Duration: {movie.filmLength} minutes</li>
+                    <li>Release Date: {movie.releaseDate}</li>
                 </ul>
-                {fullMovie.reviewScore !== 0 && <><div id='ratingsDiv'>
-                    <img src={tomatoImage} alt='rotten tomatoes logo' className='ratings-logo'/><div><h3>{fullMovie.reviewScore}%</h3><h2>Rotten Tomatoes</h2></div>
+                {movie.reviewScore !== 0 && <><div id='ratingsDiv'>
+                    <img src={tomatoImage} alt='rotten tomatoes logo' className='ratings-logo'/><div><h3>{movie.reviewScore}%</h3><h2>Rotten Tomatoes</h2></div>
                 </div></>}
                 <h3>Cast</h3>
                 <ul>
@@ -67,7 +67,7 @@ function MovieDetail (props) {
             </div>
             <div className="right-column-detail">
                 <p>
-                    {fullMovie.synopsis}
+                    {movie.synopsis}
                 </p>
             </div>
         </div>

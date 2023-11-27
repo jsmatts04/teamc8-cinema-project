@@ -18,7 +18,6 @@ function OrderConfirmation ({booking}) {
 
     return(
         <>
-        <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
         <h2 className='center-text'>Order Completed Successfully</h2>   
         <h3 className='center-text'>A copy of this confirmation has been sent to {userEmail}</h3>
         
