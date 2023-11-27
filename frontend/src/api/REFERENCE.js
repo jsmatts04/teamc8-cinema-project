@@ -11,7 +11,8 @@ MOVIE_COVER = {
     title: '', 
     trailerPicture: '', 
     releaseDate: '', 
-    filmRating: ''
+    filmRating: '',
+    movieStatus: ''
 }
 
 MOVIE_INFO = {

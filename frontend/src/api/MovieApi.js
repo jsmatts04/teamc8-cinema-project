@@ -6,6 +6,7 @@ export const fetchMovieById = (id) => api.get(`/movie/${id}`);
 
 // Returns a list of movies by status (CURRENT, UPCOMING, ARCHIVED)
 // Returns MOVIE_COVER object. (see reference)
+export const fetchAllMovieCovers = () => api.get('/movie/cover?status=0')
 export const fetchMovieCoversCurrent = () => api.get('/movie/cover?status=1');
 export const fetchMovieCoversUpcoming = () => api.get('/movie/cover?status=2');
 
