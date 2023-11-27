@@ -20,8 +20,8 @@ function MovieCard(props) {
     },[])
 
     function truncateStr(string) {
-        if (string.length > 15)
-          return string.slice(0, 15) + "...";
+        if (string.length > 12)
+          return string.slice(0, 12) + "...";
         return string
     }
 
