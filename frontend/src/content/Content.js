@@ -1,4 +1,5 @@
 import {Routes, Route} from 'react-router-dom'
+import { useState } from 'react'
 import Login from './login-register/Login'
 import Register from './login-register/Register'
 import Home from './homepage/Home'
@@ -30,7 +31,10 @@ import AddPromo from "../AddPromo";
 import ManageUsers from "../ManageUsers"
 
 function Content(props) {
-  const {loginState, setAdminState, setLoggedIn, searchQuery } = props;
+  const {loginState, setAdminState, setLoggedIn, searchQuery, userInfo } = props;
+  const [booking, setBooking] = useState({});
+
+
     return (
       <Routes>
         <Route path='/' element={<Home loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
@@ -45,10 +49,10 @@ function Content(props) {
         <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>
         <Route path='/ManagePromos' element={<ManagePromos />}></Route>
         <Route path='/Movie/SelectShowTime' element={<SelectShowTime/>}></Route>
-        <Route path='/movie/ShowTime/' element={<SelectSeats/>}></Route>
-        <Route path='/movie/ShowTime/Seats' element={<SelectAgeCategory/>}></Route>
-        <Route path='/Checkout' element={<Checkout/>}></Route> 
-        <Route path='/Order/Confirmation' element={<OrderConfirmation/>}></Route>
+        <Route path='/movie/ShowTime/' element={<SelectSeats booking={booking}/>}></Route>
+        <Route path='/movie/ShowTime/Seats' element={<SelectAgeCategory booking={booking}/>}></Route>
+        <Route path='/Checkout' element={<Checkout booking={booking} setBooking={setBooking} userInfo={userInfo}/>}></Route> 
+        <Route path='/Order/Confirmation' element={<OrderConfirmation booking={booking}/>}></Route>
         <Route path='/OrderHistory' element={<OrderHistory/>}></Route>
         <Route path='/EditProfile' element={<EditProfile/>}></Route>
         <Route path='/AddAddress' element={<AddAddress/>}></Route>

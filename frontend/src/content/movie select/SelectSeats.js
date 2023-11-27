@@ -6,9 +6,8 @@ import '../../css/movie select/SelectSeats.css'
 import { Link } from 'react-router-dom';
 import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 
-function SelectSeats() {
+function SelectSeats(props) {
     let[count,setCount] = useState(0);
-
     let[selectedList, setSelectedList] = useState([]);
     const[seatList, setSeatList] = useState([0,0,0,0,0,0,0,0,0,0,
                                              0,0,0,0,0,0,0,0,0,0,
@@ -18,7 +17,7 @@ function SelectSeats() {
     const location = useLocation();
     const {time} = location.state.time;
     const {date} = location.state.date.startDate;
-    let movie = location.state.movie.movie;
+    const {movie} = location.state.movie;
     let dateString = JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11);
 
     const handleChange = (event) => {

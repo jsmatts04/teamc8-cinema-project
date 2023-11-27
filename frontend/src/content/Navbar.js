@@ -13,13 +13,14 @@ import { removeJwtToken } from '../api/AxiosConfig';
 import Cookies from 'js-cookie';
 
 function Navbar(props) {
-    let {loginState,setLoggedIn,setSearchQuery} = props;
+    let {loginState,setLoggedIn,setSearchQuery,setUserInfo} = props;
     const [currentQuery, setCurrentQuery] = useState('');
     const navigate = useNavigate();
 
     function handleLogout() {
         removeJwtToken();
-        Cookies.remove('jwtToken')
+        setUserInfo({});
+        Cookies.remove('jwtToken');
         setLoggedIn(false);
         navigate('/');
     }

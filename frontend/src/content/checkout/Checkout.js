@@ -5,9 +5,11 @@ import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import '../../css/checkout/Checkout.css'
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { addBooking } from '../../api/BookingApi' 
 
-function Checkout() {
+function Checkout({userInfo, booking, setBooking}) {
     let adultPrice = 16.49;
     let childPrice = 13.49;
     let seniorPrice = 14.99;
@@ -28,12 +30,13 @@ function Checkout() {
     let subtotalCost = totalAdultPrice+totalChildPrice+totalSeniorPrice;
     let totalFees =(numAdult + numChild + numSenior)* 2.00;
     let totalTaxes = subtotalCost*0.08;
-    let totalPrice = subtotalCost+totalTaxes+totalFees;
+    let discount = 0;
+    let totalPrice = (subtotalCost+totalTaxes+totalFees) * ((100-discount)/100);
 
     let printAdult = () => {return <><div>Adult Tickets ({numAdult})</div><div>$ {totalAdultPrice.toFixed(2)}</div></>}    
     let printChild = () => {return <><div>Child Tickets ({numChild})</div><div>$ {totalChildPrice.toFixed(2)}</div></>}
     let printSenior = () => {return <><div>Senior Tickets ({numSenior})</div><div>$ {totalSeniorPrice.toFixed(2)}</div></>}
-
+    
     let orderInfo = {
         numAdult,
         numChild,
@@ -55,37 +58,175 @@ function Checkout() {
         return string;
     }
 
+    let promo = undefined;
+    const [promoInput, setPromoInput] = useState('');
+    function applyPromo(promo) {
+        /*
+        checkPromo(promo).then(
+            (response) => {
+                promo = response.data;
+                discount = promo.discountAmount
+            }
+        ).catch((err) => (console.log(err)))
+        */
+    }
+
+    let paymentCards=[];
+    if (userInfo.paymentCards !== undefined) {
+        paymentCards=userInfo.paymentCards;
+    }
+
+    const [newPaymentInfo, setNewPaymentInfo] = useState({
+        nameOnCard:'',
+        cardNumber:'',
+        lastFourDigits:'',
+        expirationDate:'',
+        securityCode:''
+    });
+
+    const [cardSelectedLast4Digits, setCardSelectedLast4Digits] = useState('');
+
+    const convertTime12to24 = (time12h) => {
+        const [time, modifier] = time12h.split(' ');
+      
+        let [hours, minutes] = time.split(':');
+      
+        if (hours === '12') {
+          hours = '00';
+        }
+      
+        if (modifier === 'PM') {
+          hours = parseInt(hours, 10) + 12;
+        }
+      
+        return `${hours}:${minutes}`;
+      }
+
+    let nav = useNavigate();
+
+    const handleCheckout = (e) => {
+        e.preventDefault();
+        if ((newPaymentInfo.nameOnCard !== '' && newPaymentInfo.cardNumber !== '' && newPaymentInfo.expirationDate !== '' && newPaymentInfo.securityCode !== '') || (savedCardSelected)) {
+            let newBooking = {
+                userEmail:'',
+                paymentCardLastFourDigits:'',
+                promotion:{},
+                showtime:{},
+                total:'',
+                date:''
+            };
+            newBooking.userEmail= userInfo.user.email 
+            newBooking.paymentCardLastFourDigits = savedCardSelected ? booking.paymentCardLastFourDigits = cardSelectedLast4Digits : (
+                booking.paymentCardLastFourDigits = newPaymentInfo.cardNumber.substring(newPaymentInfo.cardNumber.length - 4)
+            )
+            newBooking.promotion = promo === undefined ? booking.promotion=promo : booking.promotion=undefined;
+            newBooking.showtime = {
+                timestamp: dateString+'T'+convertTime12to24(time),
+                room: {
+                    id: 1,
+                    numSeats: 25
+                },
+                movie: movie,
+            }
+            newBooking.total = totalPrice.toFixed(2)
+            newBooking.date = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate()
+
+            let extraDetails = {
+                seats: printSeats(),
+                numAdult: numAdult,
+                numChild: numChild,
+                numSenior: numSenior,
+                totalAdultPrice: totalAdultPrice,
+                totalChildPrice: totalChildPrice,
+                totalSeniorPrice: totalSeniorPrice,
+                totalFees: totalFees,
+                totalTaxes: totalTaxes,
+                totalPrice: totalPrice,
+                discount: discount
+            }
+            newBooking.extraDetails = extraDetails;
+            setBooking(newBooking)
+            setNewPaymentInfo({})
+            nav('/Order/Confirmation')
+
+            /*
+            addBooking(newBooking).then(() => {
+                let extraDetails = {
+                    seats: printSeats(),
+                    numAdult: numAdult,
+                    numChild: numChild,
+                    numSenior: numSenior,
+                    totalAdultPrice: totalAdultPrice,
+                    totalChildPrice: totalChildPrice,
+                    totalSeniorPrice: totalSeniorPrice,
+                    totalFees: totalFees,
+                    totalTaxes: totalTaxes,
+                    totalPrice: totalPrice,
+                    discount: discount
+                }
+                newBooking.extraDetails = extraDetails;
+                setBooking(newBooking)
+                setNewPaymentInfo({})
+                nav('/Order/Confirmation')
+                }
+            ).catch((err) => {console.log(err)}) */
+        } else {
+            // display error
+            console.log('error occured')
+        }
+    }
+    
+    const [savedCardSelected, setSavedCardSelected] = useState(false);
+    function handleCardSelect(el) {
+        if (el !== -1) {
+            setSavedCardSelected(true)
+            setCardSelectedLast4Digits(el)
+        } else {
+            setCardSelectedLast4Digits('');
+            setSavedCardSelected(false);
+        }
+    }
+
+    function handleCancel() {
+        setBooking('');
+        nav('/');
+    }
+
     return (
         <>
         <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
+        <Form onSubmit={handleCheckout}>
         <div className='checkoutGrid'>
-        <Form>
+        <div>
         <Form.Group>
                 <Form.Label>Name on Card</Form.Label>
-                <Form.Control type="text" name='name' placeholder="Name"/>
+                <Form.Control type="text" name='name' placeholder="Name" value={newPaymentInfo.nameOnCard} onChange={(e) => setNewPaymentInfo({...newPaymentInfo, nameOnCard:e.target.value})}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Credit Card Number</Form.Label>
-                <Form.Control type="number" name='ccNumber' placeholder='Credit Card Number'/>
+                <Form.Control type="number" name='ccNumber' placeholder='Credit Card Number' value={newPaymentInfo.cardNumber} onChange={(e) => setNewPaymentInfo({...newPaymentInfo, cardNumber:e.target.value})}/>
             </Form.Group>
             <Row>
                 <Form.Group as={Col}>
                     <Form.Label>Expiration Date</Form.Label>
-                    <Form.Control type="tel" name='expiryDate' placeholder='Valid Thru' pattern='\d\d/\d\d'/>
+                    <Form.Control type="tel" name='expiryDate' placeholder='MM/YY' pattern='\d\d/\d\d' value={newPaymentInfo.expirationDate} onChange={(e) => setNewPaymentInfo({...newPaymentInfo, expirationDate:e.target.value})}/>
                 </Form.Group>
                 <Form.Group as={Col}>
                     <Form.Label>CVC/CVV</Form.Label>
-                    <Form.Control type="tel" name='cvv' placeholder='CVC' pattern='\d{3}'/>
+                    <Form.Control type="tel" name='cvv' placeholder='CVC' pattern='\d{3,4}' value={newPaymentInfo.securityCode} onChange={(e) => setNewPaymentInfo({...newPaymentInfo, securityCode:e.target.value})}/>
                 </Form.Group>
             </Row>
-            <Form.Group>
+            {(paymentCards.length !== 0) &&
+                <Form.Group>
                 <Form.Label>Saved Cards</Form.Label>
-                <Form.Select>
-                    <option>Choose from saved cards</option>
-                    <option value='1'>Card ending in 1234</option>
-                    <option value='2'>Card ending in 9873</option>
+                <Form.Select title='card-selector' onChange={(e) => handleCardSelect(e.target.value)}>
+                    <option value={-1}>Choose from saved card(s)</option>
+                    {paymentCards.map((card) => (
+                        <option value={card.lastFourDigits}>Card ending in {card.lastFourDigits}</option>
+                    ))}
                 </Form.Select>
-            </Form.Group>
+                </Form.Group>
+            }
             <Form.Group>
                 <Form.Label>Enter Promo Code</Form.Label>
                 <InputGroup>
@@ -93,11 +234,12 @@ function Checkout() {
                         type="text"
                         placeholder="Promo Code"
                         className="promo input"
+                        onChange={(e) => setPromoInput(e.target.value)}
                     />
-                    <Button type="submit" variant="outline-light">Apply</Button>
+                    <Button onClick={applyPromo('')} variant="outline-light">Apply</Button>
                 </InputGroup>   
             </Form.Group>
-        </Form>
+        </div>
         <div className='order-summary'>
             <hr/>
             <div className='summary-movie-details'>
@@ -120,17 +262,19 @@ function Checkout() {
             <hr/>
             <div className='two-column-grid'>
             <div>Taxes</div><div>$ {totalTaxes.toFixed(2)}</div>
+            {promo !== undefined && <><div>{promo.code}</div><div>{discount}%</div></>}
             </div>
             <hr/>
             <div className='two-column-grid'>
             <div>TOTAL</div><div>$ {totalPrice.toFixed(2)}</div>
             </div>
             <div className='center-button'>
-            <Link state={{movie:{movie}, date:{dateString}, time:{time}, orderInfo:{orderInfo}, seats}} className='confirm-button' to='/order/confirmation'>Submit Order</Link>
-            <Link id ='cancel-button' className='confirm-button' to='/'>Cancel</Link>
+            <Button variant='warning' type='submit'>Submit Order</Button>
+            <Button variant='dark' onClick={()=>handleCancel()} id ='cancel-button'>Cancel</Button>
             </div>
         </div>
         </div>
+        </Form>
         
         </>
     );

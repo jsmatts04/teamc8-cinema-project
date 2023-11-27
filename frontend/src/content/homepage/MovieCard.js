@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import '../../css/homepage/MovieCard.css';
 import MovieDetail from '../movie select/MovieDetail';
 import { Link } from 'react-router-dom';
-import SelectShowTime from '../movie select/SelectShowTime';
 import { fetchMovieById } from '../../api/MovieApi';
 import { useState, useEffect } from 'react';
 
@@ -37,7 +36,7 @@ function MovieCard(props) {
                 {movie.filmRating !== 'null' && <Card.Title style={{color:'orange'}}>{movie.filmRating}</Card.Title>}
             </Card.Body>
         </Card>
-        {loginState && <Link state={{movie:fullMovie}} to={'/Movie/SelectShowtime'} element={<SelectShowTime/>}>
+        {loginState && <Link state={{movie:fullMovie}} to={'/Movie/SelectShowtime'}>
         <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         {!loginState && <Link to={'/Login'}>
