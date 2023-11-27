@@ -36,6 +36,10 @@ public class MovieService {
         return movieRepository.findAllProjectedBy();
     }
 
+    public List<MovieCover> getAllMovieCovers() {
+        return movieRepository.findAllProjectedBy();
+    }
+
     //get movie cover by status
     public List<MovieCover> getAllMovieCoversForStatus(short status) {
         return movieRepository.findAllProjectedByMovieStatusId(status);
@@ -66,5 +70,4 @@ public class MovieService {
         else
             throw new MovieNotFoundException("There is no movie by the id " + movie.getId() + " to be updated");
     }
-
 }

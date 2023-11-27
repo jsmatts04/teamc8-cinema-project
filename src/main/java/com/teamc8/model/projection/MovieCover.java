@@ -1,5 +1,7 @@
 package com.teamc8.model.projection;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public interface MovieCover {
@@ -12,6 +14,8 @@ public interface MovieCover {
     Date getReleaseDate();
 
     String getFilmRating();
+    @JsonProperty("movieStatus")
+    String getMovieStatusStatusType();
 
 }
 
