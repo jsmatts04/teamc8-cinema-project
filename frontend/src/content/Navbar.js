@@ -19,7 +19,7 @@ function Navbar(props) {
 
     function handleLogout() {
         removeJwtToken();
-        Cookies.set('jwtToken',undefined, {expires:0})
+        Cookies.remove('jwtToken')
         setLoggedIn(false);
         navigate('/');
     }
