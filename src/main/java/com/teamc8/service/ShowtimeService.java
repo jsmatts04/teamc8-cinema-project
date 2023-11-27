@@ -30,6 +30,11 @@ public class ShowtimeService {
         return showtimeRepository.findAll();
     }
 
+    public Showtime getShowtimeById(int id) {
+        return showtimeRepository.findById(id).orElseThrow(
+            () -> new RuntimeException("Showtime by id not found: " + id));
+    }
+
     public Showtime addShowtime(NewShowtimeRequest newShowtimeRequest) {
         // Check if date and time are not already scheduled
         if (showtimeRepository.existsByTimestamp(newShowtimeRequest.getTimestamp())) {

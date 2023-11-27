@@ -25,7 +25,6 @@ public class PromotionService {
 
     public Promotion addPromo(Promotion promotion) {
         Promotion newPromotion = promotionRepository.save(promotion);
-        // TODO: send email
         sendPromotionEmail(newPromotion);
         return newPromotion;
     }

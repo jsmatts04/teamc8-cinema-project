@@ -2,12 +2,14 @@ package com.teamc8.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -21,7 +23,7 @@ public class Booking {
 
     //total
     @Column(name = "total")
-    private int total;
+    private float total;
 
     //date
     @Column(name = "date")

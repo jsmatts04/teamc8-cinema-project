@@ -27,7 +27,7 @@ public class Ticket {
     //ticket type
     @ManyToOne
     @JoinColumn(name = "type", referencedColumnName = "id")
-    private com.teamc8.model.TicketType type;
+    private TicketType type;
 
     //seat
     @ManyToOne

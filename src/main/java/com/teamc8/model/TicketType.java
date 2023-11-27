@@ -21,7 +21,7 @@ public class TicketType {
 
     //type
     @Column(name = "type", length = 10)
-    private char type;
+    private String type;
 
     //price
     @Column(name = "price")

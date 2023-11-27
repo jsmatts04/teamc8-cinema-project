@@ -35,13 +35,4 @@ public class Showtime {
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
 
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", date_time='" + timestamp + '\'' +
-                ", room_id='" + room + '\'' +
-                ", movie_id='" + movie + '\'' +
-                '}';
-    }
-
 }

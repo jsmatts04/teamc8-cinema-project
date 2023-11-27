@@ -35,4 +35,10 @@ public class SeatService {
 
         seatRepository.saveAll(seats);
     }
+
+    public Seat getSeatById(int seatId) {
+        return seatRepository.findById(seatId).orElseThrow(
+                () -> new RuntimeException("Seat by id not found: " + seatId)
+        );
+    }
 }
