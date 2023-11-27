@@ -3,6 +3,12 @@
     These are represented as JSON objects, so I am only providing the key names. Ctrl+F if you need
 */
 
+// ENUMS
+TICKET_TYPE_ENUM = {
+    1: 'Child',
+    2: 'Adult',
+    3: 'Senior'
+}
 
 // RESPONSE OBJECTS - Objects you can expect to receive from endpoints.
 // ----------------
@@ -51,12 +57,48 @@ USER_INFO = {
     promotionEligibility: true
 }
 
-PROMOTION = {
+PROMOTION_INFO = {
     id: 1,
     discountAmount: 1,
     startDate: '2023-11-25',
     endDate: '2023-11-25',
     code: 'ABCD'
+}
+
+SEAT_INFO = {
+    id: 1,
+    seatNum: 1,
+    seatRow: 'A',
+    reserved: false,
+    showtime: SHOWTIME_INFO
+}
+
+TICKET_INFO = {
+    id: 1,
+    type: '',
+    seat: SEAT_INFO
+}
+
+ROOM_INFO = {
+    id: 1,
+    numSeats: 1
+}
+
+SHOWTIME_INFO = {
+    id: 1,
+    timestamp: '2023-11-25T12:00:00',
+    room: ROOM_INFO,
+    movie: MOVIE_INFO
+}
+
+BOOKING_INFO ={
+    id: 1,
+    userEmail: '',
+    showtime: SHOWTIME_INFO,
+    paymentCardLastFourDigits: 1,
+    promotion: PROMOTION_INFO,
+    total: 1.50,
+    date: '2023-11-25'
 }
 
 ADDRESS = { 
@@ -113,4 +155,18 @@ NEW_SHOWTIME_REQUEST = {
     movieId: 1,
     timestamp: '2023-11-25T03:30:00',
     roomId: 1
+}
+
+NEW_BOOKING_REQUEST = {
+    showtimeId: 1,
+    paymentCardId: 1,
+    promotionId: 1,
+    total: 1.50,
+    date: "2023-11-25"
+}
+
+NEW_TICKET_REQUEST = {
+    bookingId: 1,
+    seatId: 1,
+    typeId: 1
 }
