@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import MovieDetail from '../movie select/MovieDetail';
-import { fetchMovieById, fetchMovieCoversCurrent,fetchMovieCoversUpcoming } from '../../api/MovieApi';
+import Fade from 'react-bootstrap/Fade'
+import { fetchMovieById, fetchAllMovieCovers } from '../../api/MovieApi';
 import ShowTimeGrid from '../movie select/ShowTimeGrid';
 import YoutubeEmbed from '../movie select/YoutubeEmbed';
 import '../../css/movie select/ShowtimeBrowser.css'
@@ -13,36 +14,16 @@ import '../../css/movie select/ShowtimeBrowser.css'
 function ShowtimeBrowser() {
     const [date, setDate] = useState(new Date());
     const [movieList, setMovieList] = useState([]);
+    const [showtimeList, setShowtimeList] = useState([]);
     const [movieSelected, setMovieSelected] = useState({});
-    const [movieListCurrent, setMovieListCurrent] = useState([]);
-    const [movieListUpcoming, setMovieListUpcoming] = useState([]);
 
     useEffect(() => {
-        fetchMovieCoversCurrent().then(
+        fetchAllMovieCovers().then(
           response => {
-            setMovieListCurrent(response.data);
+            setMovieList(response.data);
           }
         )
     },[])
-      
-    useEffect(() => {
-        fetchMovieCoversUpcoming().then(
-          response => {
-            setMovieListUpcoming(response.data);
-          }
-        )
-    },[])
-
-    useEffect(() => {
-        setMovieList(movieListCurrent.concat(movieListUpcoming));
-        if (movieList.length !== 0) {
-            fetchMovieById(movieList[0].id).then(
-                response => {
-                    setMovieSelected(response.data)
-                }
-            )
-        }
-    }, [movieListCurrent,movieListUpcoming])
     
     function truncateStr(string) {
         if (string.length > 15)
@@ -50,18 +31,16 @@ function ShowtimeBrowser() {
         return string
     }
 
+    function handleHover(movie) {
+        if (movie !== undefined) {
+            fetchMovieById(movie.id).then(response=>setMovieSelected(response.data))
+        }
+    }
+
     return(
     <div style={{height:'90vh', overflowY:'hidden'}}>
         <Navbar className='showtime-navbar'>
-            <p>Filter by</p>
-            <Form.Select>
-            Genre:
-                <option>select filter</option>
-                <option value='1'>category1</option>
-                <option value='2'>category2</option>
-                <option value='3'>category3</option>
-            </Form.Select>
-            <Form.Select>
+            <Form.Select style={{width:'fit-content'}}>
             Movie:
                 <option>select movie</option>
                 {movieList.map((movie)=>(
@@ -73,7 +52,7 @@ function ShowtimeBrowser() {
         <div className='showtime-browser-content' style={{height:'100%'}}>
         <div style={{overflowY:'scroll'}}>
         {movieList.map((movie) => (
-            <div className='showtime-card'>
+            <div className='showtime-card' onMouseEnter={()=>{handleHover(movie)}}>
             <div className='small-movie-header'>
             <img src={movie.trailerPicture} alt='movie poster'/> 
             <h3>{truncateStr(movie.title)}</h3>
@@ -84,10 +63,10 @@ function ShowtimeBrowser() {
         ))}
         </div>
         <div className='movie-details-col'>
-        {(typeof movieSelected === 'undefined') ? (
-            <p>No movie selected</p>
+        {(movieSelected.title === undefined) ? (
+            <></>
         ) : (
-            <>
+                <>
                 <YoutubeEmbed video={movieSelected.trailerVideo} thumbnail={movieSelected.trailerPicture}/>
                 <div className='grid-2-col'>
                 <h3>{movieSelected.title}</h3>
@@ -97,7 +76,7 @@ function ShowtimeBrowser() {
                 <Link state = {{movie:movieSelected}} to={'/movie'} element={<MovieDetail/>}>
                 <Button variant='warning' className='book-button'>MOVIE DETAILS</Button>
                 </Link>
-            </>
+                </>
             
         )}
         </div>
