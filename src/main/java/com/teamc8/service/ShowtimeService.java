@@ -5,16 +5,15 @@ import com.teamc8.exception.RoomNotFoundException;
 import com.teamc8.exception.ShowtimeAlreadyScheduledException;
 import com.teamc8.model.Movie;
 import com.teamc8.model.Room;
-import com.teamc8.model.Seat;
 import com.teamc8.model.Showtime;
 import com.teamc8.model.request.NewShowtimeRequest;
+import com.teamc8.model.request.GetShowtimeRequest;
 import com.teamc8.repository.MovieRepository;
 import com.teamc8.repository.RoomRepository;
 import com.teamc8.repository.ShowtimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +27,10 @@ public class ShowtimeService {
 
     public List<Showtime> getAllShowtimes() {
         return showtimeRepository.findAll();
+    }
+
+    public List<Showtime> getAllShowtimesForMovieDate(GetShowtimeRequest getShowtimeRequest) {
+        return showtimeRepository.findAllByMovieIdAndTimestamp(getShowtimeRequest.getMovieId(), getShowtimeRequest.getTimestamp());
     }
 
     public Showtime getShowtimeById(int id) {
@@ -54,5 +57,18 @@ public class ShowtimeService {
                 .build());
         seatService.generateSeats(showtime);
         return showtime;
+    }
+
+    public List<Showtime> getAllShowtimesForDate(GetShowtimeRequest getShowtimeRequest) {
+        return showtimeRepository.findAllByTimestamp(getShowtimeRequest.getTimestamp());
+    }
+
+    public List<Showtime> getAllShowtimesForMovieDateRoom(GetShowtimeRequest getShowtimeRequest) {
+        return showtimeRepository.findAllByMovieIdAndTimestampAndRoomId(getShowtimeRequest.getMovieId(),
+                getShowtimeRequest.getTimestamp(), getShowtimeRequest.getRoomId());
+    }
+
+    public List<Showtime> getAllShowtimesForMovie(GetShowtimeRequest getShowtimeRequest) {
+        return showtimeRepository.findAllByMovieId(getShowtimeRequest.getMovieId());
     }
 }

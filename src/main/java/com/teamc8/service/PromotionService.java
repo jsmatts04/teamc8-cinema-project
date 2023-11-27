@@ -1,7 +1,6 @@
 package com.teamc8.service;
 
 import com.teamc8.config.email.EmailSender;
-import com.teamc8.config.email.PromotionSenderService;
 import com.teamc8.model.Promotion;
 import com.teamc8.model.User;
 import com.teamc8.repository.PromotionRepository;
@@ -9,6 +8,7 @@ import com.teamc8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,6 +51,15 @@ public class PromotionService {
         return promotionRepository.findById(id).orElse(null);
     }
 
+    public Promotion validatePromoByCode(String code) {
+        Promotion promotion = promotionRepository.findByCode(code).orElse(null);
+
+        if (promotion.getEndDate().after(new Date()) && promotion.getStartDate().before(new Date()))
+            return promotion;
+        else
+            return null;
+    }
+
     private String buildPromotionEmail(String name, String promoCode, int discountAmount) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">" +
                 "<span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">" +
@@ -66,5 +75,4 @@ public class PromotionService {
                 "Enjoy your special offer and thank you for being with us!" +
                 "</div>";
     }
-
 }
