@@ -8,12 +8,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import filmLogo from './Images/film.png'
 
 function Navbar(props) {
-    let {setLoggedIn,setAdminState} = props;
+    let {setLoggedIn,setAdminState,setUserInfo} = props;
     const navigate = useNavigate();
     
     function logoutAdmin() {
         setLoggedIn(false);
         setAdminState(false);
+        setUserInfo({});
         navigate('/');
     }
 

@@ -2,7 +2,6 @@ import tomatoImage from '../../Images/FreshTomato.png';
 import Button from 'react-bootstrap/Button';
 import '../../css/movie select/MovieDetail.css'
 import YoutubeEmbed from './YoutubeEmbed';
-import SelectShowTime from './SelectShowTime';
 import { Link, useLocation } from 'react-router-dom';
 import { fetchMovieById } from '../../api/MovieApi';
 import { useEffect, useState } from 'react';
@@ -40,7 +39,7 @@ function MovieDetail (props) {
             <>
             <YoutubeEmbed video={fullMovie.trailerVideo} thumbnail={fullMovie.trailerPicture}/>
             <h1 id='detailsTitle'>{fullMovie.title}</h1>
-            {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:{fullMovie}}} element={<SelectShowTime/>}>
+            {loginState && <Link to={'/Movie/SelectShowtime'} state={{movie:fullMovie}}>
             <Button variant='warning' className='book-button-details'>BOOK TICKETS</Button>
             </Link>}
             {!loginState && <Link to={'/Login'}>

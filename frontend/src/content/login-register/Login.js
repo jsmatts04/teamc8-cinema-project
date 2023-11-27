@@ -7,7 +7,8 @@ import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 import Alert from 'react-bootstrap/Alert';
 import { authenticateUser, resendConfirmationEmail } from '../../api/AuthenticationApi';
-import { storeJwtToken } from '../../api/AxiosConfig';
+import { removeJwtToken, storeJwtToken } from '../../api/AxiosConfig';
+import Cookies from 'js-cookie';
 
 function Login(props) {
   let { setLoggedIn, setAdminState } = props;
@@ -44,9 +45,9 @@ function Login(props) {
     };
     authenticateUser(user).then(
       (response) => {
-        console.log(response.data.user);
         if (check) {
           storeJwtToken(response.data.jwtToken)
+          Cookies.set('jwtToken', response.data.jwtToken, {expires: 7, secure: true})
         }
         setLoggedIn(true);
         if (response.data.user.userType === "CUSTOMER") {
@@ -56,9 +57,9 @@ function Login(props) {
           navigate('/adminhomepage')
         }
     }
-      
     ).catch((err) => {
-      if (err.response.data == 'User is INACTIVE') {
+      console.log(err)
+      if (err.response.data ==='User is INACTIVE') {
         setShow(true);
       }
       else {

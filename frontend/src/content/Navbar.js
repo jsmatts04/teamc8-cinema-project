@@ -10,15 +10,18 @@ import searchIcon from '../Images/search-icon.png'
 import { useState } from 'react';
 import '../css/Navbar.css'
 import { removeJwtToken } from '../api/AxiosConfig';
+import Cookies from 'js-cookie';
 
 function Navbar(props) {
-    let {loginState,setLoggedIn,setSearchQuery} = props;
+    let {loginState,setLoggedIn,setSearchQuery,setUserInfo} = props;
     const [currentQuery, setCurrentQuery] = useState('');
     const navigate = useNavigate();
 
     function handleLogout() {
-        setLoggedIn(false);
         removeJwtToken();
+        setUserInfo({});
+        Cookies.remove('jwtToken');
+        setLoggedIn(false);
         navigate('/');
     }
 
