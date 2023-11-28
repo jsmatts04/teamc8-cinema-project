@@ -151,12 +151,6 @@ EDIT_PAYMENT_CARD_REQUEST = {
     nameOnCard: '' 
 }
 
-NEW_SHOWTIME_REQUEST = {
-    movieId: 1,
-    timestamp: '2023-11-25T03:30:00',
-    roomId: 1
-}
-
 NEW_BOOKING_REQUEST = {
     showtimeId: 1,
     paymentCardId: 1,

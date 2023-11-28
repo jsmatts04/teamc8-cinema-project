@@ -5,8 +5,8 @@ import api from "./AxiosConfig";
 export const getAllShowtimes = () => api.get(`/showtime`);
 
 // Add a showtime into the database
-// Takes a NEW_SHOWTIME_REQUEST object. (see reference)
-export const addShowtime = (showtime) => api.post(`/showtime/add`, showtime);
+// Make sure to provide all parameters
+export const addShowtime = (movieId, date, time) => api.post(`/showtime/add`, {movieId: movieId, date: date, time: time});
 
 // Get all showtimes for a specified movie id and date
 // date example = "2023-11-25"
