@@ -143,7 +143,8 @@ function Checkout({userInfo, movie, booking, setBooking}) {
             ).catch((err) => {console.log(err)})
         } else {
             // display error
-            console.log('error occured')
+            setErrorMessage('ERROR: Please choose a saved card or fill out all the payment fields')
+            setTimeout(()=>setErrorMessage(''),2000)
         }
     }
     
@@ -165,7 +166,7 @@ function Checkout({userInfo, movie, booking, setBooking}) {
 
     return (
         <>
-        <h4 style={{color:'red'}}>{errorMessage}</h4>
+        <h4 style={{color:'red', left:'25%', position:'absolute'}}>{errorMessage}</h4>
         <Form onSubmit={handleCheckout}>
         <div className='checkoutGrid'>
         <div>
@@ -224,7 +225,7 @@ function Checkout({userInfo, movie, booking, setBooking}) {
             {numAdult !== 0 && printAdult()}
             {numChild !== 0 && printChild()}
             {numSenior !== 0 && printSenior()}
-            Seats {seats.map((seat,index) => (index !== seats.length - 1 ? (seat.substring(3) + ", ") : (seat.substring(3))))}
+            Seats {seats.map((seat,index) => (index !== seats.length - 1 ? (seat.substring(seat.indexOf(':')+1) + ", ") : (seat.substring(seat.indexOf(':')+1))))}
             </div>
             FEES
             <div className='two-column-grid'>

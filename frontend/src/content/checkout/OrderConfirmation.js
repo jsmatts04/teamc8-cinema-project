@@ -39,7 +39,7 @@ function OrderConfirmation ({userInfo, movie, booking, setBooking}) {
                 <h4>Date:</h4> <h4>{dateString}</h4>
                 <h4>Time:</h4> <h4>{time}</h4>
                 <h4>Theatre:</h4> <h4>Hall {showtime.room !== null ? showtime.room.id : 1}</h4>
-                <h4>Seats:</h4> <h4>{seats.map(seat => seat.substring(3))}</h4>
+                <h4>Seats:</h4> <h4>{seats.map(seat => seat.substring(seat.indexOf(':')+1))}</h4>
                 </div>
                 <div className='two-column-grid'>
                 {numAdult !== 0 && printAdult()}

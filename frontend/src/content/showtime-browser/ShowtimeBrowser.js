@@ -62,7 +62,7 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
             </Form.Select>
             <DatePicker minDate={new Date()} selected={date} onChange={(date) => setDate(date)} />
         </Navbar>
-        <div className='showtime-browser-content' style={{height:'100%'}}>
+        <div className='showtime-browser-content' style={{height:'90%'}}>
         <div style={{overflowY:'scroll'}}>
         {handleFilterMovie(movieList).map((movie) => (
             <div className='showtime-card' onMouseEnter={()=>{handleHover(movie)}}>

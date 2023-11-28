@@ -64,7 +64,7 @@ function SelectAgeCategory() {
         if (numberTotalTickets===0) {
             return <Link className='confirm-button active' state={{ numAdult:{numberAdultTickets},numChild:{numberChildTickets},numSenior:{numberSeniorTickets},seats }} to={path}>Continue</Link>
         } else {
-            return <Link className='confirm-button disabled' to=' '>Checkout</Link>
+            return <Link className='confirm-button disabled' to=' '>Continue</Link>
         }
     }
 
