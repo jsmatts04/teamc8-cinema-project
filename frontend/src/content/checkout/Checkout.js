@@ -9,6 +9,7 @@ import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useState } from "react";
 import { addBooking } from '../../api/BookingApi' 
 import { validatePromo } from "../../api/PromotionApi";
+import { addTickets } from "../../api/TicketApi";
 
 function Checkout({userInfo, movie, booking, setBooking}) {
     let adultPrice = 16.49;
@@ -113,8 +114,27 @@ function Checkout({userInfo, movie, booking, setBooking}) {
             console.log(newBooking)
 
             addBooking(newBooking).then((response) => {
+                let id = response.data;
+                let typeArray = [];
+                for (let i = 0; i < numChild; i++) {
+                    typeArray = [...typeArray, 1]
+                }
+                for (let i = 0; i < numAdult; i++) {
+                    typeArray = [...typeArray, 2]
+                }
+                for (let i = 0; i < numSenior; i++) {
+                    typeArray = [...typeArray, 3]
+                }
+                let ticketArray = [];
+                for (let i = 0; i < numChild+numAdult+numSenior; i++) {
+                    let ticket = {
+                        typeId: typeArray[i], 
+                        seatId: seats[i].substring(0,2)
+                    }
+                    ticketArray = [...ticketArray, ticket]
+                }
                 setBooking(newBooking)
-                setBooking({...booking, id: response.data, extraDetails:{
+                setBooking({...booking, id: id, extraDetails:{
                     seats: seats,
                     numAdult: numAdult,
                     numChild: numChild,
@@ -128,7 +148,10 @@ function Checkout({userInfo, movie, booking, setBooking}) {
                     discount: discount
                 }})
                 setNewPaymentInfo({})
-                nav('../confirmation')
+                console.log(booking)
+                addTickets(id, ticketArray).then((response) => {
+                    nav('../confirmation')
+                }).catch(err => console.log(err))
                 }
             ).catch((err) => {console.log(err)})
         } else {
@@ -214,7 +237,7 @@ function Checkout({userInfo, movie, booking, setBooking}) {
             {numAdult !== 0 && printAdult()}
             {numChild !== 0 && printChild()}
             {numSenior !== 0 && printSenior()}
-            Seats {seats.map((seat,index) => (index !== seats.length - 1 ? (seat + ", ") : (seat)))}
+            Seats {seats.map((seat,index) => (index !== seats.length - 1 ? (seat.substring(3) + ", ") : (seat.substring(3))))}
             </div>
             FEES
             <div className='two-column-grid'>

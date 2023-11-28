@@ -26,7 +26,7 @@ function SelectSeats({movie, booking, setBooking}) {
 
     useEffect(()=> {
         getSeatsForShowtime(booking.showtime.id).then(
-            response=>setSeatList(response.data))
+            response=>{setSeatList(response.data.sort(function(a,b){return a.id - b.id}))})
         .catch(err => console.log(err))
     },[booking.showtime.id])
 
@@ -40,13 +40,14 @@ function SelectSeats({movie, booking, setBooking}) {
             const newList = selectedList.filter((item) => item !== event.target.value);
             setSelectedList(newList);
         }
+        console.log(selectedList);
         setCount(count);
     }
 
     function printSeatList() {
         let list = 
-        seatList.map((e) => (((e.reserved === false) && <ToggleButton onChange={handleChange} id={'toggle-check' + (e.seatRow+e.seatNum)} type="checkbox" value={e.seatRow+e.seatNum}>{e.seatRow+e.seatNum}</ToggleButton>)||( 
-            (e.reserved === true) && <ToggleButton variant='dark' value={e.seatRow+e.seatNum} disabled >{e.seatRow+e.seatNum}</ToggleButton>)));
+        seatList.map((e) => (((e.reserved === false) && <ToggleButton onChange={handleChange} id={'toggle-check' + (e.seatRow+e.seatNum)} type="checkbox" value={e.id + ':' + e.seatRow+e.seatNum}>{e.seatRow+e.seatNum}</ToggleButton>)||( 
+            (e.reserved === true) && <ToggleButton variant='dark' value={e.id + ':' + e.seatRow+e.seatNum} disabled >{e.seatRow+e.seatNum}</ToggleButton>)));
         return list;
     }
 
