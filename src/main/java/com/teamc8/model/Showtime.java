@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -25,9 +24,11 @@ public class Showtime {
 
     //date_time
     @Column(name = "date")
+    @Temporal(TemporalType.DATE)
     private LocalDate date;
 
     @Column(name = "time")
+    @Temporal(TemporalType.TIME)
     private LocalTime time;
 
     //room_id

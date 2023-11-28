@@ -1,13 +1,11 @@
 package com.teamc8.service;
 
 import com.teamc8.exception.MovieNotFoundException;
-import com.teamc8.exception.RoomNotFoundException;
 import com.teamc8.exception.ShowtimeAlreadyScheduledException;
 import com.teamc8.model.Movie;
-import com.teamc8.model.Room;
 import com.teamc8.model.Showtime;
-import com.teamc8.model.request.NewShowtimeRequest;
 import com.teamc8.model.request.GetShowtimeRequest;
+import com.teamc8.model.request.NewShowtimeRequest;
 import com.teamc8.repository.MovieRepository;
 import com.teamc8.repository.RoomRepository;
 import com.teamc8.repository.ShowtimeRepository;
@@ -47,12 +45,12 @@ public class ShowtimeService {
         Movie movie = movieRepository.findById(newShowtimeRequest.getMovieId()).orElseThrow(
                 () -> new MovieNotFoundException("Movie by id does not exist: " + newShowtimeRequest.getMovieId())
         );
-        Room room = roomRepository.findById(newShowtimeRequest.getRoomId()).orElseThrow(
-                () -> new RoomNotFoundException("Room by id does not exist: " + newShowtimeRequest.getRoomId())
-        );
+//        Room room = roomRepository.findById(newShowtimeRequest.getRoomId()).orElseThrow(
+//                () -> new RoomNotFoundException("Room by id does not exist: " + newShowtimeRequest.getRoomId())
+//        );
         Showtime showtime = showtimeRepository.save(Showtime.builder()
                 .movie(movie)
-                .room(room)
+//                .room(room)
                 .date(newShowtimeRequest.getDate())
                 .time(newShowtimeRequest.getTime())
                 .build());

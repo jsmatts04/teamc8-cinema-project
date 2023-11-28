@@ -2,7 +2,6 @@ package com.teamc8.model.request;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,5 +11,5 @@ public class NewShowtimeRequest {
     private int movieId;
     private LocalDate date;
     private LocalTime time;
-    private int roomId;
+//    private int roomId;
 }

@@ -5,6 +5,7 @@ import com.teamc8.model.Showtime;
 import com.teamc8.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +41,11 @@ public class SeatService {
         return seatRepository.findById(seatId).orElseThrow(
                 () -> new RuntimeException("Seat by id not found: " + seatId)
         );
+    }
+
+    @Transactional
+    public void reserveSeat(int seatId) {
+        Seat seat = getSeatById(seatId);
+        seat.setReserved(true);
     }
 }

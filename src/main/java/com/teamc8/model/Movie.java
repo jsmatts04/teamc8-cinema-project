@@ -3,7 +3,7 @@ package com.teamc8.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -62,7 +62,7 @@ public class Movie {
     //release date
     @Column(name = "release_date")
     @Temporal(TemporalType.DATE)
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     //movie status
     @ManyToOne

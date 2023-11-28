@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Builder
@@ -28,6 +27,7 @@ public class Booking {
 
     //date
     @Column(name = "date")
+    @Temporal(TemporalType.DATE)
     private LocalDate date;
 
     //user_id

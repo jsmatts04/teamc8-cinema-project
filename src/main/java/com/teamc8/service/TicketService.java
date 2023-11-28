@@ -5,7 +5,6 @@ import com.teamc8.model.projection.TicketProjection;
 import com.teamc8.model.request.NewTicketRequest;
 import com.teamc8.repository.TicketRepository;
 import com.teamc8.repository.TicketTypeRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +54,7 @@ public class TicketService {
                     .seat(seatService.getSeatById(newTicketRequest.getSeatId()))
                     .build();
             tickets.add(ticket);
+            seatService.reserveSeat(newTicketRequest.getSeatId());
         }
         ticketRepository.saveAll(tickets);
         return "Tickets added";

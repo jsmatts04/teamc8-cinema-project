@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -31,11 +31,13 @@ public class Promotion {
 
     //start date
     @Column(name = "start_date")
-    private Date startDate;
+    @Temporal(TemporalType.DATE)
+    private LocalDate startDate;
 
     //end date
     @Column(name = "end_date")
-    private Date endDate;
+    @Temporal(TemporalType.DATE)
+    private LocalDate endDate;
 
     public String getPromotionCode() {
         return code;

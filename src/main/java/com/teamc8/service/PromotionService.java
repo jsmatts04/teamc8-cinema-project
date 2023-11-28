@@ -9,7 +9,7 @@ import com.teamc8.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -57,7 +57,7 @@ public class PromotionService {
                 () -> new PromotionNotValidException(code)
         );
 
-        if (promotion.getEndDate().after(new Date()) && promotion.getStartDate().before(new Date()))
+        if (promotion.getEndDate().isAfter(LocalDate.now()) && promotion.getStartDate().isBefore(LocalDate.now()))
             return promotion;
         else
             return null;
