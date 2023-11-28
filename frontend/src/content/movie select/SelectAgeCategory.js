@@ -1,13 +1,9 @@
-import YoutubeEmbed from "./YoutubeEmbed";
 import { useState } from "react";
 import '../../css/movie select/SelectAgeCategory.css'
 import { Link, useLocation } from 'react-router-dom';
 
 function SelectAgeCategory() {
     const location = useLocation();
-    const {time} = location.state.time;
-    const dateString = location.state.date.dateString;
-    const movie = location.state.movie.movie;
     const {count} = location.state.count;
     const seats = location.state.selectedList;
 
@@ -66,7 +62,7 @@ function SelectAgeCategory() {
 
     function disableLink(path) {
         if (numberTotalTickets===0) {
-            return <Link className='confirm-button active' state={{ time:{time}, date:{dateString}, movie:{movie}, numAdult:{numberAdultTickets},numChild:{numberChildTickets},numSenior:{numberSeniorTickets},seats }} to={path}>Continue</Link>
+            return <Link className='confirm-button active' state={{ numAdult:{numberAdultTickets},numChild:{numberChildTickets},numSenior:{numberSeniorTickets},seats }} to={path}>Continue</Link>
         } else {
             return <Link className='confirm-button disabled' to=' '>Checkout</Link>
         }

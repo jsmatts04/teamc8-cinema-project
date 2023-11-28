@@ -4,14 +4,20 @@ import { Button, Container, Card, Table, Toast } from 'react-bootstrap';
 import AdminNavbar from './AdminNavbar';
 import './css/AdminHomePage.css';
 import './css/ManageMovies.css';
-import { fetchMovieCoversCurrent } from './api/MovieApi';
+import { fetchAllMovieCovers } from './api/MovieApi';
 
 const ManageMovies = () => {
     const [movieList, setMovieList] = useState([]);
     const [showToast, setShowToast] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const moviesPerPage = 7;
+    const indexOfLastMovie = currentPage * moviesPerPage;
+    const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+    const currentMovies = movieList.slice(indexOfFirstMovie, indexOfLastMovie);
 
     useEffect(() => {
-        fetchMovieCoversCurrent()
+        fetchAllMovieCovers()
             .then((response) => {
                 setMovieList(response.data);
                 console.log('Movie Covers Response:', response.data);
@@ -39,6 +45,10 @@ const ManageMovies = () => {
         boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',
     };
 
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <div className="admin-page">
             <Container className="admin-content-MM">
@@ -52,7 +62,7 @@ const ManageMovies = () => {
                                 </Button>
                             </Link>
 
-                            <Table striped bordered hover>
+                            <Table striped bordered hover style={{ overflowY: 'auto' }}>
                                 <thead>
                                 <tr>
                                     <th>Movie Name</th>
@@ -60,7 +70,7 @@ const ManageMovies = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {movieList.map((movie, index) => (
+                                {currentMovies.map((movie, index) => (
                                     <tr key={index}>
                                         <td>{movie.name || movie.title}</td>
                                         <td>
@@ -74,7 +84,7 @@ const ManageMovies = () => {
                                                 </Button>
                                                 <Button
                                                     variant="danger"
-                                                    onClick={() => handleArchiveMovie(index)}
+                                                    onClick={() => handleArchiveMovie(indexOfFirstMovie + index)}
                                                 >
                                                     Archive
                                                 </Button>
@@ -84,6 +94,23 @@ const ManageMovies = () => {
                                 ))}
                                 </tbody>
                             </Table>
+
+                            <div className="pagination">
+                                {movieList.length > moviesPerPage && (
+                                    <ul className="pagination-list d-flex justify-content-center">
+                                        {Array.from({ length: Math.ceil(movieList.length / moviesPerPage) }, (_, i) => (
+                                            <li key={i} className="page-item">
+                                                <Button
+                                                    variant="outline-primary"
+                                                    onClick={() => paginate(i + 1)}
+                                                >
+                                                    {i + 1}
+                                                </Button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
 
                             <Link to="/AdminHomePage" className="d-block text-center mt-4">
                                 <Button variant="primary">
