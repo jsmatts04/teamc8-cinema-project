@@ -86,7 +86,7 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
                 <h3>{movieSelected.filmRating}</h3>
                 </div>
                 <h3>{movieSelected.filmLength} minutes</h3>
-                <Link state = {{movie:movieSelected}} to={'/movie'} element={<MovieDetail/>}>
+                <Link state = {{movie:movieSelected}} to={'/movie/'+movieSelected.id+'/details'} element={<MovieDetail/>}>
                 <Button variant='warning' className='book-button'>MOVIE DETAILS</Button>
                 </Link>
                 </>
