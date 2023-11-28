@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Container, Card, Table, Toast } from 'react-bootstrap';
+import { Button, Container, Card, Table, Toast, Image } from 'react-bootstrap';
 import { fetchAllMovieCovers, fetchMovieCoversCurrent, fetchMovieCoversUpcoming } from './api/MovieApi';
 import AdminNavbar from './AdminNavbar';
+import icon from './Images/calendar_icon.png'
 import './css/AdminHomePage.css';
 import './css/ManageMovies.css';
 
@@ -23,17 +24,17 @@ const ManageMovies = () => {
             .catch((err) => console.log(err));
     }, []);
 
-
-    const handleAddMovie = () => {
-        console.log('Add a new movie');
-    };
-
     const nav = useNavigate();
     const handleEditMovie = (movieIndex) => {
         console.log(`Edit movie at index: ${movieIndex}`);
         nav('/EditMovie/'+movieIndex)
         // Handle editing the selected movie (movieIndex)
     };
+
+    const handleScheduleMovie = (movieIndex) => {
+        console.log(`Schedule Showtime at index: ${movieIndex}`);
+        nav('/ScheduleShowtime/'+movieIndex)
+    }
 
     /*const handleArchiveMovie = (movieIndex) => {
         const updatedMovies = movieList.filter((movie, index) => index !== movieIndex);
@@ -64,11 +65,15 @@ const ManageMovies = () => {
                         <Card.Body>
                             <h1 className="text-center mb-4">Manage Movies</h1>
                             <Link to="/AddMovie">
-                                <Button variant="primary" className="mb-4" onClick={handleAddMovie}>
+                                <Button variant="primary" className="mb-4" style={{marginLeft: '5px', marginRight: '5px'}}>
                                     Add Movie
                                 </Button>
                             </Link>
-
+                            <Link to="/ScheduleShowtime/0">
+                                <Button variant="primary" className="mb-4" style={{marginLeft: '5px', marginRight: '5px'}}>
+                                    Schedule Showtime
+                                </Button>
+                            </Link>
                             <Table striped bordered hover style={{ overflowY: 'auto' }}>
                                 <thead>
                                 <tr>
@@ -85,7 +90,12 @@ const ManageMovies = () => {
                                         <td>{movie.movieStatus}</td>
                                         <td>{formatDate(movie.releaseDate)}</td>
                                         <td>
-                                            <div className="d-flex">
+                                            <div className="d-flex justify-content-around">
+                                                <Image 
+                                                onClick={() => handleScheduleMovie(movie.id)}
+                                                src={icon} thumbnail 
+                                                style={{backgroundColor:'orange', height:'40px'}}
+                                                />
                                                 <Button
                                                     variant="success"
                                                     className="mr-2"
@@ -93,6 +103,7 @@ const ManageMovies = () => {
                                                 >
                                                     Edit
                                                 </Button>
+                                                
                                             </div>
                                         </td>
                                     </tr>

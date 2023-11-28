@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { Form, Button, Card, Row, Col } from 'react-bootstrap'; // Added Row and Col components for side-by-side fields
 import DatePicker from 'react-datepicker';
 import { fetchMovieById, updateMovie } from './api/MovieApi';
@@ -275,11 +275,16 @@ const EditMovie = () => {
               </Form.Group>
 
               {/* Save Button */}
-              <div className="d-flex justify-content-center">
-                <Button variant="primary" onClick={handleSaveChanges} style={{ margin: '15px 0' }}>
-                  Save Changes
-                </Button>
-              </div>
+              <div className="d-flex justify-content-around text-center mt-4" style={{marginLeft: '30%', marginRight: '30%'}} >
+                  <Button variant="primary" onClick={handleSaveChanges}>
+                    Save Changes
+                  </Button>
+                  <Link to="/ManageMovies">
+                  <Button variant="primary">
+                    Back
+                  </Button>
+                  </Link>
+                </div>
             </Form>
           </div>
         </Card.Body>

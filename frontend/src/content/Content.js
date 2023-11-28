@@ -26,7 +26,7 @@ import AddAddress from "../AddAddress";
 import AddPayment from "../AddPayment";
 import ResetPassword from './login-register/ResetPassword'
 import ShowtimeBrowser from './showtime-browser/ShowtimeBrowser'
-import AddShowtime from "../AddShowtime";
+import ScheduleShowtime from "../ScheduleShowtime";
 import AddPromo from "../AddPromo";
 import Movie from './movie select/Movie'
 import EditMovie from '../EditMovie'
@@ -69,7 +69,7 @@ function Content(props) {
         <Route path='/EditMovie/:movieId' element={<EditMovie/>}></Route>
         <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
         <Route path='/ResetPassword/' element={<ResetPassword/>}></Route>
-        <Route path='/AddShowtime/' element={<AddShowtime/>}/>
+        <Route path='/ScheduleShowtime/:movieId' element={<ScheduleShowtime/>}/>
         <Route path='/AddPromo/' element={<AddPromo/>}/>
         <Route path='*' element={<ErrorPage/>}></Route>
       </Routes>

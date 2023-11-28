@@ -22,8 +22,7 @@ const AdminHomePage = () => {
           <Card style={cardStyle}>
             <Card.Body>
               <h1 className="text-center mb-4">Welcome, Admin</h1>
-              <Link to="/ManageMovies"><Button variant="primary" className="d-block mx-auto mb-4">Manage Movies</Button></Link>
-              <Link to="/ManageShowtimes"><Button variant="primary" className="d-block mx-auto mb-4">Manage Showtimes</Button></Link>
+              <Link to="/ManageMovies"><Button variant="primary" className="d-block mx-auto mb-4">Manage Movies & Showtimes</Button></Link>
               <Link to="/ManagePromos"><Button variant="primary" className="d-block mx-auto mb-4">Manage Promos</Button></Link>
             </Card.Body>
           </Card>
