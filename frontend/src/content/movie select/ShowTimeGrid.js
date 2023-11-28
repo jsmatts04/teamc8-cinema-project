@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
-import Button from 'react-bootstrap/Button'
 import { getShowtimesForMovieDate } from '../../api/ShowtimeApi';
 
 function ShowTimeGrid({date}) {
@@ -12,10 +11,10 @@ function ShowTimeGrid({date}) {
             let list = response.data.map(showtime=>showtime)
             setShowtimeList(list)
         }).catch((err) => console.log(err))
-    },[date])
+    },[date, movie.id])
 
     const convertTime24to12 = (time24h) => {
-        const [hours, minutes, seconds] = time24h.split(':');
+        let [hours, minutes, seconds] = time24h.split(':');
         let modifier = 'AM';
         if (hours === '00') {
           hours = '12';

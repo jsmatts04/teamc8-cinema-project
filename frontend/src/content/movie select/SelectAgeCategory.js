@@ -1,6 +1,6 @@
 import { useState } from "react";
 import '../../css/movie select/SelectAgeCategory.css'
-import { Link, useLocation, useOutletContext } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function SelectAgeCategory() {
     const location = useLocation();

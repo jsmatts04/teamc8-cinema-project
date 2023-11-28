@@ -8,16 +8,12 @@ import { getSeatsForShowtime } from "../../api/SeatApi";
 function SelectSeats() {
     let[count,setCount] = useState(0);
     let[selectedList, setSelectedList] = useState([]);
-    const[seatList, setSeatList] = useState([0,0,0,0,0,0,0,0,0,0,
-                                             0,0,0,0,0,0,0,0,0,0,
-                                             0,0,0,0,0,0,0,0,0,0,
-                                             1,1,0,0,0,0,0,0,1,1,
-                                             1,1,1,0,0,0,0,1,1,1]);
+    const[seatList, setSeatList] = useState([]);
     const { movie, booking, setBooking } = useOutletContext();
     let [date, time] = booking.showtime.timestamp.split('T');
 
     const convertTime24to12 = (time24h) => {
-        const [hours, minutes, seconds] = time24h.split(':');
+        let [hours, minutes, seconds] = time24h.split(':');
         let modifier = 'AM';
         if (hours === '00') {
           hours = '12';
@@ -34,7 +30,7 @@ function SelectSeats() {
         getSeatsForShowtime(booking.showtime.id).then(
             response=>setSeatList(response.data))
         .catch(err => console.log(err))
-    },[])
+    },[booking.showtime.id])
 
     const handleChange = (event) => {
         if (event.target.checked) {

@@ -5,8 +5,8 @@ import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import '../../css/checkout/Checkout.css'
-import { useLocation, Link, useNavigate, useOutletContext } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { useState } from "react";
 import { addBooking } from '../../api/BookingApi' 
 import { validatePromo } from "../../api/PromotionApi";
 
@@ -23,7 +23,7 @@ function Checkout({userInfo}) {
     const seats = location.state.seats;
     let [dateString, time] = booking.showtime.timestamp.split('T');
     const convertTime24to12 = (time24h) => {
-        const [hours, minutes, seconds] = time24h.split(':');
+        let [hours, minutes, seconds] = time24h.split(':');
         let modifier = 'AM';
         if (hours === '00') {
           hours = '12';
@@ -73,7 +73,7 @@ function Checkout({userInfo}) {
         validatePromo(promo).then(
             response => {
                 console.log(response)
-                if (response.status != 500) {
+                if (response.status !== 500) {
                     setPromo(response.data);
                     setDiscount(response.data.discountAmount);
                 } else {
