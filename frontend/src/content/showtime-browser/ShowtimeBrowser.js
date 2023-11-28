@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import MovieDetail from '../movie select/MovieDetail';
-import Fade from 'react-bootstrap/Fade'
 import { fetchMovieById, fetchAllMovieCovers } from '../../api/MovieApi';
 import ShowTimeGrid from '../movie select/ShowTimeGrid';
 import YoutubeEmbed from '../movie select/YoutubeEmbed';
@@ -14,7 +13,6 @@ import '../../css/movie select/ShowtimeBrowser.css'
 function ShowtimeBrowser({setMovie, setBooking, booking}) {
     const [date, setDate] = useState(new Date());
     const [movieList, setMovieList] = useState([]);
-    const [showtimeList, setShowtimeList] = useState([]);
     const [movieSelected, setMovieSelected] = useState({});
     const [movieFilteredId, setMovieFilteredId] = useState('select movie');
 
