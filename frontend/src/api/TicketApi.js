@@ -5,5 +5,6 @@ import api from "./AxiosConfig";
 export const getTicketsForBooking = (bookingId) => api.get(`ticket/find?booking${bookingId}`)
 
 // Adds tickets
-// Takes in an array of NEW_TICKET_REQUEST objects (see reference)
-export const addTickets = (tickets) => api.post('/ticket/add', tickets)
+// Provide booking id and an array of ticket objects {typeId, seatId}
+// typeId (1 = child, 2 = adult, 3 = senior)
+export const addTickets = (bookingId, tickets) => api.post('/ticket/add', {bookingId: bookingId, tickets: tickets})
