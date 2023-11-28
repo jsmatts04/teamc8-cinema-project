@@ -21,7 +21,7 @@ public class ShowtimeController {
         return showtimeService.getAllShowtimes();
     }
 
-    @GetMapping(path = "/get-by-movie-date")
+    @PostMapping(path = "/get-by-movie-date")
     public List<Showtime> getAllShowtimesForMovieDate(@RequestBody GetShowtimeRequest getShowtimeRequest) {
         return showtimeService.getAllShowtimesForMovieDate(getShowtimeRequest);
     }
