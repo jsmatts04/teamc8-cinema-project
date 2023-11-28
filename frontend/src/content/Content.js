@@ -28,7 +28,6 @@ import ResetPassword from './login-register/ResetPassword'
 import ShowtimeBrowser from './showtime-browser/ShowtimeBrowser'
 import AddShowtime from "../AddShowtime";
 import AddPromo from "../AddPromo";
-import ManageUsers from "../ManageUsers"
 import Movie from './movie select/Movie'
 
 function Content(props) {
@@ -70,7 +69,6 @@ function Content(props) {
         <Route path='/ResetPassword/' element={<ResetPassword/>}></Route>
         <Route path='/AddShowtime/' element={<AddShowtime/>}/>
         <Route path='/AddPromo/' element={<AddPromo/>}/>
-        <Route path='/ManageUsers/' element={<ManageUsers/>}/>
         <Route path='*' element={<ErrorPage/>}></Route>
       </Routes>
     );
