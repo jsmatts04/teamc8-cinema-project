@@ -3,6 +3,7 @@ package com.teamc8.model.projection;
 import com.teamc8.model.Promotion;
 import com.teamc8.model.Showtime;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public interface BookingProjection {
@@ -13,6 +14,6 @@ public interface BookingProjection {
     String getPaymentCardLastFourDigits();
     Promotion getPromotion();
     float getTotal();
-    Date getDate();
+    LocalDate getDate();
 
 }
