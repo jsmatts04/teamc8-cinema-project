@@ -14,6 +14,10 @@ export const fetchMovieCoversUpcoming = () => api.get('/movie/cover?status=2');
 // Requires MOVIE_INFO object. (see reference, do not specify id)
 export const postMovie = (movie) => api.post('/movie/add', movie);
 
+// Updates a movie in the database
+// Requires a MOVIE_INFO object (reference)
+export const updateMovie = (movie) => api.put('/movie/update', movie)
+
 // export const fetchMovieCoversUpcoming = () => axios.get(`${API_URL}/cover`, {params:{status: "UPCOMING"}});
 // export const fetchMovieCoversCurrent = () => axios.get(`${API_URL}/cover`, {params:{status: "CURRENT"}});
 
