@@ -1,14 +1,14 @@
 
 import Card from 'react-bootstrap/Card'
-import { Link, useOutletContext } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import '../../css/checkout/OrderConfirmation.css'
 
 function OrderConfirmation ({userInfo, movie, booking, setBooking}) {
-    console.log(userInfo)
+    console.log(booking)
     const showtime = booking.showtime;
     let [dateString, time] = showtime.timestamp.split('T');
     const convertTime24to12 = (time24h) => {
-        const [hours, minutes, seconds] = time24h.split(':');
+        let [hours, minutes, seconds] = time24h.split(':');
         let modifier = 'AM';
         if (hours === '00') {
           hours = '12';
@@ -38,8 +38,8 @@ function OrderConfirmation ({userInfo, movie, booking, setBooking}) {
                 <h4>Movie:</h4> <h4>{movie.title}</h4>
                 <h4>Date:</h4> <h4>{dateString}</h4>
                 <h4>Time:</h4> <h4>{time}</h4>
-                <h4>Theatre:</h4> <h4>Hall {showtime.room.id}</h4>
-                <h4>Seats:</h4> <h4>{seats}</h4>
+                <h4>Theatre:</h4> <h4>Hall {showtime.room !== null ? showtime.room.id : 1}</h4>
+                <h4>Seats:</h4> <h4>{seats.map(seat => seat.substring(3))}</h4>
                 </div>
                 <div className='two-column-grid'>
                 {numAdult !== 0 && printAdult()}
@@ -47,8 +47,8 @@ function OrderConfirmation ({userInfo, movie, booking, setBooking}) {
                 {numSenior !== 0 && printSenior()}
                 <div>Online Fees</div> <div>$ {totalFees.toFixed(2)}</div>
                 <div>Taxes</div> <div>$ {totalTaxes.toFixed(2)}</div>
-                {booking.promotion !== undefined && <><div>Discount</div> <div>{booking.promotion.discountAmount}%</div></>}
-                <div>Total</div> <div>$ {totalPrice.toFixed(2)}</div>
+                {booking.extraDetails.discount !== 0 && <><div style={{color:'lightgreen'}}>Discount</div> <div style={{color:'lightgreen'}}>- {booking.extraDetails.discount}%</div></>}
+                <div style={{fontWeight:'bold'}}>Total</div> <div style={{fontWeight:'bold'}}>$ {totalPrice.toFixed(2)}</div>
                 </div>
             </div>
             <div className="center-text">
