@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Card, Table, Toast } from 'react-bootstrap';
 import AdminNavbar from './AdminNavbar';
 import './css/AdminHomePage.css';
@@ -29,16 +29,18 @@ const ManageMovies = () => {
         console.log('Add a new movie');
     };
 
+    const nav = useNavigate();
     const handleEditMovie = (movieIndex) => {
         console.log(`Edit movie at index: ${movieIndex}`);
+        nav('/EditMovie/'+movieIndex)
         // Handle editing the selected movie (movieIndex)
     };
 
-    const handleArchiveMovie = (movieIndex) => {
+    /*const handleArchiveMovie = (movieIndex) => {
         const updatedMovies = movieList.filter((movie, index) => index !== movieIndex);
         setMovieList(updatedMovies);
         setShowToast(true);
-    };
+    };*/
 
     const cardStyle = {
         backgroundColor: 'white',
@@ -78,15 +80,9 @@ const ManageMovies = () => {
                                                 <Button
                                                     variant="success"
                                                     className="mr-2"
-                                                    onClick={() => handleEditMovie(index)}
+                                                    onClick={() => handleEditMovie(movie.id)}
                                                 >
                                                     Edit
-                                                </Button>
-                                                <Button
-                                                    variant="danger"
-                                                    onClick={() => handleArchiveMovie(indexOfFirstMovie + index)}
-                                                >
-                                                    Archive
                                                 </Button>
                                             </div>
                                         </td>

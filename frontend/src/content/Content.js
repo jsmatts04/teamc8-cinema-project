@@ -30,6 +30,7 @@ import AddShowtime from "../AddShowtime";
 import AddPromo from "../AddPromo";
 import ManageUsers from "../ManageUsers"
 import Movie from './movie select/Movie'
+import EditMovie from '../EditMovie'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery, userInfo } = props;
@@ -66,6 +67,7 @@ function Content(props) {
         <Route path='/AddAddress' element={<AddAddress/>}></Route>
         <Route path='/AddPayment' element={<AddPayment/>}></Route>
         <Route path='/AddMovie' element={<AddMovie/>}></Route>
+        <Route path='/EditMovie/:movieId' element={<EditMovie/>}></Route>
         <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
         <Route path='/ResetPassword/' element={<ResetPassword/>}></Route>
         <Route path='/AddShowtime/' element={<AddShowtime/>}/>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Form, Button, Card, Row, Col } from 'react-bootstrap'; // Added Row and Col components for side-by-side fields
 import DatePicker from 'react-datepicker';
-import { postMovie } from './api/MovieApi';
+import { fetchMovieById, updateMovie } from './api/MovieApi';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const AddMovie = () => {
+const EditMovie = () => {
   const [movieData, setMovieData] = useState({
     title: '',
     synopsis: '',
@@ -22,6 +22,15 @@ const AddMovie = () => {
     releaseDate: null,
   });
 
+  const {movieId} = useParams();
+  useEffect(()=> {
+    fetchMovieById(movieId).then(
+        response=> {
+            setMovieData({...response.data, releaseDate: new Date(response.data.releaseDate)})
+        }
+    ).catch((err) => console.log(err))
+  },[])
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setMovieData({ ...movieData, [name]: value });
@@ -36,18 +45,22 @@ const AddMovie = () => {
     setMovieData({ ...movieData, releaseDate: date });
   };
 
-  const nav = useNavigate ();
+  const nav = useNavigate();
 
   const handleSaveChanges = () => {
     let date = movieData.releaseDate.toISOString().substring(0,10)
     // Handle saving movie data here
-    console.log(movieData);
-    postMovie({...movieData, releaseDate: date}).then(response=> {
-      nav('/managemovies')
-    }).catch(err=>console.log(err))
+      console.log(movieData);
+      updateMovie({...movieData, releaseDate:date}).then(
+        response => {
+            nav('/ManageMovies')
+        }
+      ).catch(err => console.log(err))
     // You can send the data to your backend or perform any desired actions.
-    
   };
+
+
+
 
   const gradientBackground = {
     background: 'linear-gradient(180deg, #000000 0%, #923CB5 100%)', // Change the gradient color here
@@ -136,7 +149,7 @@ const AddMovie = () => {
             <Row>
                 <Col md={6}>
                   {/* Movie Poster */}
-                  <Form.Group controlId="movieImage">
+                  <Form.Group controlId="trailerPicture">
                     <Form.Label style={{ fontSize: '1.2rem' }}>Movie Poster</Form.Label>
                     <Form.Control
                       type="text"
@@ -195,7 +208,7 @@ const AddMovie = () => {
                 <Form.Control
                   as="select"
                   name="movieStatus"
-                  value={movieData.movieStatus.id}
+                  value={movieData.movieStatus === null ? 1 : movieData.movieStatus.id}
                   onChange={handleStatusChange}
                   required
                   style={{ fontSize: '1rem' }}
@@ -275,4 +288,4 @@ const AddMovie = () => {
   );
 };
 
-export default AddMovie;
+export default EditMovie;
