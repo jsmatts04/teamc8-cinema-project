@@ -26,22 +26,6 @@ public class ShowtimeController {
         return showtimeService.getAllShowtimesForMovieDate(getShowtimeRequest);
     }
 
-    @GetMapping(path = "/get-by-date")
-    public List<Showtime> getAllShowtimesForDate(@RequestBody GetShowtimeRequest getShowtimeRequest) {
-        return showtimeService.getAllShowtimesForDate(getShowtimeRequest);
-    }
-
-    @GetMapping(path = "/get-by-movie")
-    public List<Showtime> getAllShowtimesForMovie(@RequestBody GetShowtimeRequest getShowtimeRequest) {
-        return showtimeService.getAllShowtimesForMovie(getShowtimeRequest);
-    }
-
-
-    @GetMapping(path = "/get-by-movie-date-room")
-    public List<Showtime> getAllShowtimesForMovieDateRoom(@RequestBody GetShowtimeRequest getShowtimeRequest) {
-        return showtimeService.getAllShowtimesForMovieDateRoom(getShowtimeRequest);
-    }
-
     @PostMapping(path = "/add")
     public Showtime addShowtime(@RequestBody NewShowtimeRequest newShowtimeRequest) {
         return showtimeService.addShowtime(newShowtimeRequest);

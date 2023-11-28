@@ -29,7 +29,7 @@ public class BookingService {
         return bookingRepository.findAllProjectedBy();
     }
 
-    public String addBooking(String authHeader, NewBookingRequest newBookingRequest) {
+    public int addBooking(String authHeader, NewBookingRequest newBookingRequest) {
         String email = jwtService.extractUsername(jwtService.getTokenFromHeader(authHeader));
 
         Booking booking = Booking.builder()
@@ -41,8 +41,8 @@ public class BookingService {
                 .paymentCard(paymentCardService.getPaymentCardById(newBookingRequest.getPaymentCardId()))
                 .build();
 
-        bookingRepository.save(booking);
-        return "Booking added";
+        Booking savedBooking = bookingRepository.save(booking);
+        return savedBooking.getId();
     }
 
     public List<BookingProjection> getAllBookingsForUser(String authHeader) {

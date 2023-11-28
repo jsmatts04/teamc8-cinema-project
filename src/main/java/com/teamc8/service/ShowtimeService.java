@@ -30,7 +30,7 @@ public class ShowtimeService {
     }
 
     public List<Showtime> getAllShowtimesForMovieDate(GetShowtimeRequest getShowtimeRequest) {
-        return showtimeRepository.findAllByMovieIdAndTimestamp(getShowtimeRequest.getMovieId(), getShowtimeRequest.getTimestamp());
+        return showtimeRepository.findAllByMovieIdAndDate(getShowtimeRequest.getMovieId(), getShowtimeRequest.getDate());
     }
 
     public Showtime getShowtimeById(int id) {
@@ -40,7 +40,7 @@ public class ShowtimeService {
 
     public Showtime addShowtime(NewShowtimeRequest newShowtimeRequest) {
         // Check if date and time are not already scheduled
-        if (showtimeRepository.existsByTimestamp(newShowtimeRequest.getTimestamp())) {
+        if (showtimeRepository.existsByDateAndTime(newShowtimeRequest.getDate(), newShowtimeRequest.getTime())) {
             throw new ShowtimeAlreadyScheduledException("Showtime already scheduled at this date and time");
         }
         // Create new seats
@@ -53,22 +53,10 @@ public class ShowtimeService {
         Showtime showtime = showtimeRepository.save(Showtime.builder()
                 .movie(movie)
                 .room(room)
-                .timestamp(newShowtimeRequest.getTimestamp())
+                .date(newShowtimeRequest.getDate())
+                .time(newShowtimeRequest.getTime())
                 .build());
         seatService.generateSeats(showtime);
         return showtime;
-    }
-
-    public List<Showtime> getAllShowtimesForDate(GetShowtimeRequest getShowtimeRequest) {
-        return showtimeRepository.findAllByTimestamp(getShowtimeRequest.getTimestamp());
-    }
-
-    public List<Showtime> getAllShowtimesForMovieDateRoom(GetShowtimeRequest getShowtimeRequest) {
-        return showtimeRepository.findAllByMovieIdAndTimestampAndRoomId(getShowtimeRequest.getMovieId(),
-                getShowtimeRequest.getTimestamp(), getShowtimeRequest.getRoomId());
-    }
-
-    public List<Showtime> getAllShowtimesForMovie(GetShowtimeRequest getShowtimeRequest) {
-        return showtimeRepository.findAllByMovieId(getShowtimeRequest.getMovieId());
     }
 }

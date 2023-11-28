@@ -27,7 +27,7 @@ public class BookingController {
     }
 
     @PostMapping(path = "/add")
-    public String addBooking(@RequestHeader("Authorization") String authHeader, @RequestBody NewBookingRequest newBookingRequest) {
+    public int addBooking(@RequestHeader("Authorization") String authHeader, @RequestBody NewBookingRequest newBookingRequest) {
         return bookingService.addBooking(authHeader, newBookingRequest);
     }
 

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -22,8 +24,11 @@ public class Showtime {
     private int id;
 
     //date_time
-    @Column(name = "date_time")
-    private Timestamp timestamp;
+    @Column(name = "date")
+    private LocalDate date;
+
+    @Column(name = "time")
+    private LocalTime time;
 
     //room_id
     @ManyToOne
