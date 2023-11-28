@@ -5,6 +5,7 @@ import com.teamc8.model.Showtime;
 import com.teamc8.model.Ticket;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -14,6 +15,6 @@ public class NewBookingRequest {
     private int paymentCardId;
     private int promotionId;
     private float total;
-    private Date date;
+    private LocalDate date;
 
 }

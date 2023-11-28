@@ -1,6 +1,7 @@
 package com.teamc8.service;
 
 import com.teamc8.config.email.EmailSender;
+import com.teamc8.exception.PromotionNotValidException;
 import com.teamc8.model.Promotion;
 import com.teamc8.model.User;
 import com.teamc8.repository.PromotionRepository;
@@ -52,7 +53,9 @@ public class PromotionService {
     }
 
     public Promotion validatePromoByCode(String code) {
-        Promotion promotion = promotionRepository.findByCode(code).orElse(null);
+        Promotion promotion = promotionRepository.findByCode(code).orElseThrow(
+                () -> new PromotionNotValidException(code)
+        );
 
         if (promotion.getEndDate().after(new Date()) && promotion.getStartDate().before(new Date()))
             return promotion;

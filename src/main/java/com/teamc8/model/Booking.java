@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -27,7 +28,7 @@ public class Booking {
 
     //date
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     //user_id
     @ManyToOne
@@ -48,26 +49,6 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "promotion_id", referencedColumnName = "id")
     private Promotion promotion;
-
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", total='" + total + '\'' +
-                ", user_id='" + user + '\'' +
-                ", payment_card_id='" + paymentCard + '\'' +
-                ", promotion_id='" + promotion + '\'' +
-
-
-                '}';
-    }
-
-
-
-
-
-
 
 }
 
