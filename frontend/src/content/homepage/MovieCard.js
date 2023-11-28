@@ -5,6 +5,7 @@ import MovieDetail from '../movie select/MovieDetail';
 import { Link } from 'react-router-dom';
 import { fetchMovieById } from '../../api/MovieApi';
 import { useState, useEffect } from 'react';
+import Movie from '../movie select/Movie';
 
 
 function MovieCard(props) {
@@ -28,7 +29,7 @@ function MovieCard(props) {
     return(
         <div style={{width:'fit-content'}}>
         <Card style={{width:'15rem', marginBottom: -10, backgroundColor:'transparent', color: 'white', borderColor:'transparent'}}>
-            <Link state = {{movie:fullMovie}} to={'/movie'} element={<MovieDetail/>}>
+            <Link state = {{movie:fullMovie}} to={'movie/' + movie.id + '/details'}>
             <Card.Img variant='top' alt='movie-poster' style={{ height:330, width: '100%', objectFit:'cover' }} src={movie.trailerPicture}/>
             </Link>
             <Card.Body className="d-flex justify-content-between">
@@ -36,7 +37,7 @@ function MovieCard(props) {
                 {movie.filmRating !== 'null' && <Card.Title style={{color:'orange'}}>{movie.filmRating}</Card.Title>}
             </Card.Body>
         </Card>
-        {loginState && <Link state={{movie:fullMovie}} to={'/Movie/SelectShowtime'}>
+        {loginState && <Link state={{movie:fullMovie}} to={'movie/'+movie.id+'/booking/select-show-time'}>
         <Button variant='warning' className='book-button'>BOOK TICKETS</Button>
         </Link>}
         {!loginState && <Link to={'/Login'}>

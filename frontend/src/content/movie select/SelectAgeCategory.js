@@ -74,7 +74,6 @@ function SelectAgeCategory() {
 
     return (
         <>
-            <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
             <h1 className="title">Select {numberTotalTickets} Remaining Tickets</h1>
             <div id='ticket-select-grid'>
             <button id='plus-minus' onClick={handleDecrementAdult}>-</button>
@@ -88,7 +87,7 @@ function SelectAgeCategory() {
             <button id='plus-minus' onClick={handleIncrementSenior}>+</button>
             </div>
             <div className='center-button'>
-            {disableLink('/Checkout')}
+            {disableLink('../checkout')}
             </div>
         </>
     );

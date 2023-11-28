@@ -147,7 +147,7 @@ function Checkout({userInfo, booking, setBooking}) {
             newBooking.extraDetails = extraDetails;
             setBooking(newBooking)
             setNewPaymentInfo({})
-            nav('/Order/Confirmation')
+            nav('../confirmation')
 
             /*
             addBooking(newBooking).then(() => {
@@ -194,7 +194,6 @@ function Checkout({userInfo, booking, setBooking}) {
 
     return (
         <>
-        <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
         <Form onSubmit={handleCheckout}>
         <div className='checkoutGrid'>
         <div>

@@ -29,6 +29,7 @@ import ShowtimeBrowser from './showtime-browser/ShowtimeBrowser'
 import AddShowtime from "../AddShowtime";
 import AddPromo from "../AddPromo";
 import ManageUsers from "../ManageUsers"
+import Movie from './movie select/Movie'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery, userInfo } = props;
@@ -48,11 +49,16 @@ function Content(props) {
         <Route path='/ManageMovies' element={<ManageMovies />}></Route>
         <Route path='/ManageShowtimes' element={<ManageShowtimes />}></Route>
         <Route path='/ManagePromos' element={<ManagePromos />}></Route>
-        <Route path='/Movie/SelectShowTime' element={<SelectShowTime/>}></Route>
-        <Route path='/movie/ShowTime/' element={<SelectSeats booking={booking}/>}></Route>
-        <Route path='/movie/ShowTime/Seats' element={<SelectAgeCategory booking={booking}/>}></Route>
-        <Route path='/Checkout' element={<Checkout booking={booking} setBooking={setBooking} userInfo={userInfo}/>}></Route> 
-        <Route path='/Order/Confirmation' element={<OrderConfirmation booking={booking}/>}></Route>
+        <Route path='movie/:movieId' element={<Movie/>}>
+          <Route path='details' element={<MovieDetail loginState={loginState}/>}/>
+          <Route path='booking'>
+            <Route path='select-show-time' element={<SelectShowTime/>}/>
+            <Route path='seats' element={<SelectSeats booking={booking}/>}/>
+            <Route path='age-category' element={<SelectAgeCategory booking={booking}/>}/>
+            <Route path='checkout' element={<Checkout booking={booking} setBooking={setBooking} userInfo={userInfo}/>}/>
+            <Route path='confirmation' element={<OrderConfirmation booking={booking}/>}></Route>
+          </Route>
+        </Route>
         <Route path='/OrderHistory' element={<OrderHistory/>}></Route>
         <Route path='/EditProfile' element={<EditProfile/>}></Route>
         <Route path='/AddAddress' element={<AddAddress/>}></Route>

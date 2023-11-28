@@ -57,14 +57,13 @@ function SelectSeats(props) {
 
     return (
         <>
-            <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
             <h1 id='date-time'>{movie.title} | {dateString} | {time}</h1>
             <h2 id='screen'>Screen</h2>
             <ToggleButtonGroup type="checkbox" id='cinema-layout'>
                 {printSeatList()}
             </ToggleButtonGroup>
             <div id='footer'>
-            <h3 id='ticket-count'> {count} Ticket(s) Selected</h3>{disabledButton('/movie/ShowTime/Seats')}
+            <h3 id='ticket-count'> {count} Ticket(s) Selected</h3>{disabledButton('../age-category')}
             </div>
         </>
     );
