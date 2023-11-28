@@ -10,4 +10,4 @@ export const addShowtime = (showtime) => api.post(`/showtime/add`, showtime);
 
 // Get all showtimes for a specified movie id and date
 // date example = "2023-11-25"
-export const getShowtimesForMovieDate = (movieId, date) => api.get('/showtime/get-by-movie-date', {'movieId': movieId, 'date': date});
+export const getShowtimesForMovieDate = (movieId, date) => api.post('/showtime/get-by-movie-date', {movieId: movieId, date: date});
