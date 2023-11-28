@@ -1,15 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-
-const data = [
-  {
-    date: '2023-09-28',
-    movieTitle: 'Oppenheimer',
-    orderTotal: '$38.96',
-    bookingConfirmation: '10056794',
-  },
-  // Add more data entries as needed
-];
+import { getBookingsForUser } from './api/BookingApi';
 
 const columns = [
   {
@@ -19,73 +10,85 @@ const columns = [
   },
   {
     name: 'Movie Title',
-    selector: 'movieTitle',
+    selector: 'showtime.movieTitle', // Assuming 'showtime' has 'movieTitle' property
     sortable: true,
   },
   {
     name: 'Order Total',
-    selector: 'orderTotal',
+    selector: 'total',
     sortable: true,
+    cell: (row) => `$${row.total.toFixed(2)}`, // Format total as currency
   },
   {
     name: 'Booking Confirmation #',
-    selector: 'bookingConfirmation',
+    selector: 'id',
     sortable: true,
   },
 ];
 
-const tableStyles = {
-  backgroundColor: '#444', // Dark background color for data rows
-};
+const OrderHistory = () => {
+  const [userBookings, setUserBookings] = useState([]);
 
-const headerRowStyles = {
-  backgroundColor: '#333', // Dark background color for header row
-  color: '#fff', // Text color for header cells
-};
+  useEffect(() => {
+    getBookingsForUser()
+        .then((response) => {
+          setUserBookings(response.data); // Assuming API response returns user bookings
+          console.log('User Bookings:', response.data);
+        })
+        .catch((error) => console.error('Error fetching bookings:', error));
+  }, []);
 
-function OrderHistory() {
+  const tableStyles = {
+    backgroundColor: '#444',
+  };
+
+  const headerRowStyles = {
+    backgroundColor: '#333',
+    color: '#fff',
+  };
+
   const containerStyle = {
     display: 'flex',
-    justifyContent: 'center', // Center horizontally
-    alignItems: 'center', // Center vertically
-    height: '80vh', // Adjust as needed to move the content up
-    paddingTop: '20px', // Add padding to the top to move content up
-    paddingBottom: '250px'
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '80vh',
+    paddingTop: '20px',
+    paddingBottom: '250px',
   };
 
   const tableContainerStyle = {
-    width: '50%', // Adjust the table width as needed
-    maxHeight: '600px', // Increase the maximum height of the table
+    width: '80%', // Adjust the table width as needed
+    maxHeight: '600px',
   };
 
   const titleStyle = {
-    color: '#fff', // Text color for the title (white)
-    textAlign: 'center', // Center the text horizontally
+    color: '#fff',
+    textAlign: 'center',
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={tableContainerStyle}>
-        <h2 style={titleStyle}>Order History</h2>
-        <DataTable
-          columns={columns}
-          data={data}
-          pagination
-          paginationPerPage={5}
-          paginationRowsPerPageOptions={[5, 10, 20]}
-          theme="dark" // Apply dark theme
-          customStyles={{
-            rows: {
-              style: tableStyles,
-            },
-            headRow: {
-              style: headerRowStyles,
-            },
-          }}
-        />
+      <div style={containerStyle}>
+        <div style={tableContainerStyle}>
+          <h2 style={titleStyle}>Order History</h2>
+          <DataTable
+              columns={columns}
+              data={userBookings} // Use fetched user bookings as data
+              pagination
+              paginationPerPage={5}
+              paginationRowsPerPageOptions={[5, 10, 20]}
+              theme="dark"
+              customStyles={{
+                rows: {
+                  style: tableStyles,
+                },
+                headRow: {
+                  style: headerRowStyles,
+                },
+              }}
+          />
+        </div>
       </div>
-    </div>
   );
-}
+};
 
 export default OrderHistory;
