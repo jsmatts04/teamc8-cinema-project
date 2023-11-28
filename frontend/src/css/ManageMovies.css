@@ -3,6 +3,6 @@
     max-width: 800px; /* Adjust the max-width as needed */
     text-align: center;
     padding: 10px;
-    position: relative; top: -105px;
+    height: fit-content;
     border: none;
   }

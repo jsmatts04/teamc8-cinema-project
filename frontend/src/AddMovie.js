@@ -43,7 +43,7 @@ const AddMovie = () => {
     // Handle saving movie data here
     console.log(movieData);
     postMovie({...movieData, releaseDate: date}).then(response=> {
-      nav('/managemovies')
+      nav('/managemovies', {state: {toastId: 'added-toast'}})
     }).catch(err=>console.log(err))
     // You can send the data to your backend or perform any desired actions.
 

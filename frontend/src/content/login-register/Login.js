@@ -148,7 +148,7 @@ function Login(props) {
         <ToastContainer
           className="p-3"
           position='top-center'
-          style={{ zIndex: 1}}
+          style={{ zIndex: 2}}
         >
           <Toast show={toastId==='reset-toast'} bg={'success'} onClose={()=>setToastId('')} animation={true}>
             <Toast.Header closeButton={true} style={{background:'#00000010'}}>

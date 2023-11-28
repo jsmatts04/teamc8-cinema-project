@@ -53,7 +53,7 @@ const AddShowtime = () => {
         console.log('Saving showtime:', { movieId, date, time });
         
          addShowtime(movieId, date, time).then((response) => {
-            nav('/managemovies');
+            nav('/managemovies', {state: {toastId: 'schedule-toast'}});
         }).catch((err) => console.log(err));
     };
 

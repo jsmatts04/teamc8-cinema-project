@@ -53,7 +53,7 @@ const EditMovie = () => {
       console.log(movieData);
       updateMovie({...movieData, releaseDate:date}).then(
         response => {
-            nav('/ManageMovies')
+            nav('/ManageMovies', {state: {toastId: 'edited-toast'}})
         }
       ).catch(err => console.log(err))
     // You can send the data to your backend or perform any desired actions.

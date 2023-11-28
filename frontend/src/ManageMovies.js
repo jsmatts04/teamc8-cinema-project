@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Container, Card, Table, Toast, Image } from 'react-bootstrap';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Button, Container, Card, Table, Toast, Image, ToastContainer } from 'react-bootstrap';
 import { fetchAllMovieCovers, fetchMovieCoversCurrent, fetchMovieCoversUpcoming } from './api/MovieApi';
 import AdminNavbar from './AdminNavbar';
 import icon from './Images/calendar_icon.png'
@@ -23,6 +23,18 @@ const ManageMovies = () => {
             })
             .catch((err) => console.log(err));
     }, []);
+
+    const [toastId, setToastId] = useState('');
+    const [show, setShow] = useState(false);
+
+    const data = useLocation();
+    useEffect (() => {
+        console.log(data.state);
+        if (data.state !== null) {
+          setToastId(data.state.toastId)
+          setTimeout(()=>setToastId(''), 3000)
+        }
+      },[data.state])
 
     const nav = useNavigate();
     const handleEditMovie = (movieIndex) => {
@@ -60,7 +72,7 @@ const ManageMovies = () => {
     return (
         <div className="admin-page">
             <Container className="admin-content-MM">
-                <div className="d-flex justify-content-center align-items-center h-100" style={{ marginTop: '200px' }}>
+                <div className="d-flex justify-content-center align-items-center h-100" style={{ marginTop: '50px' }}>
                     <Card className="w-100" style={cardStyle}>
                         <Card.Body>
                             <h1 className="text-center mb-4">Manage Movies</h1>
@@ -136,6 +148,42 @@ const ManageMovies = () => {
                     </Card>
                 </div>
             </Container>
+            <ToastContainer
+            className="p-3"
+            position='top-center'
+            style={{ zIndex: 2}}
+            >
+            <Toast show={toastId==='added-toast'} bg={'success'} onClose={()=>setToastId('')} animation={true}>
+                <Toast.Header closeButton={true} style={{background:'#00000010'}}>
+                <strong className="me-auto">Movie Added</strong>
+                </Toast.Header>
+                <Toast.Body>The movie has been added succesfully.</Toast.Body>
+            </Toast>
+            </ToastContainer>
+            <ToastContainer
+            className="p-3"
+            position='top-center'
+            style={{ zIndex: 2}}
+            >
+            <Toast show={toastId==='edited-toast'} bg={'success'} onClose={()=>setToastId('')} animation={true}>
+                <Toast.Header closeButton={true} style={{background:'#00000010'}}>
+                <strong className="me-auto">Movie Changes Saved</strong>
+                </Toast.Header>
+                <Toast.Body>The changes to the movie has been saved succesfully.</Toast.Body>
+            </Toast>
+            </ToastContainer>
+            <ToastContainer
+            className="p-3"
+            position='top-center'
+            style={{ zIndex: 2}}
+            >
+            <Toast show={toastId==='schedule-toast'} bg={'success'} onClose={()=>setToastId('')} animation={true}>
+                <Toast.Header closeButton={true} style={{background:'#00000010'}}>
+                <strong className="me-auto">Movie Scheduled</strong>
+                </Toast.Header>
+                <Toast.Body>The showtime has been scheduled scuessfully.</Toast.Body>
+            </Toast>
+            </ToastContainer>
         </div>
     );
 };
