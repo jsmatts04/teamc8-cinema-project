@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Row, Col } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { fetchAllMovieCovers } from './api/MovieApi';
+import {addShowtime} from "./api/ShowtimeApi";
 
 const AddShowtime = () => {
     const [showtimeData, setShowtimeData] = useState({
         movieName: '',
-        dateTime: null,
-        availableSeats: '',
         selectedTime: '',
         selectedDate: null,
-        selectedRoom: '',
     });
+
+    const [movieNames, setMovieNames] = useState([]);
+
+    useEffect(() => {
+        // Fetch movie names when the component mounts
+        fetchAllMovieCovers()
+            .then((movies) => {
+                const names = movies.map((movie) => movie.name);
+                setMovieNames(names);
+            })
+            .catch((error) => {
+                console.error('Error fetching movie names:', error);
+            });
+    }, []);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -22,10 +36,25 @@ const AddShowtime = () => {
         setShowtimeData({ ...showtimeData, selectedDate: date });
     };
 
+    const handleTimeChange = (time) => {
+        setShowtimeData({ ...showtimeData, selectedTime: time });
+    };
+
+    const nav = useNavigate();
+
     const handleSaveChanges = () => {
-        // Handle saving showtime data here
-        console.log(showtimeData);
-        // Send data to backend or perform desired actions
+        const date = showtimeData.selectedDate.toISOString().substring(0, 10);
+        const time = showtimeData.selectedTime;
+        const movieId = showtimeData.movieName;
+        const timestamp = `${date}T${time}`;
+
+        console.log('Saving showtime:', { movieId, date, time, timestamp });
+
+         addShowtime(movieId, date, timestamp)
+             .then((response) => {
+                 nav('/manageshowtime');
+             })
+             .catch((err) => console.log(err));
     };
 
     const gradientBackground = {
@@ -58,31 +87,15 @@ const AddShowtime = () => {
                                 required
                             >
                                 <option value="">Select Movie</option>
-                                {/* Add options for movie names */}
-                                <option value="Movie 1">Movie 1</option>
-                                <option value="Movie 2">Movie 2</option>
-                                {/* Add more movies as needed */}
+                                {movieNames.map((name, index) => (
+                                    <option key={index} value={name}>
+                                        {name}
+                                    </option>
+                                ))}
                             </Form.Control>
                         </Form.Group>
 
                         <Row>
-                            <Col md={6}>
-                                <Form.Group controlId="selectedRoom">
-                                    <Form.Label>Choose a Room</Form.Label>
-                                    <Form.Control
-                                        as="select"
-                                        name="selectedRoom"
-                                        value={showtimeData.selectedRoom}
-                                        onChange={handleInputChange}
-                                        required
-                                    >
-                                        <option value="">Select Room</option>
-                                        <option value="1">Room 1</option>
-                                        <option value="2">Room 2</option>
-                                        <option value="3">Room 3</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Col>
                             <Col md={6}>
                                 <Form.Group controlId="dateTime">
                                     <Form.Label>Select a Date</Form.Label>
@@ -104,7 +117,7 @@ const AddShowtime = () => {
                                 type="time"
                                 name="selectedTime"
                                 value={showtimeData.selectedTime}
-                                onChange={handleInputChange}
+                                onChange={(e) => handleTimeChange(e.target.value)}
                                 required
                             />
                         </Form.Group>

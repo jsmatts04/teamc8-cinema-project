@@ -25,7 +25,6 @@ const AdminHomePage = () => {
               <Link to="/ManageMovies"><Button variant="primary" className="d-block mx-auto mb-4">Manage Movies</Button></Link>
               <Link to="/ManageShowtimes"><Button variant="primary" className="d-block mx-auto mb-4">Manage Showtimes</Button></Link>
               <Link to="/ManagePromos"><Button variant="primary" className="d-block mx-auto mb-4">Manage Promos</Button></Link>
-              <Link to="/ManageUsers"><Button variant="primary" className="d-block mx-auto mb-4">Manage Users</Button></Link>
             </Card.Body>
           </Card>
         </div>

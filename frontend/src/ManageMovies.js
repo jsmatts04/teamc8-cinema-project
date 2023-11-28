@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Card, Table, Toast } from 'react-bootstrap';
+import { fetchAllMovieCovers, fetchMovieCoversCurrent, fetchMovieCoversUpcoming } from './api/MovieApi';
 import AdminNavbar from './AdminNavbar';
 import './css/AdminHomePage.css';
 import './css/ManageMovies.css';
-import { fetchAllMovieCovers } from './api/MovieApi';
 
 const ManageMovies = () => {
     const [movieList, setMovieList] = useState([]);
-    const [showToast, setShowToast] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-
     const moviesPerPage = 7;
     const indexOfLastMovie = currentPage * moviesPerPage;
     const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
     const currentMovies = movieList.slice(indexOfFirstMovie, indexOfLastMovie);
 
     useEffect(() => {
+        // Fetch all movie covers initially
         fetchAllMovieCovers()
             .then((response) => {
                 setMovieList(response.data);
-                console.log('Movie Covers Response:', response.data);
             })
             .catch((err) => console.log(err));
     }, []);
+
 
     const handleAddMovie = () => {
         console.log('Add a new movie');
@@ -45,6 +44,12 @@ const ManageMovies = () => {
     const cardStyle = {
         backgroundColor: 'white',
         boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',
+        width: '800px', // Adjust card width here
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0];
     };
 
     const paginate = (pageNumber) => {
@@ -60,7 +65,7 @@ const ManageMovies = () => {
                             <h1 className="text-center mb-4">Manage Movies</h1>
                             <Link to="/AddMovie">
                                 <Button variant="primary" className="mb-4" onClick={handleAddMovie}>
-                                    Add Movies
+                                    Add Movie
                                 </Button>
                             </Link>
 
@@ -68,13 +73,17 @@ const ManageMovies = () => {
                                 <thead>
                                 <tr>
                                     <th>Movie Name</th>
-                                    <th>Actions</th>
+                                    <th>Movie Status</th>
+                                    <th>Release Date</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {currentMovies.map((movie, index) => (
                                     <tr key={index}>
-                                        <td>{movie.name || movie.title}</td>
+                                        <td>{movie.title}</td>
+                                        <td>{movie.movieStatus}</td>
+                                        <td>{formatDate(movie.releaseDate)}</td>
                                         <td>
                                             <div className="d-flex">
                                                 <Button
@@ -107,27 +116,11 @@ const ManageMovies = () => {
                                     </ul>
                                 )}
                             </div>
-
                             <Link to="/AdminHomePage" className="d-block text-center mt-4">
                                 <Button variant="primary">
                                     Back
                                 </Button>
                             </Link>
-
-                            <Toast
-                                show={showToast}
-                                onClose={() => setShowToast(false)}
-                                style={{
-                                    position: 'absolute',
-                                    top: '-60px',
-                                    right: '0',
-                                    backgroundColor: '#28a745',
-                                }}
-                                delay={3000}
-                                autohide
-                            >
-                                <Toast.Body>Movie Successfully Archived!</Toast.Body>
-                            </Toast>
                         </Card.Body>
                     </Card>
                 </div>
