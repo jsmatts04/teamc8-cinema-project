@@ -7,7 +7,7 @@ import { fetchMovieById } from '../../api/MovieApi';
 import { useEffect, useState } from 'react';
 
 function MovieDetail ({loginState}) {
-    let movie = useOutletContext();
+    let {movie} = useOutletContext();
     
     const {movieId} = useParams();
     if (movie.title === undefined) {

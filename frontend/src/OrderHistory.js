@@ -11,7 +11,7 @@ const columns = [
   },
   {
     name: 'Movie Title',
-    selector: 'showtime.movieTitle', // Assuming 'showtime' has 'movieTitle' property
+    selector: 'showtime.movie.title', // Assuming 'showtime' has 'movieTitle' property
     sortable: true,
   },
   {

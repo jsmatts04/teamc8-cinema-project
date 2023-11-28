@@ -1,15 +1,26 @@
-import YoutubeEmbed from "../movie select/YoutubeEmbed";
+
 import Card from 'react-bootstrap/Card'
-import { useLocation, Link } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 import '../../css/checkout/OrderConfirmation.css'
 
-function OrderConfirmation ({booking}) {
-    console.log(booking);
-    let {userEmail, showtime, paymentCardLastFourDigits, total} = booking;
-
-    const location = useLocation();
-    let [dateString,time] = showtime.timestamp.split('T')
-    const movie = showtime.movie;
+function OrderConfirmation ({userInfo}) {
+    console.log(userInfo)
+    const {booking, movie} = useOutletContext();
+    const showtime = booking.showtime;
+    let [dateString, time] = showtime.timestamp.split('T');
+    const convertTime24to12 = (time24h) => {
+        const [hours, minutes, seconds] = time24h.split(':');
+        let modifier = 'AM';
+        if (hours === '00') {
+          hours = '12';
+        }
+        if (parseInt(hours) > 12) {
+            hours = parseInt(hours) % 12;
+            modifier = 'PM'
+        }
+        return `${hours}:${minutes} ${modifier}`;
+    }
+    time = convertTime24to12(time);
     let orderInfo = booking.extraDetails;
     let {numAdult,numChild,numSenior,totalAdultPrice,totalChildPrice,totalSeniorPrice,totalFees,totalTaxes,totalPrice, seats} = orderInfo;
     let printAdult = () => {return <><div>Adult Tickets ({numAdult})</div><div>$ {totalAdultPrice.toFixed(2)}</div></>}    
@@ -19,10 +30,10 @@ function OrderConfirmation ({booking}) {
     return(
         <>
         <h2 className='center-text'>Order Completed Successfully</h2>   
-        <h3 className='center-text'>A copy of this confirmation has been sent to {userEmail}</h3>
+        <h3 className='center-text'>A copy of this confirmation has been sent to {userInfo.user.email}</h3>
         
         <Card id='confirmation-card' bg='dark'>
-            <Card.Header><h3>Booking #10056794</h3></Card.Header>
+            <Card.Header><h3>Booking #{booking.id}</h3></Card.Header>
             <div id='order-summary' className='two-column-grid'>
                 <div className='summary-movie-details' id='order-summary'>
                 <h4>Movie:</h4> <h4>{movie.title}</h4>

@@ -33,8 +33,6 @@ import Movie from './movie select/Movie'
 
 function Content(props) {
   const {loginState, setAdminState, setLoggedIn, searchQuery, userInfo } = props;
-  const [booking, setBooking] = useState({});
-
 
     return (
       <Routes>
@@ -53,10 +51,10 @@ function Content(props) {
           <Route path='details' element={<MovieDetail loginState={loginState}/>}/>
           <Route path='booking'>
             <Route path='select-show-time' element={<SelectShowTime/>}/>
-            <Route path='seats' element={<SelectSeats booking={booking}/>}/>
-            <Route path='age-category' element={<SelectAgeCategory booking={booking}/>}/>
-            <Route path='checkout' element={<Checkout booking={booking} setBooking={setBooking} userInfo={userInfo}/>}/>
-            <Route path='confirmation' element={<OrderConfirmation booking={booking}/>}></Route>
+            <Route path='seats' element={<SelectSeats/>}/>
+            <Route path='age-category' element={<SelectAgeCategory/>}/>
+            <Route path='checkout' element={<Checkout userInfo={userInfo}/>}/>
+            <Route path='confirmation' element={<OrderConfirmation userInfo={userInfo}/>}></Route>
           </Route>
         </Route>
         <Route path='/OrderHistory' element={<OrderHistory/>}></Route>

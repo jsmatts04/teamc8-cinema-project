@@ -8,6 +8,7 @@ function Movie() {
     const {movieId} = useParams();
 
     const [movie, setMovie] = useState({});
+    const [booking, setBooking] = useState({});
 
     useEffect(() => {
         fetchMovieById(movieId).then((response) => {
@@ -19,7 +20,7 @@ function Movie() {
     return (
         <>
         <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
-        <Outlet context={movie}/>
+        <Outlet context={{movie, booking, setBooking}}/>
         </>
     )
 }

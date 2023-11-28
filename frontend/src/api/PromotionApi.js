@@ -10,4 +10,4 @@ export const addPromo = (promo) => api.post(`${API_URL}/add`, promo);
 
 // Validate a promotion by code
 // Returns the promotion object
-export const validatePromot = (code) => api.post(`${API_URL}/validate/${code}`);
+export const validatePromo = (code) => api.get(`${API_URL}/validate/${code}`);

@@ -1,12 +1,11 @@
-import YoutubeEmbed from "./YoutubeEmbed";
 import { useState,useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
+import { useOutletContext } from "react-router-dom";
 import '../../css/movie select/SelectSeats.css'
 import { Link } from 'react-router-dom';
 import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { getSeatsForShowtime } from "../../api/SeatApi";
 
-function SelectSeats(props) {
+function SelectSeats() {
     let[count,setCount] = useState(0);
     let[selectedList, setSelectedList] = useState([]);
     const[seatList, setSeatList] = useState([0,0,0,0,0,0,0,0,0,0,
@@ -14,11 +13,28 @@ function SelectSeats(props) {
                                              0,0,0,0,0,0,0,0,0,0,
                                              1,1,0,0,0,0,0,0,1,1,
                                              1,1,1,0,0,0,0,1,1,1]);
-    const location = useLocation();
-    const {time} = location.state.time;
-    const {date} = location.state.date.startDate;
-    const {movie} = location.state.movie;
-    let dateString = JSON.stringify(location.state.date.startDate, null, '\t').substring(1,11);
+    const { movie, booking, setBooking } = useOutletContext();
+    let [date, time] = booking.showtime.timestamp.split('T');
+
+    const convertTime24to12 = (time24h) => {
+        const [hours, minutes, seconds] = time24h.split(':');
+        let modifier = 'AM';
+        if (hours === '00') {
+          hours = '12';
+        }
+        if (parseInt(hours) > 12) {
+            hours = parseInt(hours) % 12;
+            modifier = 'PM'
+        }
+        return `${hours}:${minutes} ${modifier}`;
+    }
+    time = convertTime24to12(time)
+
+    useEffect(()=> {
+        getSeatsForShowtime(booking.showtime.id).then(
+            response=>setSeatList(response.data))
+        .catch(err => console.log(err))
+    },[])
 
     const handleChange = (event) => {
         if (event.target.checked) {
@@ -33,31 +49,22 @@ function SelectSeats(props) {
         setCount(count);
     }
 
-    function returnSeat(num) {
-        let newNum = num;
-        if (num%10 != 0) 
-            newNum = (num)%10;
-        else 
-            newNum = 10
-        return String.fromCharCode('A'.charCodeAt(0) + (num - 1)/10) + newNum;
-    }
-
     function printSeatList() {
         let list = 
-        seatList.map((e,index) => (((e === 0) && <ToggleButton onChange={handleChange} id={'toggle-check' + index} type="checkbox" value={returnSeat(index+1)}>{returnSeat(index+1)}</ToggleButton>)||( 
-        (e === 1) && <ToggleButton variant='dark' value={returnSeat(index+1)} disabled >{returnSeat(index+1)}</ToggleButton>)));
+        seatList.map((e) => (((e.reserved === false) && <ToggleButton onChange={handleChange} id={'toggle-check' + (e.seatRow+e.seatNum)} type="checkbox" value={e.seatRow+e.seatNum}>{e.seatRow+e.seatNum}</ToggleButton>)||( 
+            (e.reserved === true) && <ToggleButton variant='dark' value={e.seatRow+e.seatNum} disabled >{e.seatRow+e.seatNum}</ToggleButton>)));
         return list;
     }
 
     function disabledButton(path) {
         if (count !== 0)
-            return <Link state={{time:{time}, date:{dateString}, movie:{movie}, count:{count}, selectedList}}  className='confirm-button active' to={path}>Continue</Link>;
+            return <Link state={{count:{count}, selectedList}}  className='confirm-button active' to={path}>Continue</Link>;
         return <Link className='confirm-button disabled' to=' '>Continue</Link>;
     }
 
     return (
         <>
-            <h1 id='date-time'>{movie.title} | {dateString} | {time}</h1>
+            <h1 id='date-time'>{movie.title} | {date} | {time}</h1>
             <h2 id='screen'>Screen</h2>
             <ToggleButtonGroup type="checkbox" id='cinema-layout'>
                 {printSeatList()}

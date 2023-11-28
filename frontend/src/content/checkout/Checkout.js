@@ -5,23 +5,36 @@ import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import '../../css/checkout/Checkout.css'
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { addBooking } from '../../api/BookingApi' 
+import { validatePromo } from "../../api/PromotionApi";
 
-function Checkout({userInfo, booking, setBooking}) {
+function Checkout({userInfo}) {
     let adultPrice = 16.49;
     let childPrice = 13.49;
     let seniorPrice = 14.99;
-
+    
+    const {movie, booking, setBooking} = useOutletContext();
     const location = useLocation();
     const numAdult = location.state.numAdult.numberAdultTickets;
     const numChild = location.state.numChild.numberChildTickets;
     const numSenior = location.state.numSenior.numberSeniorTickets;
-    const {time} = location.state.time;
-    const dateString = location.state.date.dateString;
-    const movie = location.state.movie.movie;
     const seats = location.state.seats;
+    let [dateString, time] = booking.showtime.timestamp.split('T');
+    const convertTime24to12 = (time24h) => {
+        const [hours, minutes, seconds] = time24h.split(':');
+        let modifier = 'AM';
+        if (hours === '00') {
+          hours = '12';
+        }
+        if (parseInt(hours) > 12) {
+            hours = parseInt(hours) % 12;
+            modifier = 'PM'
+        }
+        return `${hours}:${minutes} ${modifier}`;
+    }
+    time = convertTime24to12(time)
 
     let totalAdultPrice = numAdult * adultPrice;
     let totalChildPrice = numChild * childPrice; 
@@ -30,7 +43,7 @@ function Checkout({userInfo, booking, setBooking}) {
     let subtotalCost = totalAdultPrice+totalChildPrice+totalSeniorPrice;
     let totalFees =(numAdult + numChild + numSenior)* 2.00;
     let totalTaxes = subtotalCost*0.08;
-    let discount = 0;
+    const [discount, setDiscount] = useState(0);
     let totalPrice = (subtotalCost+totalTaxes+totalFees) * ((100-discount)/100);
 
     let printAdult = () => {return <><div>Adult Tickets ({numAdult})</div><div>$ {totalAdultPrice.toFixed(2)}</div></>}    
@@ -49,26 +62,25 @@ function Checkout({userInfo, booking, setBooking}) {
         totalPrice
     }
 
-    function printSeats() {
-        let string = "";
-        for (let i = 0; i < seats.length - 1; i++) {
-            string += seats[i] + ', ';
-        }
-        string += seats[seats.length - 1];
-        return string;
-    }
-
-    let promo = undefined;
+    const [promo, setPromo] = useState();
     const [promoInput, setPromoInput] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     function applyPromo(promo) {
-        /*
-        checkPromo(promo).then(
-            (response) => {
-                promo = response.data;
-                discount = promo.discountAmount
+        setPromo();
+        setDiscount(0);
+        setPromoInput('');
+        validatePromo(promo).then(
+            response => {
+                console.log(response)
+                if (response.status != 500) {
+                    setPromo(response.data);
+                    setDiscount(response.data.discountAmount);
+                } else {
+                    setErrorMessage('Promo code does not exist')
+                }
             }
         ).catch((err) => (console.log(err)))
-        */
     }
 
     let paymentCards=[];
@@ -84,23 +96,7 @@ function Checkout({userInfo, booking, setBooking}) {
         securityCode:''
     });
 
-    const [cardSelectedLast4Digits, setCardSelectedLast4Digits] = useState('');
-
-    const convertTime12to24 = (time12h) => {
-        const [time, modifier] = time12h.split(' ');
-      
-        let [hours, minutes] = time.split(':');
-      
-        if (hours === '12') {
-          hours = '00';
-        }
-      
-        if (modifier === 'PM') {
-          hours = parseInt(hours, 10) + 12;
-        }
-      
-        return `${hours}:${minutes}`;
-      }
+    const [cardSelected, setCardSelected] = useState('');
 
     let nav = useNavigate();
 
@@ -108,51 +104,19 @@ function Checkout({userInfo, booking, setBooking}) {
         e.preventDefault();
         if ((newPaymentInfo.nameOnCard !== '' && newPaymentInfo.cardNumber !== '' && newPaymentInfo.expirationDate !== '' && newPaymentInfo.securityCode !== '') || (savedCardSelected)) {
             let newBooking = {
-                userEmail:'',
-                paymentCardLastFourDigits:'',
-                promotion:{},
-                showtime:{},
-                total:'',
-                date:''
+                showtimeId: booking.showtime.id,
+                paymentCardId: cardSelected !== undefined ? cardSelected : '',
+                promotionId: promo !== undefined ? promo.id: '',
+                total: totalPrice.toFixed(2),
+                date: ''
             };
-            newBooking.userEmail= userInfo.user.email 
-            newBooking.paymentCardLastFourDigits = savedCardSelected ? booking.paymentCardLastFourDigits = cardSelectedLast4Digits : (
-                booking.paymentCardLastFourDigits = newPaymentInfo.cardNumber.substring(newPaymentInfo.cardNumber.length - 4)
-            )
-            newBooking.promotion = promo === undefined ? booking.promotion=promo : booking.promotion=undefined;
-            newBooking.showtime = {
-                timestamp: dateString+'T'+convertTime12to24(time),
-                room: {
-                    id: 1,
-                    numSeats: 25
-                },
-                movie: movie,
-            }
-            newBooking.total = totalPrice.toFixed(2)
-            newBooking.date = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate()
+            newBooking.date = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate();
+            console.log(newBooking)
 
-            let extraDetails = {
-                seats: printSeats(),
-                numAdult: numAdult,
-                numChild: numChild,
-                numSenior: numSenior,
-                totalAdultPrice: totalAdultPrice,
-                totalChildPrice: totalChildPrice,
-                totalSeniorPrice: totalSeniorPrice,
-                totalFees: totalFees,
-                totalTaxes: totalTaxes,
-                totalPrice: totalPrice,
-                discount: discount
-            }
-            newBooking.extraDetails = extraDetails;
-            setBooking(newBooking)
-            setNewPaymentInfo({})
-            nav('../confirmation')
-
-            /*
-            addBooking(newBooking).then(() => {
-                let extraDetails = {
-                    seats: printSeats(),
+            addBooking(newBooking).then((response) => {
+                setBooking(newBooking)
+                setBooking({...booking, id: response.data, extraDetails:{
+                    seats: seats,
                     numAdult: numAdult,
                     numChild: numChild,
                     numSenior: numSenior,
@@ -163,13 +127,11 @@ function Checkout({userInfo, booking, setBooking}) {
                     totalTaxes: totalTaxes,
                     totalPrice: totalPrice,
                     discount: discount
-                }
-                newBooking.extraDetails = extraDetails;
-                setBooking(newBooking)
+                }})
                 setNewPaymentInfo({})
-                nav('/Order/Confirmation')
+                nav('../confirmation')
                 }
-            ).catch((err) => {console.log(err)}) */
+            ).catch((err) => {console.log(err)})
         } else {
             // display error
             console.log('error occured')
@@ -180,9 +142,9 @@ function Checkout({userInfo, booking, setBooking}) {
     function handleCardSelect(el) {
         if (el !== -1) {
             setSavedCardSelected(true)
-            setCardSelectedLast4Digits(el)
+            setCardSelected(el)
         } else {
-            setCardSelectedLast4Digits('');
+            setCardSelected('');
             setSavedCardSelected(false);
         }
     }
@@ -194,6 +156,7 @@ function Checkout({userInfo, booking, setBooking}) {
 
     return (
         <>
+        <h4 style={{color:'red'}}>{errorMessage}</h4>
         <Form onSubmit={handleCheckout}>
         <div className='checkoutGrid'>
         <div>
@@ -221,7 +184,7 @@ function Checkout({userInfo, booking, setBooking}) {
                 <Form.Select title='card-selector' onChange={(e) => handleCardSelect(e.target.value)}>
                     <option value={-1}>Choose from saved card(s)</option>
                     {paymentCards.map((card) => (
-                        <option value={card.lastFourDigits}>Card ending in {card.lastFourDigits}</option>
+                        <option value={card.id}>Card ending in {card.lastFourDigits}</option>
                     ))}
                 </Form.Select>
                 </Form.Group>
@@ -235,7 +198,7 @@ function Checkout({userInfo, booking, setBooking}) {
                         className="promo input"
                         onChange={(e) => setPromoInput(e.target.value)}
                     />
-                    <Button onClick={applyPromo('')} variant="outline-light">Apply</Button>
+                    <Button onClick={()=>applyPromo(promoInput)} variant="outline-light">Apply</Button>
                 </InputGroup>   
             </Form.Group>
         </div>
@@ -252,7 +215,7 @@ function Checkout({userInfo, booking, setBooking}) {
             {numAdult !== 0 && printAdult()}
             {numChild !== 0 && printChild()}
             {numSenior !== 0 && printSenior()}
-            Seats {printSeats()}
+            Seats {seats.map((seat,index) => (index !== seats.length - 1 ? (seat + ", ") : (seat)))}
             </div>
             FEES
             <div className='two-column-grid'>
@@ -261,7 +224,7 @@ function Checkout({userInfo, booking, setBooking}) {
             <hr/>
             <div className='two-column-grid'>
             <div>Taxes</div><div>$ {totalTaxes.toFixed(2)}</div>
-            {promo !== undefined && <><div>{promo.code}</div><div>{discount}%</div></>}
+            {promo !== undefined && <><div style={{color:'lightgreen'}}>Code: {promo.code}</div><div style={{color:'lightgreen'}}>{promo.discountAmount} %</div></>}
             </div>
             <hr/>
             <div className='two-column-grid'>
