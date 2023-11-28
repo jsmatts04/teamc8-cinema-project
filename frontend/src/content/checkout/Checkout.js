@@ -10,12 +10,11 @@ import { useState } from "react";
 import { addBooking } from '../../api/BookingApi' 
 import { validatePromo } from "../../api/PromotionApi";
 
-function Checkout({userInfo}) {
+function Checkout({userInfo, movie, booking, setBooking}) {
     let adultPrice = 16.49;
     let childPrice = 13.49;
     let seniorPrice = 14.99;
     
-    const {movie, booking, setBooking} = useOutletContext();
     const location = useLocation();
     const numAdult = location.state.numAdult.numberAdultTickets;
     const numChild = location.state.numChild.numberChildTickets;

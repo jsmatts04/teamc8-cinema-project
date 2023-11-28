@@ -2,10 +2,8 @@ import {useState, useEffect} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 import { getShowtimesForMovieDate } from '../../api/ShowtimeApi';
 
-function ShowTimeGrid({date}) {
-    const {movie, booking, setBooking} = useOutletContext();
+function ShowTimeGrid({date, movie, booking, setBooking}) {
     const[showtimeList, setShowtimeList] = useState([]);
-    
     useEffect(()=> {
         getShowtimesForMovieDate(movie.id, date).then((response) => {
             let list = response.data.map(showtime=>showtime)
@@ -40,9 +38,9 @@ function ShowTimeGrid({date}) {
 
     return (
     <div className='body-margin'>
-        {showtimeList.length === 0 && <h3 style={{color:'grey', textAlign:'center'}}>No showtimes found for this date</h3>}
+        {showtimeList.length === 0 && <h3 style={{fontSize:'100%',color:'grey', textAlign:'center'}}>No showtimes found for this date</h3>}
         <div id='time-grid'>
-        {showtimeList.map((showtime) => <Link onClick={() => updateBooking(showtime)} id='timeLink' to='../seats'>{convertTime24to12(showtime.time)}</Link>)}
+        {showtimeList.map((showtime) => <Link onClick={() => updateBooking(showtime)} id='timeLink' to={'/movie/'+movie.id+'/booking/seats'}>{convertTime24to12(showtime.time)}</Link>)}
         </div>
     </div>
     );

@@ -3,12 +3,8 @@ import YoutubeEmbed from "./YoutubeEmbed";
 import { useEffect,useState } from "react";
 import { fetchMovieById } from "../../api/MovieApi";
 
-function Movie() {
-    let location = useLocation();
+function Movie({movie, setMovie}) {
     const {movieId} = useParams();
-
-    const [movie, setMovie] = useState({});
-    const [booking, setBooking] = useState({});
 
     useEffect(() => {
         fetchMovieById(movieId).then((response) => {
@@ -20,7 +16,7 @@ function Movie() {
     return (
         <>
         <YoutubeEmbed video={movie.trailerVideo} thumbnail={movie.trailerPicture}/>
-        <Outlet context={{movie, booking, setBooking}}/>
+        <Outlet/>
         </>
     )
 }

@@ -1,15 +1,13 @@
 import { useState,useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
 import '../../css/movie select/SelectSeats.css'
 import { Link } from 'react-router-dom';
 import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { getSeatsForShowtime } from "../../api/SeatApi";
 
-function SelectSeats() {
+function SelectSeats({movie, booking, setBooking}) {
     let[count,setCount] = useState(0);
     let[selectedList, setSelectedList] = useState([]);
     const[seatList, setSeatList] = useState([]);
-    const { movie, booking, setBooking } = useOutletContext();
     let [date, time] = booking.showtime.timestamp.split('T');
 
     const convertTime24to12 = (time24h) => {

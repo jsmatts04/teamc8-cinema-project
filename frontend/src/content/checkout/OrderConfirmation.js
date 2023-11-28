@@ -3,9 +3,8 @@ import Card from 'react-bootstrap/Card'
 import { Link, useOutletContext } from 'react-router-dom'
 import '../../css/checkout/OrderConfirmation.css'
 
-function OrderConfirmation ({userInfo}) {
+function OrderConfirmation ({userInfo, movie, booking, setBooking}) {
     console.log(userInfo)
-    const {booking, movie} = useOutletContext();
     const showtime = booking.showtime;
     let [dateString, time] = showtime.timestamp.split('T');
     const convertTime24to12 = (time24h) => {

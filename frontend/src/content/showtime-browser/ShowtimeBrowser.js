@@ -11,11 +11,16 @@ import ShowTimeGrid from '../movie select/ShowTimeGrid';
 import YoutubeEmbed from '../movie select/YoutubeEmbed';
 import '../../css/movie select/ShowtimeBrowser.css'
 
-function ShowtimeBrowser() {
+function ShowtimeBrowser({setMovie, setBooking, booking}) {
     const [date, setDate] = useState(new Date());
     const [movieList, setMovieList] = useState([]);
     const [showtimeList, setShowtimeList] = useState([]);
     const [movieSelected, setMovieSelected] = useState({});
+    const [movieFilteredId, setMovieFilteredId] = useState('select movie');
+
+    const convertDate = (d) => {
+        return(d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate())
+    }
 
     useEffect(() => {
         fetchAllMovieCovers().then(
@@ -37,10 +42,18 @@ function ShowtimeBrowser() {
         }
     }
 
+    function handleFilterMovie(list) {
+        if (movieFilteredId !== 'select movie') {
+            list = movieList.filter((movie) => movie.id === parseInt(movieFilteredId));
+        }
+        return list;
+    }
+
+
     return(
     <div style={{height:'90vh', overflowY:'hidden'}}>
         <Navbar className='showtime-navbar'>
-            <Form.Select style={{width:'fit-content'}}>
+            <Form.Select style={{width:'fit-content', backgroundColor:'#505050'}} onChange={e => setMovieFilteredId(e.target.value)}>
             Movie:
                 <option>select movie</option>
                 {movieList.map((movie)=>(
@@ -51,14 +64,14 @@ function ShowtimeBrowser() {
         </Navbar>
         <div className='showtime-browser-content' style={{height:'100%'}}>
         <div style={{overflowY:'scroll'}}>
-        {movieList.map((movie) => (
+        {handleFilterMovie(movieList).map((movie) => (
             <div className='showtime-card' onMouseEnter={()=>{handleHover(movie)}}>
             <div className='small-movie-header'>
             <img src={movie.trailerPicture} alt='movie poster'/> 
             <h3>{truncateStr(movie.title)}</h3>
             </div>
             <hr className='showtime-hr'/>
-            <ShowTimeGrid startDate={date} movie={movie}/>
+            <ShowTimeGrid setBooking={setBooking} booking={booking} date={convertDate(date)} movie={movie}/>
             </div>
         ))}
         </div>

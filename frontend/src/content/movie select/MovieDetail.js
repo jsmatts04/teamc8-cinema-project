@@ -6,9 +6,7 @@ import { Link, useOutletContext,useParams } from 'react-router-dom';
 import { fetchMovieById } from '../../api/MovieApi';
 import { useEffect, useState } from 'react';
 
-function MovieDetail ({loginState}) {
-    let {movie} = useOutletContext();
-    
+function MovieDetail ({loginState, movie}) {
     const {movieId} = useParams();
     if (movie.title === undefined) {
         console.log(movieId)
