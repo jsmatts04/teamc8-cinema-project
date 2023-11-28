@@ -2,7 +2,7 @@ package com.teamc8.controller;
 
 import com.teamc8.model.Ticket;
 import com.teamc8.model.projection.TicketProjection;
-import com.teamc8.model.request.NewTicketRequest;
+import com.teamc8.model.request.NewTicketsRequest;
 import com.teamc8.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ public class TicketController {
     }
 
     @PostMapping(path = "/add")
-    public String addTicket(@RequestBody NewTicketRequest[] newTickets) {
+    public String addTicket(@RequestBody NewTicketsRequest newTickets) {
         return ticketService.addTicket(newTickets);
     }
 
