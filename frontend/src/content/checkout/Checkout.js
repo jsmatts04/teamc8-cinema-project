@@ -1,11 +1,10 @@
-import YoutubeEmbed from "../movie select/YoutubeEmbed";
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import '../../css/checkout/Checkout.css'
-import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { addBooking } from '../../api/BookingApi' 
 import { validatePromo } from "../../api/PromotionApi";
@@ -49,18 +48,6 @@ function Checkout({userInfo, movie, booking, setBooking}) {
     let printAdult = () => {return <><div>Adult Tickets ({numAdult})</div><div>$ {totalAdultPrice.toFixed(2)}</div></>}    
     let printChild = () => {return <><div>Child Tickets ({numChild})</div><div>$ {totalChildPrice.toFixed(2)}</div></>}
     let printSenior = () => {return <><div>Senior Tickets ({numSenior})</div><div>$ {totalSeniorPrice.toFixed(2)}</div></>}
-    
-    let orderInfo = {
-        numAdult,
-        numChild,
-        numSenior,
-        totalAdultPrice,
-        totalChildPrice,
-        totalSeniorPrice,
-        totalFees,
-        totalTaxes,
-        totalPrice
-    }
 
     const [promo, setPromo] = useState();
     const [promoInput, setPromoInput] = useState('');
