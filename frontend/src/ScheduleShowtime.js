@@ -15,6 +15,7 @@ const AddShowtime = () => {
 
     const [movieData, setMovieData] = useState({title:''})
     const [movieList, setMovieList] = useState([]);
+    const [showError, setShowError] = useState(false);
 
     const { movieId } = useParams();
     useEffect(() => {
@@ -31,7 +32,7 @@ const AddShowtime = () => {
                 response => {
                     setMovieList(response.data)
                 }
-            ).catch(err => console.log(err))
+            ).catch(err => {console.log(err)})
         } 
     }, []);
 
@@ -54,7 +55,11 @@ const AddShowtime = () => {
         
          addShowtime(movieId, date, time).then((response) => {
             nav('/managemovies', {state: {toastId: 'schedule-toast'}});
-        }).catch((err) => console.log(err));
+        }).catch((err) => {
+            console.log(err)
+            setShowError(true)
+            setTimeout(()=>setShowError(false),2000)
+        });
     };
 
     const gradientBackground = {
@@ -133,6 +138,7 @@ const AddShowtime = () => {
                         </Form.Group>
                         </Col>
                         </Row>
+                        {showError && <h4 style={{color: 'red', marginTop: '10px', fontSize:'15px', textAlign:'center'}}>ERROR: an existing movie has already been scheduled at that time</h4>}
                         <div className="d-flex justify-content-around text-center mt-4" style={{marginLeft: '30%', marginRight: '30%'}} >
                             <Button variant="primary" onClick={handleSaveChanges}>
                                 Save Changes
