@@ -17,7 +17,6 @@ const ManageShowtimes = () => {
             })
             .catch((err) => console.log(err));
     }, []);
-
     const gradientBackground = {
         background: 'linear-gradient(180deg, #000000 0%, #923CB5 100%)',
     };

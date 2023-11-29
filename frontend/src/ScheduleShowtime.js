@@ -69,11 +69,12 @@ const AddShowtime = () => {
     };
 
     const cardStyle = {
-        maxWidth: '700px',
-        margin: '0 auto',
+        margin: 'auto',
+        marginTop: '200px',
         padding: '20px',
         backgroundColor: 'white',
         boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',
+        width: '40%'
     };
 
     return (

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Card, Table, Toast, Form } from 'react-bootstrap';
 import { getAllPromos, addPromo } from './api/PromotionApi';
+import './css/ManagePromos.css';
+import './css/AdminHomePage.css';
+
 
 const ManagePromo = () => {
     const [promos, setPromos] = useState([]);
@@ -48,11 +51,18 @@ const ManagePromo = () => {
         }
     };
 
+    const cardStyle = {
+        backgroundColor: 'white',
+        boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',
+        width: '800px',
+        marginTop: '100px'
+    };
+
     return (
-        <div style={{ background: 'linear-gradient(180deg, #000000 0%, #923CB5 100%)', minHeight: '100vh', paddingTop: '20px' }}>
-            <Container style={{ maxWidth: '700px' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px' }}>
-                    <Card style={{ backgroundColor: 'white', boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)' }}>
+        <div className="admin-page">
+            <Container className="admin-content-MP">
+                <div className="d-flex justify-content-center align-items-center vh-100">
+                    <Card className="w-100" style={cardStyle}>
                         <Card.Body>
                             <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Manage Promos</h1>
                             <Button

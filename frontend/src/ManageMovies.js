@@ -48,12 +48,6 @@ const ManageMovies = () => {
         nav('/ScheduleShowtime/'+movieIndex)
     }
 
-    /*const handleArchiveMovie = (movieIndex) => {
-        const updatedMovies = movieList.filter((movie, index) => index !== movieIndex);
-        setMovieList(updatedMovies);
-        setShowToast(true);
-    };*/
-
     const cardStyle = {
         backgroundColor: 'white',
         boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',

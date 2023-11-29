@@ -71,6 +71,7 @@ const EditMovie = () => {
   const cardStyle = {
     backgroundColor: 'white', // Set the background color to white
     boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',
+    width: '800px',
   };
 
   return (
