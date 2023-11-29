@@ -38,7 +38,7 @@ function Navbar(props) {
     }
 
     return (
-        <NavBar style={{ background: '#3B3B3C' }} data-bs-theme="dark" expand="lg" className="bg=body-tertiary">
+        <NavBar style={{ background: '#3B3B3C', height: '7vh'}} data-bs-theme="dark" expand="lg" className="bg=body-tertiary">
             <Container>
                 <Link to='/' style={{ textDecoration: 'none' }}>
                     <NavBar.Brand>

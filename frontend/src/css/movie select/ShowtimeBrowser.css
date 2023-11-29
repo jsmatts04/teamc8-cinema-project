@@ -13,7 +13,7 @@
     justify-content: space-around;
     padding-left:20%;
     padding-right:20%;
-    background-color: #ffffff30;
+    background-color: #000000BF;
 }
 
 .showtime-navbar select {
@@ -44,21 +44,20 @@
 
 .showtime-card{
     background-color: #2424244d;
+    border: #00000050 solid 2px;
 	backdrop-filter: blur(10px);
-	box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1);
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top: 20px;
     padding: 2% 2%;
+    width: 100%;
+}
+
+.showtime-card:hover {
+    background-color: #5858584d;
+    transition: ease-in-out 0.7s;
 }
 
 .showtime-browser-content {
     display:grid;
     grid-template-columns: 3fr 2fr;
-}
-
-.movie-details-col {
-    padding: 20px 20px;
 }
 
 .grid-2-col {

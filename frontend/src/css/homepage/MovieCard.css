@@ -1,6 +1,18 @@
-.card {
+div.card {
     background-color: transparent;
     border-color:transparent;
+    width: 15rem;
+    margin-bottom: -10px;
+}
+
+#movie-card-wrapper:hover {
+    transition:ease-in-out 0.6s;
+    background-color: #00000060;
+    width: 200px;
+}
+
+.card-title {
+    color: white;
 }
 
 .book-button {

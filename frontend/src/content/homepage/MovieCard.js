@@ -1,11 +1,9 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import '../../css/homepage/MovieCard.css';
-import MovieDetail from '../movie select/MovieDetail';
 import { Link } from 'react-router-dom';
 import { fetchMovieById } from '../../api/MovieApi';
 import { useState, useEffect } from 'react';
-import Movie from '../movie select/Movie';
 
 
 function MovieCard(props) {
@@ -27,8 +25,8 @@ function MovieCard(props) {
     }
 
     return(
-        <div style={{width:'fit-content'}}>
-        <Card style={{width:'15rem', marginBottom: -10, backgroundColor:'transparent', color: 'white', borderColor:'transparent'}}>
+        <div id='movie-card-wrapper' style={{width:'fit-content', padding: '5px', paddingBottom:'10px', borderRadius: '5px'}}>
+        <Card>
             <Link state = {{movie:fullMovie}} to={'/movie/' + movie.id + '/details'}>
             <Card.Img variant='top' alt='movie-poster' style={{ height:330, width: '100%', objectFit:'cover' }} src={movie.trailerPicture}/>
             </Link>

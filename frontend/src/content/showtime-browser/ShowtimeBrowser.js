@@ -49,7 +49,8 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
 
 
     return(
-    <div style={{height:'90vh', overflowY:'hidden'}}>
+    <div style={{height:'93vh', overflowY:'hidden', backgroundImage:'url('+movieSelected.trailerPicture+')', backgroundSize: '1000px', backgroundPosition:'center'}}>
+        <div style={{backgroundColor:'#00000090',backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)', height: '100%', width: '100%'}}>
         <Navbar className='showtime-navbar'>
             <Form.Select style={{width:'fit-content', backgroundColor:'#505050'}} onChange={e => setMovieFilteredId(e.target.value)}>
             Movie:
@@ -60,7 +61,7 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
             </Form.Select>
             <DatePicker minDate={new Date()} selected={date} onChange={(date) => setDate(date)} />
         </Navbar>
-        <div className='showtime-browser-content' style={{height:'90%'}}>
+        <div className='showtime-browser-content' style={{height:'93%'}}>
         <div style={{overflowY:'scroll'}}>
         {handleFilterMovie(movieList).map((movie) => (
             <div className='showtime-card' onMouseEnter={()=>{handleHover(movie)}}>
@@ -74,10 +75,11 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
         ))}
         </div>
         <div className='movie-details-col'>
+            
         {(movieSelected.title === undefined) ? (
             <></>
         ) : (
-                <>
+                <div className='selected-movie-wrapper' style={{padding: '50px'}}>
                 <YoutubeEmbed video={movieSelected.trailerVideo} thumbnail={movieSelected.trailerPicture}/>
                 <div className='grid-2-col'>
                 <h3>{movieSelected.title}</h3>
@@ -87,11 +89,12 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
                 <Link state = {{movie:movieSelected}} to={'/movie/'+movieSelected.id+'/details'} element={<MovieDetail/>}>
                 <Button variant='warning' className='book-button'>MOVIE DETAILS</Button>
                 </Link>
-                </>
+                </div>
             
         )}
         </div>
         </div>
+    </div>
     </div>
     );
 }
