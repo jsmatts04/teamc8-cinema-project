@@ -27,12 +27,6 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
           }
         )
     },[])
-    
-    function truncateStr(string) {
-        if (string.length > 15)
-          return string.slice(0, 15) + "...";
-        return string
-    }
 
     function handleHover(movie) {
         if (movie !== undefined) {
@@ -67,7 +61,7 @@ function ShowtimeBrowser({setMovie, setBooking, booking}) {
             <div className='showtime-card' onMouseEnter={()=>{handleHover(movie)}}>
             <div className='small-movie-header'>
             <img src={movie.trailerPicture} alt='movie poster'/> 
-            <h3>{truncateStr(movie.title)}</h3>
+            <h3 style={{fontSize:'2vw'}}>{movie.title}</h3>
             </div>
             <hr className='showtime-hr'/>
             <ShowTimeGrid setBooking={setBooking} booking={booking} date={convertDate(date)} movie={movie}/>
