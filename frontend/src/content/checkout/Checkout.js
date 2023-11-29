@@ -116,7 +116,7 @@ function Checkout({userInfo, movie, booking, setBooking}) {
                 for (let i = 0; i < numChild+numAdult+numSenior; i++) {
                     let ticket = {
                         typeId: typeArray[i], 
-                        seatId: seats[i].substring(0,2)
+                        seatId: seats[i].substring(0,seats[i].indexOf(':'))
                     }
                     ticketArray = [...ticketArray, ticket]
                 }
@@ -136,7 +136,9 @@ function Checkout({userInfo, movie, booking, setBooking}) {
                 }})
                 setNewPaymentInfo({})
                 console.log(booking)
+                console.log(ticketArray)
                 addTickets(id, ticketArray).then((response) => {
+                    console.log(response.data)
                     nav('../confirmation')
                 }).catch(err => console.log(err))
                 }
