@@ -9,10 +9,11 @@
 }
 
 .showtime-navbar {
-    display:flex;
-    justify-content: space-around;
-    padding-left:20%;
-    padding-right:20%;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    padding-left:15%;
+    padding-right:15%;
     background-color: #000000BF;
 }
 
