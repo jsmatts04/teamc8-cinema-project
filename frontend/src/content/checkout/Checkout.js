@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Spinner from 'react-bootstrap/Spinner'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import '../../css/checkout/Checkout.css'
@@ -95,7 +96,9 @@ function Checkout({setUserInfo, userInfo, movie, booking, setBooking}) {
 
     let nav = useNavigate();
 
+    const [loading, setLoading] = useState(false);
     const handleCheckout = (e) => {
+        setLoading(true)
         e.preventDefault();
         if ((newPaymentInfo.nameOnCard !== '' && newPaymentInfo.cardNumber !== '' && newPaymentInfo.expirationDate !== '' && newPaymentInfo.securityCode !== '') || (savedCardSelected)) {
             let newBooking = {
@@ -147,6 +150,7 @@ function Checkout({setUserInfo, userInfo, movie, booking, setBooking}) {
                 console.log(ticketArray)
                 addTickets(id, ticketArray).then((response) => {
                     console.log(response.data)
+                    setLoading(false)
                     nav('../confirmation')
                 }).catch(err => console.log(err))
                 }
@@ -251,7 +255,15 @@ function Checkout({setUserInfo, userInfo, movie, booking, setBooking}) {
             <div>TOTAL</div><div>$ {totalPrice.toFixed(2)}</div>
             </div>
             <div className='center-button'>
-            <Button variant='warning' type='submit'>Submit Order</Button>
+            
+            <Button variant='warning' type='submit' disabled={loading}> 
+            {loading ? <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            /> : 'Submit Order'}</Button>
             <Button variant='dark' onClick={()=>handleCancel()} id ='cancel-button'>Cancel</Button>
             </div>
         </div>

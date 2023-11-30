@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import AddPayment from './AddPayment';
 import EditPayment from './EditPayment';
 import { deletePaymentCard } from './api/PaymentCardApi';
+import Spinner from 'react-bootstrap/Spinner'
 
 function EditProfile() {
   const location = useLocation();
@@ -149,7 +150,9 @@ function EditProfile() {
     setUnsubscribePromos(!unsubscribePromos);
   };
 
+  const [loading, setLoading] = useState(false)
   const handleSaveChanges = () => {
+    setLoading(true)
     let user={
       email: email,
       firstName: firstName,
@@ -157,7 +160,8 @@ function EditProfile() {
       phoneNumber: phoneNumber,
       promotionEligibility: unsubscribePromos
     }
-    editUserProfile(user).then(()=>showToastWithId('changes-saved-toast')
+    editUserProfile(user).then(()=>{showToastWithId('changes-saved-toast')
+  setLoading(false)}
     ).catch((err)=>(console.log(err)))
     // You can add logic here to save changes to a database or perform other actions.
   };
@@ -219,7 +223,13 @@ function EditProfile() {
                 </div>
 
                 {/* Save Changes button */}
-                <button onClick={handleSaveChanges} style={{ backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer', marginTop: '10px' }}>Save Changes</button>
+                <button onClick={handleSaveChanges} disabled={loading} style={{ backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer', marginTop: '10px' }}>{loading ? <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                /> : 'Save Changes'}</button>
 
               </div>
             </div><ToastContainer position="top-center" style={{ zIndex: 1 }}>

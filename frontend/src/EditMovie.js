@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { Form, Button, Card, Row, Col } from 'react-bootstrap'; // Added Row and Col components for side-by-side fields
+import { Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap'; // Added Row and Col components for side-by-side fields
 import DatePicker from 'react-datepicker';
 import { fetchMovieById, updateMovie } from './api/MovieApi';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -47,15 +47,19 @@ const EditMovie = () => {
 
   const nav = useNavigate();
 
+  const [loading, setLoading] = useState(false)
   const handleSaveChanges = () => {
-    let date = movieData.releaseDate.toISOString().substring(0,10)
+    setLoading(true)
+    let date = movieData.releaseDate.getFullYear() + '-' + movieData.releaseDate.getMonth() + '-' + movieData.releaseDate.getDate()
     // Handle saving movie data here
       console.log(movieData);
       updateMovie({...movieData, releaseDate:date}).then(
         response => {
             nav('/ManageMovies', {state: {toastId: 'edited-toast'}})
+            setLoading(false)
         }
-      ).catch(err => console.log(err))
+      ).catch(err => {console.log(err)
+      setLoading(false)})
     // You can send the data to your backend or perform any desired actions.
   };
 
@@ -277,8 +281,13 @@ const EditMovie = () => {
 
               {/* Save Button */}
               <div className="d-flex justify-content-around text-center mt-4" style={{marginLeft: '30%', marginRight: '30%'}} >
-                  <Button variant="primary" onClick={handleSaveChanges}>
-                    Save Changes
+                  <Button variant="primary" onClick={handleSaveChanges} disabled={loading}>{loading ? <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            /> : 'Save Changes'}
                   </Button>
                   <Link to="/ManageMovies">
                   <Button variant="primary">

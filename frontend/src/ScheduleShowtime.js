@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { fetchAllMovieCovers, fetchMovieById } from './api/MovieApi';
@@ -44,22 +44,25 @@ const AddShowtime = () => {
         setShowtimeData({ ...showtimeData, time: time });
     };
 
+    const [loading, setLoading] = useState(false)
     const nav = useNavigate();
-
     const handleSaveChanges = () => {
+        setLoading(true)
         const date = showtimeData.date.getFullYear() + '-' + showtimeData.date.getMonth() + '-' + showtimeData.date.getDate();
         const time = showtimeData.time;
         const movieId = showtimeData.movieId;
 
         console.log('Saving showtime:', { movieId, date, time });
-        /*
+        
          addShowtime(movieId, date, time).then((response) => {
+            setLoading(false)
             nav('/managemovies', {state: {toastId: 'schedule-toast'}});
         }).catch((err) => {
             console.log(err)
             setShowError(true)
             setTimeout(()=>setShowError(false),2000)
-        });*/
+        });
+        setLoading(false)
     };
 
     const gradientBackground = {
@@ -141,8 +144,14 @@ const AddShowtime = () => {
                         </Row>
                         {showError && <h4 style={{color: 'red', marginTop: '10px', fontSize:'15px', textAlign:'center'}}>ERROR: an existing movie has already been scheduled at that time</h4>}
                         <div className="d-flex justify-content-around text-center mt-4" style={{marginLeft: '30%', marginRight: '30%'}} >
-                            <Button variant="primary" onClick={handleSaveChanges}>
-                                Save Changes
+                            <Button variant="primary" onClick={handleSaveChanges} disabled={loading}>
+                                {loading ? <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                /> : 'Save Changes'}
                             </Button>
                         <Link to="/ManageMovies">
                             <Button variant="primary">

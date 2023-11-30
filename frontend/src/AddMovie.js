@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom'
+import Spinner from 'react-bootstrap/Spinner'
 import { Form, Button, Card, Row, Col } from 'react-bootstrap'; // Added Row and Col components for side-by-side fields
 import DatePicker from 'react-datepicker';
 import { postMovie } from './api/MovieApi';
@@ -7,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './css/AdminHomePage.css';
 
 const AddMovie = () => {
+  const [loading, setLoading] = useState(false)
   const [movieData, setMovieData] = useState({
     title: '',
     synopsis: '',
@@ -43,6 +45,7 @@ const AddMovie = () => {
   const nav = useNavigate ();
 
   const handleSaveChanges = () => {
+    setLoading(true)
     let hasEmptyFields = false;
 
     // Check if any field is empty
@@ -62,15 +65,17 @@ const AddMovie = () => {
     setErrorMessageVisible(true);
 
     if (!hasEmptyFields) {
-      let date = movieData.releaseDate.toISOString().substring(0,10)
+      let date = movieData.releaseDate.getFullYear() + '-' + movieData.releaseDate.getMonth() + '-' + movieData.releaseDate.getDate()
       console.log(movieData);
       postMovie({...movieData, releaseDate: date}).then(response=> {
         nav('/managemovies', {state: {toastId: 'added-toast'}})
+        setLoading(false)
       }).catch(err=>console.log(err))
       // You can send the data to your backend or perform any desired actions.
       setTimeout(() => {
         setErrorMessageVisible(false);
       }, 3000);
+      setLoading(false)
     }
   };
 
@@ -329,8 +334,14 @@ const AddMovie = () => {
 
                 {/* Save Button */}
                 <div className="d-flex justify-content-around text-center mt-4" style={{marginLeft: '30%', marginRight: '30%'}} >
-                  <Button variant="primary" onClick={handleSaveChanges}>
-                    Save Changes
+                  <Button variant="primary" onClick={handleSaveChanges} disabled={loading}>
+                  {loading ? <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            /> : 'Save Changes'}
                   </Button>
                   <Link to="/ManageMovies">
                   <Button variant="primary">

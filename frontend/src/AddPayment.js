@@ -1,7 +1,6 @@
 import React,{useState} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
+import Spinner from 'react-bootstrap/Spinner'
 import { addPaymentCard } from './api/PaymentCardApi';
 import Button from 'react-bootstrap/Button'
 
@@ -24,9 +23,11 @@ function AddPayment() {
         const [nameOnCard, setNameOnCard] = useState('');
         const [securityCode, setSecurityCode] = useState('');
 
+        const [loading, setLoading] = useState(false)
         const location = useLocation();
         const nav = useNavigate();
         const handleSubmit = (e) => {
+            setLoading(true)
             e.preventDefault();
             let req = {
                 email: location.state.email,
@@ -39,6 +40,7 @@ function AddPayment() {
             addPaymentCard(req).then(
                 (response) => {
                     console.log(response.data)
+                    setLoading(false)
                     nav('/EditProfile', {state: {toastId: 'payment-toast'}});
                 }
             ).catch((err) => (console.log(err)))
@@ -70,8 +72,15 @@ function AddPayment() {
                                 <Button
                                     type='submit'
                                     variant='success'
+                                    disabled={loading}
                                 >
-                                    Save Payment
+                                    {loading ? <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                    /> : 'Save Payment'}
                                 </Button>
                             </div>
                         </form>

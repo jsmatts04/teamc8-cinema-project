@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Container, Card, Table, Toast, Form } from 'react-bootstrap';
+import { Button, Container, Card, Table, Toast, Form, Spinner } from 'react-bootstrap';
 import { getAllPromos, addPromo } from './api/PromotionApi';
 import './css/ManagePromos.css';
 import './css/AdminHomePage.css';
@@ -31,7 +31,9 @@ const ManagePromo = () => {
     const [errMessage, setErrMessage] = useState('');
     // Assumed no delete and edit cause we send out emails instantly after adding a promotion
 
+    const [loading, setLoading] = useState(false)
     const handleSaveChanges = () => {
+        setLoading(true)
         console.log(newPromo)
         if (newPromo.startDate > newPromo.endDate) {
             setErrMessage('Inputted dates are not in a valid order');
@@ -47,7 +49,9 @@ const ManagePromo = () => {
                 console.log(response.data)
                 setShowAddPromo(false);
                 setShowToast(true);
-            }).catch((err) => (console.log(err)))
+                setLoading(false)
+            }).catch((err) => {console.log(err)
+            setLoading(false)})
         }
     };
 
@@ -123,8 +127,14 @@ const ManagePromo = () => {
                                                 }}
                                             />
                                         </Form.Group>
-                                        <Button variant="primary" onClick={handleSaveChanges}>
-                                            Save Changes
+                                        <Button variant="primary" onClick={handleSaveChanges} disabled={loading}>
+                                            {loading ? <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                /> : 'Save Changes'}
                                         </Button>
                                     </Form>
                                 </div>

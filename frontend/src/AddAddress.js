@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { addAddress,deleteAddress } from './api/AddressApi';
+import Spinner from 'react-bootstrap/Spinner'
 
 function AddAddress() {
      const gradientBackground = {
@@ -21,9 +22,12 @@ function AddAddress() {
     const [state, setState] = useState('');
     const [postalCode, setPostalCode] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const location = useLocation();
     const nav = useNavigate();
     function handleSubmit(e) {
+        setLoading(true)
         e.preventDefault();
         let address = {
             email: location.state.email,
@@ -35,6 +39,7 @@ function AddAddress() {
         addAddress(address).then(
             (response) => {
                 console.log(response.data)
+                setLoading(false)
                 nav('/EditProfile', {state: {toastId:'address-toast'}});
             }
         ).catch((err) => (err));
@@ -66,8 +71,14 @@ function AddAddress() {
                                 <button
                                     className="btn btn-primary"
                                     style={{ backgroundColor: '#C84B31' }}
-                                >
-                                    Save Address
+                                    disabled={loading}
+                                >{loading ? <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                    /> : 'Save Address'}
                                 </button>
                             </div>
                         </form>

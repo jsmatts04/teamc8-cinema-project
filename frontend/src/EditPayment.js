@@ -1,4 +1,5 @@
 import Button from 'react-bootstrap/Button'
+import Spinner from 'react-bootstrap/Spinner'
 import { useState } from 'react';
 import { deletePaymentCard, editPaymentCard } from './api/PaymentCardApi';
 import { useNavigate } from 'react-router-dom';
@@ -19,13 +20,18 @@ function EditPayment(props) {
     const toggleShow = () => setShowEdit(!showEdit);
     const nav = useNavigate();
     const handleDelete = () => {
+        setLoading(true)
         deletePaymentCard(id).then(() => {
+            setLoading(false)
             nav('/EditProfile', {state: {showPaymentToastDelete: true, showPaymentToast: false}})
             setList(list.filter((card) => card.id !== id).map((card, index) => ({...card, id: index})))
             }     
         ).catch((err)=>(console.log(err)))
+        setLoading(false)
     }
+    const [loading, setLoading] = useState(false)
     const handleSubmit = (e) => {
+        setLoading(true)
         e.preventDefault();
         let card = {
             id: id,
@@ -35,10 +41,12 @@ function EditPayment(props) {
             nameOnCard: name        
         }
         editPaymentCard(card).then(() => {
-            nav('/EditProfile', {state: {toastId: 'payment-toast'}})
             setShowEdit(false)
+            setLoading(false)
+            nav('/EditProfile', {state: {toastId: 'payment-toast'}})
         }
         ).catch((err)=>(console.log(err)))
+        setLoading(false)
     }
 
     const handleCancel = (e) => {
@@ -74,15 +82,27 @@ function EditPayment(props) {
                                 type='submit'
                                 className="col"
                                 variant='success'
-                            >
-                                Save Payment
+                                disabled={loading}
+                            >{loading ? <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                /> : 'Save Payment'}
                             </Button>
                             <Button
                                 className="col"
                                 onClick={handleDelete}
                                 variant='danger'
-                            >
-                                Delete Payment
+                                disabled={loading}
+                            >{loading ? <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                /> : 'Delete Payment'}
                             </Button>
                             <Button
                                 className="col"
