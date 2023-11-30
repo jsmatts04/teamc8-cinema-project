@@ -3,6 +3,14 @@ import {Link, useOutletContext} from 'react-router-dom';
 import { getShowtimesForMovieDate } from '../../api/ShowtimeApi';
 
 function ShowTimeGrid({date, movie, booking, setBooking}) {
+    if (date.length < 10) {
+        if (date.lastIndexOf('-') - date.indexOf('-') !== 3) {
+            date = date.substring(0,date.indexOf('-')+1) + 0 + date.substring(date.indexOf('-')+1) 
+        }
+        if (date.length !== 10) {
+            date = date.substring(0,date.lastIndexOf('-')+1) + 0 + date.substring(date.lastIndexOf('-')+1)
+        }
+    }
     const[showtimeList, setShowtimeList] = useState([]);
     useEffect(()=> {
         getShowtimesForMovieDate(movie.id, date).then((response) => {

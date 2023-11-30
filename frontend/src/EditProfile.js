@@ -232,7 +232,7 @@ function EditProfile() {
                                 /> : 'Save Changes'}</button>
 
               </div>
-            </div><ToastContainer position="top-center" style={{ zIndex: 1 }}>
+            </div><ToastContainer position="top-center" style={{ zIndex: 2 }}>
                 <Toast show={toastId==='changes-saved-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                   <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                     <strong className="me-auto">Changes Saved</strong>
@@ -240,7 +240,7 @@ function EditProfile() {
                   <Toast.Body>Your changes have been saved.</Toast.Body>
                 </Toast>
               </ToastContainer><div aria-live="polite" aria-atomic="true" className="position-block">
-                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
+                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 2 }}>
                   <Toast show={toastId==='address-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Address Updated</strong>
@@ -249,7 +249,7 @@ function EditProfile() {
                   </Toast>
                 </ToastContainer>
               </div><div aria-live="polite" aria-atomic="true" className="position-block">
-                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
+                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 2 }}>
                   <Toast show={toastId==='address-delete-toast'} bg="warning" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Address Deleted</strong>
@@ -258,7 +258,7 @@ function EditProfile() {
                   </Toast>
                 </ToastContainer>
               </div><div aria-live="polite" aria-atomic="true" className="position-block">
-                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
+                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 2 }}>
                   <Toast show={toastId==='payment-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Payment Method Updated</strong>
@@ -267,7 +267,7 @@ function EditProfile() {
                   </Toast>
                 </ToastContainer>
               </div><div aria-live="polite" aria-atomic="true" className="position-block">
-                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 1 }}>
+                <ToastContainer className="p-3" position="top-center" style={{ zIndex: 2 }}>
                   <Toast show={toastId==='password-toast'} bg="success" onClose={() => closeToast()} animation={true}>
                     <Toast.Header closeButton={true} style={{ background: '#00000010' }}>
                       <strong className="me-auto">Password Changed</strong>

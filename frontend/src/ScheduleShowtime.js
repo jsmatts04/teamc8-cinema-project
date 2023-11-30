@@ -8,7 +8,7 @@ import {addShowtime} from "./api/ShowtimeApi";
 
 const AddShowtime = () => {
     const [showtimeData, setShowtimeData] = useState({
-        movieId: '',
+        movieId: 0,
         time: '',
         date: new Date(),
     });
@@ -48,9 +48,18 @@ const AddShowtime = () => {
     const nav = useNavigate();
     const handleSaveChanges = () => {
         setLoading(true)
-        const date = showtimeData.date.getFullYear() + '-' + showtimeData.date.getMonth() + '-' + showtimeData.date.getDate();
+        let date = showtimeData.date.getFullYear() + '-' + (1+showtimeData.date.getMonth()) + '-' + showtimeData.date.getDate();
         const time = showtimeData.time;
-        const movieId = showtimeData.movieId;
+        let movieId = showtimeData.movieId;
+
+    if (date.length < 10) {
+        if (date.lastIndexOf('-') - date.indexOf('-') !== 3) {
+            date = date.substring(0,date.indexOf('-')+1) + 0 + date.substring(date.indexOf('-')+1) 
+        }
+        if (date.length !== 10) {
+            date = date.substring(0,date.lastIndexOf('-')+1) + 0 + date.substring(date.lastIndexOf('-')+1)
+        }
+    }
 
         console.log('Saving showtime:', { movieId, date, time });
         
@@ -105,6 +114,7 @@ const AddShowtime = () => {
                                     name="title"
                                     onChange={(e)=>(setShowtimeData({...showtimeData, movieId:e.target.value}))}
                                 >
+                                    <option>Select a movie</option>
                                     {movieList.map(movie=><option value={movie.id}>{movie.title}</option>)}
                                 </Form.Select>
                         

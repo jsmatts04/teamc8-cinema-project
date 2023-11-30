@@ -163,7 +163,7 @@ const ManageMovies = () => {
                 <Toast.Header closeButton={true} style={{background:'#00000010'}}>
                 <strong className="me-auto">Movie Changes Saved</strong>
                 </Toast.Header>
-                <Toast.Body>The changes to the movie has been saved succesfully.</Toast.Body>
+                <Toast.Body>The changes to the movie has been saved successfully.</Toast.Body>
             </Toast>
             </ToastContainer>
             <ToastContainer
@@ -175,7 +175,7 @@ const ManageMovies = () => {
                 <Toast.Header closeButton={true} style={{background:'#00000010'}}>
                 <strong className="me-auto">Movie Scheduled</strong>
                 </Toast.Header>
-                <Toast.Body>The showtime has been scheduled scuessfully.</Toast.Body>
+                <Toast.Body>The showtime has been scheduled successfully.</Toast.Body>
             </Toast>
             </ToastContainer>
         </div>

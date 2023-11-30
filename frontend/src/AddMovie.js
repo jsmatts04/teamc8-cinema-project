@@ -65,7 +65,15 @@ const AddMovie = () => {
     setErrorMessageVisible(true);
 
     if (!hasEmptyFields) {
-      let date = movieData.releaseDate.getFullYear() + '-' + movieData.releaseDate.getMonth() + '-' + movieData.releaseDate.getDate()
+      let date = movieData.releaseDate.getFullYear() + '-' + (1+movieData.releaseDate.getMonth()) + '-' + movieData.releaseDate.getDate()
+      if (date.length < 10) {
+        if (date.lastIndexOf('-') - date.indexOf('-') !== 3) {
+            date = date.substring(0,date.indexOf('-')+1) + 0 + date.substring(date.indexOf('-')+1) 
+        }
+        if (date.length !== 10) {
+            date = date.substring(0,date.lastIndexOf('-')+1) + 0 + date.substring(date.lastIndexOf('-')+1)
+        }
+    }
       console.log(movieData);
       postMovie({...movieData, releaseDate: date}).then(response=> {
         nav('/managemovies', {state: {toastId: 'added-toast'}})
@@ -75,8 +83,8 @@ const AddMovie = () => {
       setTimeout(() => {
         setErrorMessageVisible(false);
       }, 3000);
-      setLoading(false)
     }
+    setLoading(false)
   };
 
   const gradientBackground = {

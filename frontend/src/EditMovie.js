@@ -50,7 +50,16 @@ const EditMovie = () => {
   const [loading, setLoading] = useState(false)
   const handleSaveChanges = () => {
     setLoading(true)
-    let date = movieData.releaseDate.getFullYear() + '-' + movieData.releaseDate.getMonth() + '-' + movieData.releaseDate.getDate()
+    let date = movieData.releaseDate.getFullYear() + '-' + (1+movieData.releaseDate.getMonth()) + '-' + movieData.releaseDate.getDate()
+    console.log(date)
+    if (date.length < 10) {
+      if (date.lastIndexOf('-') - date.indexOf('-') !== 3) {
+          date = date.substring(0,date.indexOf('-')+1) + 0 + date.substring(date.indexOf('-')+1) 
+      }
+      if (date.length !== 10) {
+          date = date.substring(0,date.lastIndexOf('-')+1) + 0 + date.substring(date.lastIndexOf('-')+1)
+      }
+    }
     // Handle saving movie data here
       console.log(movieData);
       updateMovie({...movieData, releaseDate:date}).then(
