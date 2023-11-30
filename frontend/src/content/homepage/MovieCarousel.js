@@ -14,7 +14,7 @@ function MovieCarousel({type, loginState, searchQuery}) {
       response => {
         setMovieListCurrent(response.data);
       }
-    )
+    ).catch((err)=>console.log(err))
   },[])
   
   useEffect(() => {
@@ -22,7 +22,7 @@ function MovieCarousel({type, loginState, searchQuery}) {
       response => {
         setMovieListUpcoming(response.data);
       }
-    )
+    ).catch((err)=>console.log(err))
   },[])
 
   function handleSearch() {

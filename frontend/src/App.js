@@ -6,7 +6,7 @@ import AdminNavbar from './AdminNavbar'
 import Navbar from './content/Navbar'
 import Content from './content/Content'
 import { getAllUserInfo } from './api/UserApi'
-import { getJwtToken } from './api/AxiosConfig'
+import { getJwtToken, removeJwtToken } from './api/AxiosConfig'
 import Cookies from 'js-cookie';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    if (Cookies.get('jwtToken') !== null) {
+    if (Cookies.get('jwtToken') !== undefined) {
       getAllUserInfo().then((response) => {
         setUserInfo(response.data);
         setLoggedIn(true);
@@ -24,10 +24,13 @@ function App() {
       ).catch(
         (err) => {
           console.log('retrieval of jwtToken failed or does not exist')
-          setLoggedIn(false);
+          setLoggedIn(false)
+          Cookies.remove('jwtToken')
+          removeJwtToken()
         }
       )
     }
+    setLoggedIn(false)
   }
   ,[]);
 
