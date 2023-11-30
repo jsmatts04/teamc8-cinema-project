@@ -20,5 +20,5 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Integer> {
 
     @Query(value = "SELECT * FROM showtime s WHERE s.date + s.time < :newEndTimestamp AND s.end_timestamp > :newStartTimestamp",
     nativeQuery = true)
-    Optional<List<Showtime>> findFirstByTimestamps(LocalDateTime newStartTimestamp, LocalDateTime newEndTimestamp);
+    Optional<List<Showtime>> findByTimestamps(LocalDateTime newStartTimestamp, LocalDateTime newEndTimestamp);
 }

@@ -38,10 +38,6 @@ public class ShowtimeService {
     }
 
     public Showtime addShowtime(NewShowtimeRequest newShowtimeRequest) {
-        // Check if date and time are not already scheduled
-        if (showtimeRepository.existsByDateAndTime(newShowtimeRequest.getDate(), newShowtimeRequest.getTime())) {
-            throw new ShowtimeAlreadyScheduledException("Showtime already scheduled at this date and time");
-        }
 
         Movie movie = movieService.getMovieById(newShowtimeRequest.getMovieId());
 
@@ -50,11 +46,11 @@ public class ShowtimeService {
         LocalDateTime endTimestamp = startTimestamp.plusMinutes(movie.getFilmLength());
 
         // Check if a showtime exists within range
-        Optional<List<Showtime>> optionalShowtimeList = showtimeRepository.findFirstByTimestamps(startTimestamp, endTimestamp);
-        if (optionalShowtimeList.isPresent()) {
-            List<Integer> conflictingShowtimeIds = new ArrayList<>();
+        Optional<List<Showtime>> optionalShowtimeList = showtimeRepository.findByTimestamps(startTimestamp, endTimestamp);
+        if (optionalShowtimeList.isPresent() && !optionalShowtimeList.get().isEmpty()) {
+            List<String> conflictingShowtimeIds = new ArrayList<>();
             for (Showtime showtime : optionalShowtimeList.get()) {
-                conflictingShowtimeIds.add(showtime.getId());
+                conflictingShowtimeIds.add(showtime.getMovie().getTitle());
             }
             throw new ShowtimeAlreadyScheduledException("Conflicting showtimes with " + conflictingShowtimeIds);
         }
@@ -78,7 +74,7 @@ public class ShowtimeService {
         LocalDateTime endTimestamp = startTimestamp.plusMinutes(movie.getFilmLength());
         System.out.println("START: " + startTimestamp);
         System.out.println("END: " + endTimestamp);
-        Optional<List<Showtime>> showtimeOptional = showtimeRepository.findFirstByTimestamps(startTimestamp, endTimestamp);
+        Optional<List<Showtime>> showtimeOptional = showtimeRepository.findByTimestamps(startTimestamp, endTimestamp);
         return showtimeOptional.orElse(null);
     }
 }
