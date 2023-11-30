@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -22,14 +23,20 @@ public class Showtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //date_time
+    //date
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private LocalDate date;
 
+    // time
     @Column(name = "time")
     @Temporal(TemporalType.TIME)
     private LocalTime time;
+
+    // timestamp that showtime ends
+    @Column(name = "end_timestamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime endTimestamp;
 
     //room_id
     @ManyToOne

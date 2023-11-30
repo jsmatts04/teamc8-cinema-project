@@ -1,8 +1,8 @@
 package com.teamc8.controller;
 
 import com.teamc8.model.Showtime;
-import com.teamc8.model.request.NewShowtimeRequest;
 import com.teamc8.model.request.GetShowtimeRequest;
+import com.teamc8.model.request.NewShowtimeRequest;
 import com.teamc8.service.ShowtimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +29,11 @@ public class ShowtimeController {
     @PostMapping(path = "/add")
     public Showtime addShowtime(@RequestBody NewShowtimeRequest newShowtimeRequest) {
         return showtimeService.addShowtime(newShowtimeRequest);
+    }
+
+    @PostMapping(path = "/validate")
+    public List<Showtime> validateShowtime(@RequestBody NewShowtimeRequest newShowtimeRequest) {
+        return showtimeService.validateShowtime(newShowtimeRequest);
     }
 
 }
