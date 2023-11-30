@@ -47,19 +47,19 @@ const AddShowtime = () => {
     const nav = useNavigate();
 
     const handleSaveChanges = () => {
-        const date = showtimeData.date.toISOString().substring(0, 10);
+        const date = showtimeData.date.getFullYear() + '-' + showtimeData.date.getMonth() + '-' + showtimeData.date.getDate();
         const time = showtimeData.time;
         const movieId = showtimeData.movieId;
 
         console.log('Saving showtime:', { movieId, date, time });
-        
+        /*
          addShowtime(movieId, date, time).then((response) => {
             nav('/managemovies', {state: {toastId: 'schedule-toast'}});
         }).catch((err) => {
             console.log(err)
             setShowError(true)
             setTimeout(()=>setShowError(false),2000)
-        });
+        });*/
     };
 
     const gradientBackground = {

@@ -9,8 +9,10 @@ import { useState } from "react";
 import { addBooking } from '../../api/BookingApi' 
 import { validatePromo } from "../../api/PromotionApi";
 import { addTickets } from "../../api/TicketApi";
+import { useEffect } from 'react'
+import { getAllUserInfo } from '../../api/UserApi'
 
-function Checkout({userInfo, movie, booking, setBooking}) {
+function Checkout({setUserInfo, userInfo, movie, booking, setBooking}) {
     let adultPrice = 16.49;
     let childPrice = 13.49;
     let seniorPrice = 14.99;
@@ -71,6 +73,12 @@ function Checkout({userInfo, movie, booking, setBooking}) {
     }
 
     let paymentCards=[];
+    useEffect(()=> {
+        getAllUserInfo().then((response)=>{
+            setUserInfo(response.data);
+        }).catch(err=>console.log(err))
+    },[])
+    
     if (userInfo.paymentCards !== undefined) {
         paymentCards=userInfo.paymentCards;
     }

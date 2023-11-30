@@ -27,12 +27,11 @@ import AddPayment from "../AddPayment";
 import ResetPassword from './login-register/ResetPassword'
 import ShowtimeBrowser from './showtime-browser/ShowtimeBrowser'
 import ScheduleShowtime from "../ScheduleShowtime";
-import AddPromo from "../AddPromo";
 import Movie from './movie select/Movie'
 import EditMovie from '../EditMovie'
 
 function Content(props) {
-  const {loginState, setAdminState, setLoggedIn, searchQuery, userInfo } = props;
+  const {loginState, setAdminState, setLoggedIn, searchQuery, setUserInfo, userInfo } = props;
   const [booking, setBooking] = useState({});
   const [movie, setMovie] = useState({});
 
@@ -56,7 +55,7 @@ function Content(props) {
             <Route path='select-show-time' element={<SelectShowTime movie={movie} booking={booking} setBooking={setBooking}/>}/>
             <Route path='seats' element={<SelectSeats movie={movie} booking={booking} setBooking={setBooking}/>}/>
             <Route path='age-category' element={<SelectAgeCategory/>}/>
-            <Route path='checkout' element={<Checkout userInfo={userInfo} movie={movie} booking={booking} setBooking={setBooking}/>}/>
+            <Route path='checkout' element={<Checkout setUserInfo={setUserInfo} userInfo={userInfo} movie={movie} booking={booking} setBooking={setBooking}/>}/>
             <Route path='confirmation' element={<OrderConfirmation userInfo={userInfo} movie={movie} booking={booking} setBooking={setBooking}/>}></Route>
           </Route>
         </Route>
@@ -70,7 +69,6 @@ function Content(props) {
         <Route path='/Search/' element={<SearchResult loginState = {loginState} searchQuery = {searchQuery}/>}></Route>
         <Route path='/ResetPassword/' element={<ResetPassword/>}></Route>
         <Route path='/ScheduleShowtime/:movieId' element={<ScheduleShowtime/>}/>
-        <Route path='/AddPromo/' element={<AddPromo/>}/>
         <Route path='*' element={<ErrorPage/>}></Route>
       </Routes>
     );

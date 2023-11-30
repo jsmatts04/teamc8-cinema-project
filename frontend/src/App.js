@@ -16,7 +16,7 @@ function App() {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    if (Cookies.get('jwtToken') === getJwtToken()) {
+    if (Cookies.get('jwtToken') !== null) {
       getAllUserInfo().then((response) => {
         setUserInfo(response.data);
         setLoggedIn(true);
@@ -50,6 +50,7 @@ function App() {
         setAdminState={setAdminState}
         setLoggedIn={setLoggedIn}
         searchQuery={searchQuery}
+        setUserInfo={setUserInfo}
         userInfo={userInfo}
       />
     </Router>
