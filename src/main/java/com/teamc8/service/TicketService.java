@@ -81,7 +81,7 @@ public class TicketService {
                 "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "Hi " + name + "," +
                 "</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
-                "Thank you for your booking. Your booking ID is: " + booking.getId() + ". Here are your ticket details:" +
+                "Thank you for your booking. Your booking ID is: " + booking.getId() + " for the movie '" + booking.getShowtime().getMovie().getTitle() + "'. Here are your ticket details:" +
                 "</p>";
 
         for (Ticket ticket : tickets) {
