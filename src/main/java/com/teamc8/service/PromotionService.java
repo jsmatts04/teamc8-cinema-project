@@ -25,6 +25,8 @@ public class PromotionService {
     }
 
     public Promotion addPromo(Promotion promotion) {
+        if (promotionRepository.existsByCode(promotion.getCode()))
+            throw new PromotionNotValidException(promotion.getCode());
         Promotion newPromotion = promotionRepository.save(promotion);
         sendPromotionEmail(newPromotion);
         return newPromotion;
@@ -57,7 +59,7 @@ public class PromotionService {
                 () -> new PromotionNotValidException(code)
         );
 
-        if (promotion.getEndDate().isAfter(LocalDate.now()) && promotion.getStartDate().isBefore(LocalDate.now()))
+        if (promotion.getEndDate().isAfter(LocalDate.now().minusDays(1)) && promotion.getStartDate().isBefore(LocalDate.now().plusDays(1)))
             return promotion;
         else
             return null;
