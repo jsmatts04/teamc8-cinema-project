@@ -62,7 +62,7 @@ public class PromotionService {
         if (promotion.getEndDate().isAfter(LocalDate.now().minusDays(1)) && promotion.getStartDate().isBefore(LocalDate.now().plusDays(1)))
             return promotion;
         else
-            return null;
+            throw new PromotionNotValidException(code);
     }
 
     private String buildPromotionEmail(String name, String promoCode, int discountAmount) {
