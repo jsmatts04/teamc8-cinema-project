@@ -86,7 +86,7 @@ public class TicketService {
 
         for (Ticket ticket : tickets) {
             emailContent += "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
-                    "Seat: " + ticket.getSeat() + ", Type: " + ticket.getType() +
+                    "Seat: " + ticket.getSeat().getSeatRow() + ticket.getSeat().getSeatNum() + ", Type: " + ticket.getType().getType() +
                     "</p>";
         }
 
