@@ -47,7 +47,9 @@ function Login(props) {
       (response) => {
         if (check) {
           storeJwtToken(response.data.jwtToken)
-          Cookies.set('jwtToken', response.data.jwtToken, {expires: 7, secure: true})
+          Cookies.set('jwtToken', response.data.jwtToken, {expires: 30, secure: true})
+        } else {
+          Cookies.set('jwtToken', response.data.jwtToken)
         }
         setLoggedIn(true);
         if (response.data.user.userType === "CUSTOMER") {
