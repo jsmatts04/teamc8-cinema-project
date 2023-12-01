@@ -110,6 +110,14 @@ function Checkout({setUserInfo, userInfo, movie, booking, setBooking}) {
             };
             newBooking.date = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate();
             console.log(newBooking)
+            if (newBooking.date.length < 10) {
+                if (newBooking.date.lastIndexOf('-') - newBooking.date.indexOf('-') !== 3) {
+                    newBooking.date = newBooking.date.substring(0,newBooking.date.indexOf('-')+1) + 0 + newBooking.date.substring(newBooking.date.indexOf('-')+1) 
+                }
+                if (newBooking.date.length !== 10) {
+                    newBooking.date = newBooking.date.substring(0,newBooking.date.lastIndexOf('-')+1) + 0 + newBooking.date.substring(newBooking.date.lastIndexOf('-')+1)
+                }
+            }
 
             addBooking(newBooking).then((response) => {
                 let id = response.data;
