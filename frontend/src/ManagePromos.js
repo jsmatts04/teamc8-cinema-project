@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Container, Card, Table, Toast, Form, Spinner } from 'react-bootstrap';
+import { Button, Container, Card, Table, Toast, Form, Spinner, Row, Col } from 'react-bootstrap';
 import { getAllPromos, addPromo } from './api/PromotionApi';
 import './css/ManagePromos.css';
 import './css/AdminHomePage.css';
@@ -82,6 +82,8 @@ const ManagePromo = () => {
                                         <h4 style={{fontSize:'15px',color: 'red'}}>ERROR: {errMessage}</h4>
                                     )}
                                     <Form>
+                                        <Row>
+                                            <Col>
                                         <Form.Group controlId="promoCode">
                                             <Form.Label>Code</Form.Label>
                                             <Form.Control
@@ -94,6 +96,8 @@ const ManagePromo = () => {
                                                 }}
                                             />
                                         </Form.Group>
+                                        </Col>
+                                        <Col>
                                         <Form.Group controlId="promoAmount">
                                             <Form.Label>Amount</Form.Label>
                                             <Form.Control
@@ -105,6 +109,10 @@ const ManagePromo = () => {
                                                 }}
                                             />
                                         </Form.Group>
+                                        </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
                                         <Form.Group controlId="promoStartDate">
                                             <Form.Label>Start Date</Form.Label>
                                             <Form.Control
@@ -116,6 +124,8 @@ const ManagePromo = () => {
                                                 }}
                                             />
                                         </Form.Group>
+                                        </Col>
+                                        <Col>
                                         <Form.Group controlId="promoEndDate">
                                             <Form.Label>End Date</Form.Label>
                                             <Form.Control
@@ -127,7 +137,9 @@ const ManagePromo = () => {
                                                 }}
                                             />
                                         </Form.Group>
-                                        <Button variant="primary" onClick={handleSaveChanges} disabled={loading}>
+                                        </Col>
+                                        </Row>
+                                        <Button variant="primary" style={{marginTop:'20px'}} onClick={handleSaveChanges} disabled={loading}>
                                             {loading ? <Spinner
                                 as="span"
                                 animation="border"
