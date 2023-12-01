@@ -1,23 +1,22 @@
 import axios from 'axios';
 
+const api = axios.create({
+    baseURL: 'http://localhost:8080/api',
+});
+
 // Retrieve jwt token from localStorage
 export const getJwtToken = () => {
     let res = localStorage.getItem('jwtToken');
     return res === null ? '' : res;
 }
 
+api.defaults.headers.common['Authorization'] = `Bearer ${getJwtToken()}`;
+
 // Removes token from localStorage. Mainly used when logging out
 export const removeJwtToken = () => {
     localStorage.removeItem('jwtToken');
+    delete api.defaults.headers.common['Authorization'];
 }
-
-const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
-    headers: {
-        'Authorization': `Bearer ${getJwtToken()}`,
-        'Content-Type': 'application/json'
-    }
-});
 
 // Intercept responses from api
 api.interceptors.response.use(
