@@ -48,6 +48,7 @@ const AddShowtime = () => {
     const nav = useNavigate();
     const handleSaveChanges = () => {
         setLoading(true)
+        setTimeout(()=>setLoading(false), 2500)
         let date = showtimeData.date.getFullYear() + '-' + (1+showtimeData.date.getMonth()) + '-' + showtimeData.date.getDate();
         const time = showtimeData.time;
         let movieId = showtimeData.movieId;
