@@ -90,9 +90,11 @@ public class TicketService {
                     "</p>";
         }
 
-        emailContent += "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
-                "Enjoy your movie!" +
-                "</p></div>";
+        emailContent += """
+                <p style="Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c">\
+                Enjoy your movie!\
+                </p></div>\
+                """;
 
         return emailContent;
     }

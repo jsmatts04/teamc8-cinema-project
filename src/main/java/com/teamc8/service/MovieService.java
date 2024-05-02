@@ -4,7 +4,6 @@ import com.teamc8.exception.MovieNotFoundException;
 import com.teamc8.model.Movie;
 import com.teamc8.model.projection.MovieCover;
 import com.teamc8.repository.MovieRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,6 @@ public class MovieService {
     private final MovieRepository movieRepository;
 
     //constructor
-    @Autowired
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }

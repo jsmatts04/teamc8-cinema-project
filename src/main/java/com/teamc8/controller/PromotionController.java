@@ -30,17 +30,17 @@ public class PromotionController {
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public void deletePromo(@PathVariable("id") int id) {
+    public void deletePromo(@PathVariable int id) {
         promotionService.deletePromo(promotionService.getPromoById(id));
     }
 
     @GetMapping(path = "/get/{id}")
-    public Promotion getPromoById(@PathVariable("id") int id) {
+    public Promotion getPromoById(@PathVariable int id) {
         return promotionService.getPromoById(id);
     }
 
     @GetMapping(path = "/validate/{code}")
-    public Promotion validatePromoByCode(@PathVariable("code") String code) {
+    public Promotion validatePromoByCode(@PathVariable String code) {
         return promotionService.validatePromoByCode(code);
     }
 

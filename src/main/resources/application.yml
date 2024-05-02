@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://cinema-ebooking.colmbfym90m1.us-east-2.rds.amazonaws.com:5432/cinema_ebooking
-    username: phogangon
-    password: 811047395
+    url: jdbc:postgresql://localhost:5432/cinema_ebooking
+    username: postgres
+    password: Chachan*1942
   jpa:
     hibernate:
       ddl-auto: update

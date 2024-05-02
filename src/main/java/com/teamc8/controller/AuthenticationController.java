@@ -41,7 +41,7 @@ public class AuthenticationController {
 
     //confirm a user
     @GetMapping(path = "/confirm")
-    public String confirm(@RequestParam("token") String token) {
+    public String confirm(@RequestParam String token) {
         return confirmationTokenService.confirmToken(token);
     }
 

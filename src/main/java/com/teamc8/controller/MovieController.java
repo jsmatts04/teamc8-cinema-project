@@ -3,7 +3,6 @@ package com.teamc8.controller;
 import com.teamc8.model.Movie;
 import com.teamc8.model.projection.MovieCover;
 import com.teamc8.service.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +14,6 @@ public class MovieController {
     private final MovieService movieService;
 
     //constructor
-    @Autowired
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }
@@ -28,7 +26,7 @@ public class MovieController {
 
     //get movie by id
     @GetMapping(path = "/{id}")
-    public Movie getMovieById(@PathVariable("id") int id) {
+    public Movie getMovieById(@PathVariable int id) {
         return movieService.getMovieById(id);
     }
 
